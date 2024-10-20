@@ -1,0 +1,86 @@
+[
+  {
+    "_id": "1",
+    "name": "Ficus Audrey Tree",
+    "image": "/images/home/PopularPlants/img1.png",
+    "price": 3000,
+    "popular": true
+  },
+  {
+    "_id": "2",
+    "name": "Snake Plant",
+    "image": "/images/home/PopularPlants/img2.png",
+    "price": 3400,
+    "popular": true,
+    "hoverImg": "/images/home/PopularPlants/hoverimg1"
+  },
+  {
+    "_id": "3",
+    "name": "Monstera Delicosa",
+    "image": "/images/home/PopularPlants/img3.png",
+    "category": "salad",
+    "price": 2500,
+    "popular": true
+  },
+  {
+    "_id": "4",
+    "name": "Mass Cane Plant",
+    "image": "/images/home/PopularPlants/img4.png",
+    "price": 2000,
+    "popular": true
+  },
+  {
+    "_id": "5",
+    "name": "Ficus Audrey Tree",
+    "image": "/images/home/PopularPlants/img1.png",
+    "price": 3000,
+    "popular": true
+  },
+  {
+    "_id": "6",
+    "name": "Snake Plant",
+    "image": "/images/home/PopularPlants/img2.png",
+    "price": 3400
+  },
+  {
+    "_id": "7",
+    "name": "Monstera Delicosa",
+    "image": "/images/home/PopularPlants/img3.png",
+    "price": 2500,
+    "popular": true
+  },
+  {
+    "_id": "8",
+    "name": "Mass Cane Plant",
+    "image": "/images/home/PopularPlants/img4.png",
+    "price": 2000,
+    "popular": true
+  },
+  {
+    "_id": "9",
+    "name": "Ficus Audrey Tree",
+    "image": "/images/home/PopularPlants/img1.png",
+    "price": 3000,
+    "popular": true
+  },
+  {
+    "_id": "10",
+    "name": "Snake Plant",
+    "image": "/images/home/PopularPlants/img2.png",
+    "price": 2500
+  },
+  {
+    "_id": "10",
+    "name": "Snake Plant",
+    "image": "/images/home/PopularPlants/img3.png",
+    "price": 2500,
+    "popular": true
+  },
+  {
+    "_id": "12",
+    "name": "Mass Cane Plant",
+    "image": "/images/home/PopularPlants/img4.png",
+    "price": 2000,
+    "popular": true
+  }
+]
