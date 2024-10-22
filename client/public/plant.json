@@ -82,5 +82,68 @@
     "image": "/images/home/PopularPlants/img4.png",
     "price": 2000,
     "popular": true
+  },
+
+
+  {
+    "_id": "13",
+    "name": "Lemon Bush",
+    "image": "/images/home/OutdoorPlants/img1.png",
+    "price": 1000,
+    "category": "Outdoor Plant"
+  },
+  {
+    "_id": "14",
+    "name": "Star Jasmine Plant",
+    "image": "/images/home/OutdoorPlants/img2.png",
+    "price": 3000,
+    "category": "Outdoor Plant"
+  },
+  {
+    "_id": "15",
+    "name": "Red Jasmine Tree",
+    "image": "/images/home/OutdoorPlants/img3.png",
+    "price": 5000,
+    "category": "Outdoor Plant",
+    "popular": true
+  },
+  {
+    "_id": "16",
+    "name": "Blue Berry Heaven",
+    "image": "/images/home/OutdoorPlants/img4.png",
+    "price": 7000,
+    "category": "Outdoor Plant"
+  },
+  {
+    "_id": "17",
+    "name": "Lemon Bush",
+    "image": "/images/home/OutdoorPlants/img1.png",
+    "price": 1000,
+    "category": "Outdoor Plant"
+  },
+  {
+    "_id": "18",
+    "name": "Star Jasmine Plant",
+    "image": "/images/home/OutdoorPlants/img2.png",
+    "price": 3000,
+    "category": "Outdoor Plant"
+  },
+  {
+    "_id": "19",
+    "name": "Red Jasmine Tree",
+    "image": "/images/home/OutdoorPlants/img3.png",
+    "price": 5000,
+    "category": "Outdoor Plant",
+    "popular": true
+
+  },
+  {
+    "_id": "20",
+    "name": "Blue Berry Heaven",
+    "image": "/images/home/OutdoorPlants/img4.png",
+    "price": 7000,
+    "category": "Outdoor Plant"
   }
 ]
+
+

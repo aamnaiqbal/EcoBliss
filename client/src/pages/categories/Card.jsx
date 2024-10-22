@@ -12,12 +12,16 @@ const Card = ({ item }) => {
           />
         </figure>
       </Link>
-      <div className="card-body petrona mx-auto">
-        <h2 className="card-title ">{item.name}</h2>
-        <p className={`text-grey mx-auto`}>Rs. {item.price}/- only</p>
+      <div className="card-body petrona ">
+        <div className="mx-auto"><h2 className="card-title ">{item.name}</h2>
+        <p className={`text-grey text-center`}>Rs. {item.size?.S}/- only</p></div>
+        <div className="card-actions bg-slate-400">
+          <button className={`btn  text-green text-base bg-lightGreen  hover:bg-[#3cb371] hover:text-white outline-none border-0 w-full`}>Add to Cart</button>
+        </div>
       </div>
     </div>
   );
 };
 
 export default Card;
+

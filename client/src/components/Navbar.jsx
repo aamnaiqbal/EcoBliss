@@ -94,10 +94,10 @@ const Navbar = () => {
               <Link to="/" className={`hover:text-green hover:bg-lightGreen`}>Houseplants</Link>
             </li>
             <li>
-              <Link to="/" className={`hover:text-green hover:bg-lightGreen`}>Outdoor</Link>
+              <Link to="/outdoorplants" className={`hover:text-green hover:bg-lightGreen`}>Outdoor</Link>
             </li>
             <li>
-              <Link to="/" className={`hover:text-green hover:bg-lightGreen`}>Orchids</Link>
+              <Link to="/orchidplants" className={`hover:text-green hover:bg-lightGreen`}>Orchids</Link>
             </li>
             <li>
               <Link to="/" className={`hover:text-green hover:bg-lightGreen`}>Gifts</Link>

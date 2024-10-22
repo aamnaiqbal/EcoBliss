@@ -2,7 +2,7 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <footer className="footer bg-bgSky petrona py-10 max-w-screen-2xl container mx-auto xl:px-16 font-medium text-md">
+    <footer className="footer bg-bgSky petrona py-10 max-w-screen-2xl container mx-auto xl:px-16 font-medium text-md mt-8">
       <aside>
         <svg
           width="50"

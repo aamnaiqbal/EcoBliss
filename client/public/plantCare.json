@@ -1,0 +1,50 @@
+[
+  {
+    "_id": "1",
+    "name": "Zigzag Planter",
+    "image": "/images/home/PlantCare/img1.png",
+    "price": 3000
+  },
+  {
+    "_id": "2",
+    "name": "Ceramicclanter",
+    "image": "/images/home/PlantCare/img2.png",
+    "price": 3000
+  },
+  {
+    "_id": "3",
+    "name": "Majestic Pot",
+    "image": "/images/home/PlantCare/img3.png",
+    "price": 1500
+  },
+  {
+    "_id": "4",
+    "name": "Polka Dots",
+    "image": "/images/home/PlantCare/img4.png",
+    "price": 3000
+  },
+  {
+    "_id": "5",
+    "name": "Zigzag Planter",
+    "image": "/images/home/PlantCare/img1.png",
+    "price": 3000
+  },
+  {
+    "_id": "6",
+    "name": "Ceramicclanter",
+    "image": "/images/home/PlantCare/img2.png",
+    "price": 3000
+  },
+  {
+    "_id": "7",
+    "name": "Majestic Pot",
+    "image": "/images/home/PlantCare/img3.png",
+    "price": 1500
+  },
+  {
+    "_id": "8",
+    "name": "Polka Dots",
+    "image": "/images/home/PlantCare/img4.png",
+    "price": 3000
+  }
+]

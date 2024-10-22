@@ -1,0 +1,112 @@
+[
+    {
+        "name": "Sunrise Orchid",
+        "size":{"S": 700} ,
+        "category": "Orchid",
+        "image": "/images/Orchid/img1.jpg",
+        "subImg": {
+          "subImg1": "/images/Orchid/img1-1.jpg"
+        },
+        "description": "Our Sunrise Orchid features long-lasting, pinkish-orange flowers. As a Phalaenopsis orchid, it is easy to care for and non-toxic (AKA pet-friendly), making it our go-to gift for any celebration. Phalaenopsis orchids typically bloom about once a year for up to three months. You may notice a small number of blooms on your orchid upon delivery; these blooms will open quicker in a warm indoor setting. After a blooming cycle, the flowers will wilt and fall off, allowing the orchid to store energy to re-bloom again next season.",
+        "popular":true
+    },
+    
+    {
+        "name": "Mini Orchid",
+        "size":{"S": 800} ,
+        "category": "Orchid",
+        "image": "/images/Orchid/img2.jpg",
+        "subImg": {
+          "subImg1": "/images/Orchid/img2-1.jpg",
+          "subImg2": "/images/Orchid/img2-2.jpg",
+          "subImg3": "/images/Orchid/img2-3.jpg"
+        },
+        "description": "Our Mini Orchid is your favorite Phalaenopsis Orchid but in a fun size offered in white, pink, yellow, and red. You may notice a small number of blooms on your orchid upon delivery. These blooms will open quicker in a warm indoor setting. The Phalaenopsis will typically bloom about once a year for up to three months. After a blooming cycle, the flowers will wilt and fall off. This is the orchid’s way to store up energy to re-bloom again next season."
+    },
+    
+    {
+        "name": "Petite Sunset Orchid",
+        "size":{"S": 1000} ,
+        "category": "Orchid",
+        "image": "/images/Orchid/img3.jpg",
+        "subImg": {
+          "subImg1": "/images/Orchid/img3-1.jpg",
+          "subImg2": "/images/Orchid/img3-2.jpg"
+        },
+        "description": "Add a pop of serenity to your tablescape with this popular Phalaenopsis orchid. One of the easiest varieties to grow as a houseplant—it is affectionately called the beginner orchid. You may notice a small number of blooms on your orchid upon delivery. These blooms will open quicker in a warm indoor setting. It will typically bloom about once a year, for up to three months. After a blooming cycle, the flowers will wilt and fall off. This is the orchid’s way to store up energy to re-bloom again next season."
+    },
+    
+    {
+        "name": "White Orchid",
+        "size":{"S": 1200} ,
+        "category": "Orchid",
+        "image": "/images/Orchid/img4.jpg",
+        "subImg": {
+          "subImg1": "/images/Orchid/img4-1.jpg",
+          "subImg2": "/images/Orchid/img4-2.jpg",
+          "subImg3": "/images/Orchid/img4-3.jpg"
+        },
+        "description": "With its elegant stems and vibrant white flowers, this Phalaenopsis orchid makes any space feel chicer. You may notice a small number of blooms on your orchid upon delivery. These blooms will open quicker in a warm indoor setting. The Phalaenopsis will typically bloom about once a year for up to three months. After a blooming cycle, the flowers will wilt and fall off. This is the orchid’s way to store up energy to re-bloom again next season."
+    },
+    
+    {
+        "name": "Yellow Orchid",
+        "size":{"S": 600} ,
+        "category": "Orchid",
+        "image": "/images/Orchid/img5.jpg",
+        "subImg": {
+          "subImg1": "/images/Orchid/img5-1.jpg",
+          "subImg2": "/images/Orchid/img5-2.jpg"
+        },
+        "description": "Our Yellow Orchid is sure to brighten up any space with its light yellow flowers with fun, pink centers. This is a Phalaenopsis orchid, which are also known as “beginner” orchids as they’re one of the easiest varieties to grow as a houseplant. You may notice a small number of blooms on your orchid upon delivery. These blooms will open more quickly in a warm, indoor setting. This plant will typically bloom about once a year, for up to three months at a time. After a blooming cycle, the flowers will wilt and fall off. This is the orchid's way to store up energy to re-bloom again next season."
+    },
+    
+    {
+        "name": "Petite White Orchid",
+        "size":{"S": 800} ,
+        "category": "Orchid",
+        "image": "/images/Orchid/img6.jpg",
+        "subImg": {
+          "subImg1": "/images/Orchid/img6-1.jpg",
+          "subImg2": "/images/Orchid/img6-2.jpg",
+          "subImg3": "/images/Orchid/img6-3.jpg"
+        },
+        "description": "Affectionately nicknamed the beginner orchid, the popular Phalaenopsis orchid is one of the easiest varieties of orchids to grow as a houseplant. This orchid will typically bloom once a year for up to three months. Upon delivery, you may notice a small number of blooms on your orchid—these blooms will open quicker in a warm, indoor setting. After a blooming cycle, the flowers will wilt and fall off and the orchid will store up energy to re-bloom again next season."
+    },
+    
+    {
+        "name": "Blue Watercolor Orchid",
+        "size":{"S": 1500} ,
+        "category": "Orchid",
+        "image": "/images/Orchid/img7.jpg",
+        "subImg": {
+          "subImg1": "/images/Orchid/img7-1.jpg"
+        },
+        "description": "The Blue Watercolor Orchid achieves its look through a special process in which dye is injected into the stem, giving the petals their bright, gradient coloring. The dye is completely safe and causes no harm, though please note that when this plant re-blooms, it’ll be its natural color (white or light pink). This is a Phalaenopsis orchid, which typically blooms about once a year for up to three months. Non-toxic to pets.",
+        "popular":true
+    },
+    
+    {
+        "name": "Pink Watercolor Orchid",
+        "size":{"S": 2500} ,
+        "category": "Orchid",
+        "image": "/images/Orchid/img8.jpg",
+        "subImg": {
+          "subImg1": "/images/Orchid/img8-1.jpg"
+        },
+        "description": "The Pink Watercolor Orchid achieves its look through a special process in which dye is injected into the stem, giving the petals their bright, gradient coloring. The dye is completely safe and causes no harm, though please note that when this plant re-blooms, it’ll be its natural color (white or light pink). This is a Phalaenopsis orchid, which typically blooms about once a year for up to three months. Non-toxic to pets.",
+        "popular":true
+    },
+    
+    {
+        "name": "Petite Pink Orchid",
+        "size":{"S": 1800} ,
+        "category": "Orchid",
+        "image": "/images/Orchid/img9.jpg",
+        "subImg": {
+          "subImg1": "/images/Orchid/img9-1.jpg",
+          "subImg2": "/images/Orchid/img9-2.jpg"
+        },
+        "description": ""
+    }
+    ]
