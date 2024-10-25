@@ -1,49 +1,74 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { TbLetterSSmall, TbLetterLSmall, TbLetterMSmall } from "react-icons/tb";
 import Slider from "./Slider";
+import axios from "axios";
+import { useLocation, useParams } from "react-router-dom";
+import { PlantCareContext } from "../context/plantCareContext";
+import { PlantContext } from "../context/PlantContext";
 
-const PlantDetails = () => {
-  const [plantDetails, setPlantdetails] = useState([
-    {
-      name: "Calamondin Tree",
-      size: { S: 2400, M: 3000, L: 4000 },
-      category: "Outdoor",
-      image: "/images/Outdoor/img3.jpeg",
-      subImg: {
-        subImg1: "/images/Outdoor/img3-1.jpeg",
-        subImg2: "/images/Outdoor/img3-2.jpeg",
-      },
-      description:
-        "We’re very excited to offer the delightful Calamondin tree. Native to the Philippines, the Calamondin (also known as Calamansi) produces an abundance of small, tart fruits .",
-    },
-  ]);
+const productDetails = () => {
+  const {plantCareProducts}=useContext(PlantCareContext);
+  const {orchidPlants, housePlants, outdoorPlants}=useContext(PlantContext);
+  let [category, setCategory] = useState([]);
+
+  const { pathname } = useLocation();
+  const { id } = useParams();
+  const [productDetails, setProductDetails] = useState([]);
   const [selectedSize, setSelectedSize] = useState("S");
-  const [price, setPrice] = useState(plantDetails[0].size.S);
+  const [price, setPrice] = useState(
+    productDetails.size?.S || (productDetails.price && productDetails.price)
+  );
   const [quantity, setQuantity] = useState(1);
-  const [img, setImg] = useState(plantDetails[0].image);
+  const [img, setImg] = useState(productDetails.image);
+
   const handleSizeChange = (size) => {
     if (size === "S") {
       setSelectedSize("S");
-      setPrice(plantDetails[0].size.S);
+      setPrice(productDetails.size.S);
     } else if (size === "M") {
       setSelectedSize("M");
-      setPrice(plantDetails[0].size.M);
+      setPrice(productDetails.size.M);
     } else if (size === "L") {
       setSelectedSize("L");
-      setPrice(plantDetails[0].size.L);
+      setPrice(productDetails.size.L);
     }
   };
-  const [plants, setPlants] = useState([]);
 
   useEffect(() => {
-    fetch("/plant.json")
-      .then((res) => res.json())
-      .then((data) => {
-        const popular = data.filter((item) => item.hasOwnProperty("popular"));
-        // console.log(popular);
-        setPlants(popular);
-      });
-  }, []);
+    const fetchData = async () => {
+      try {
+        let res;
+        if (pathname.includes("plantcare")) {
+          res = await axios.get(`http://localhost:8000/api/v1/plantcare/${id}`);
+          setProductDetails(res.data.data.product);
+        } else {
+          res = await axios.get(`http://localhost:8000/api/v1/plant/${id}`);
+          setProductDetails(res.data.data.plant);
+        }
+      } catch (err) {
+        console.log("There is some error fetching the data", err);
+      }
+    };
+    fetchData();
+    
+    
+  }, [id, pathname]);
+
+  useEffect(()=>{
+    if(pathname.includes("Outdoor")) setCategory(outdoorPlants)
+    else if(pathname.includes('Orchid')) setCategory(orchidPlants)
+    else if(pathname.includes("Houseplants")) setCategory(housePlants)
+    else setCategory(plantCareProducts)
+  }, [pathname, outdoorPlants, orchidPlants, housePlants, plantCareProducts])
+
+  useEffect(() => {
+    if (productDetails) {
+      setPrice(
+        productDetails.size?.S || (productDetails.price && productDetails.price)
+      );
+      setImg(productDetails.image)
+    }
+  }, [productDetails]);
   return (
     <div className={`max-w-screen-2xl container mx-auto xl:px-24 pt-44 `}>
       <div className="flex">
@@ -51,46 +76,46 @@ const PlantDetails = () => {
           <div className="flex flex-col gap-y-4 ">
             <div className="w-32  h-36 ">
               <img
-                src={plantDetails[0].image}
+                src={productDetails.image}
                 className={`w-32 h-36 object-contain-fit hover:cursor-pointer ${
-                  img === plantDetails[0].image && "border-2 border-black"
+                  img === productDetails.image && "border-2 border-black"
                 } `}
-                onClick={() => setImg(plantDetails[0].image)}
+                onClick={() => setImg(productDetails.image)}
               ></img>
             </div>
-            {plantDetails[0].subImg?.subImg1 && (
+            {productDetails.subImg?.subImg1 && (
               <div className="w-32  h-36 ">
                 <img
-                  src={plantDetails[0].subImg?.subImg1}
+                  src={productDetails.subImg?.subImg1}
                   className={`w-32 h-36 object-contain-fit hover:cursor-pointer ${
-                    img === plantDetails[0].subImg?.subImg1 &&
+                    img === productDetails.subImg?.subImg1 &&
                     "border-2 border-black"
                   } `}
-                  onClick={() => setImg(plantDetails[0].subImg?.subImg1)}
+                  onClick={() => setImg(productDetails.subImg?.subImg1)}
                 ></img>
               </div>
             )}
-            {plantDetails[0].subImg?.subImg2 && (
+            {productDetails.subImg?.subImg2 && (
               <div className="w-32  h-36 ">
                 <img
-                  src={plantDetails[0].subImg?.subImg2}
+                  src={productDetails.subImg?.subImg2}
                   className={`w-32 h-36 object-contain-fit hover:cursor-pointer ${
-                    img === plantDetails[0].subImg?.subImg2 &&
+                    img === productDetails.subImg?.subImg2 &&
                     "border-2 border-black"
                   } `}
-                  onClick={() => setImg(plantDetails[0].subImg?.subImg2)}
+                  onClick={() => setImg(productDetails.subImg?.subImg2)}
                 ></img>
               </div>
             )}
-            {plantDetails[0].subImg?.subImg3 && (
+            {productDetails.subImg?.subImg3 && (
               <div className="w-32  h-36 border-0">
                 <img
-                  src={plantDetails[0].subImg?.subImg3}
+                  src={productDetails.subImg?.subImg3}
                   className={`w-32 h-36 object-contain-fit hover:cursor-pointer ${
-                    img === plantDetails[0].subImg?.subImg3 &&
+                    img === productDetails.subImg?.subImg3 &&
                     "border-2 border-black"
                   } `}
-                  onClick={() => setImg(plantDetails[0].subImg?.subImg3)}
+                  onClick={() => setImg(productDetails.subImg?.subImg3)}
                 ></img>
               </div>
             )}
@@ -102,21 +127,23 @@ const PlantDetails = () => {
         <div className={`w-1/2 px-8  petrona`}>
           <div className="border-b border-grey pb-4">
             <h1 className="marcellus text-4xl font-normal mb-4">
-              {plantDetails[0].name}
+              {productDetails.name}
             </h1>
             <p className="text-xl text-lightGreen">Rs. {price} </p>
           </div>
           <div className="mt-4">
-            <h3 className="text-2xl font-lg">Size</h3>
+            {productDetails.size && <h3 className="text-2xl font-lg">Size</h3>}
             <div className="flex gap-4 justify-center items-center">
-              <TbLetterSSmall
-                className={`border-2 rounded-sm h-9 w-9 bg-grey  hover:cursor-pointer ${
-                  selectedSize === "S" ? "border-black" : "border-grey"
-                }`}
-                color="white"
-                onClick={() => handleSizeChange("S")}
-              />
-              {plantDetails[0].size.M && (
+              {productDetails.size?.S && (
+                <TbLetterSSmall
+                  className={`border-2 rounded-sm h-9 w-9 bg-grey  hover:cursor-pointer ${
+                    selectedSize === "S" ? "border-black" : "border-grey"
+                  }`}
+                  color="white"
+                  onClick={() => handleSizeChange("S")}
+                />
+              )}
+              {productDetails.size?.M && (
                 <TbLetterMSmall
                   className={`border-2 rounded-sm h-9 w-9 bg-grey hover:cursor-pointer ${
                     selectedSize === "M" ? "border-black" : "border-grey"
@@ -125,7 +152,7 @@ const PlantDetails = () => {
                   onClick={() => handleSizeChange("M")}
                 />
               )}
-              {plantDetails[0].size.L && (
+              {productDetails.size?.L && (
                 <TbLetterLSmall
                   className={`border-2 rounded-sm h-9 w-9 bg-grey hover:cursor-pointer ${
                     selectedSize === "L" ? "border-black" : "border-grey"
@@ -139,7 +166,7 @@ const PlantDetails = () => {
           <div className="mt-4">
             <h3 className="text-2xl font-lg mb-[3px]">Description</h3>
             <p className="text-justify text-grey">
-              {plantDetails[0].description}
+              {productDetails.description}
             </p>
           </div>
           <div className="mt-4">
@@ -173,11 +200,13 @@ const PlantDetails = () => {
         </div>
       </div>
       <div className="my-8">
-        <h1 className="marcellus text-4xl font-md md:pl-8">You May Also Like</h1>
-        <Slider items={plants}/>
+        <h1 className="marcellus text-4xl font-md md:pl-8">
+          You May Also Like
+        </h1>
+        <Slider items={category} url={pathname.includes('plantcare')? "plantcare": category[0]?.category}/>
       </div>
     </div>
   );
 };
 
-export default PlantDetails;
+export default productDetails;

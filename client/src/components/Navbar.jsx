@@ -42,7 +42,7 @@ const Navbar = () => {
                   <Link to="/">About Us</Link>
                 </li>
                 <li>
-                  <Link to="/">Cart</Link>
+                  <Link to="/cart">Cart</Link>
                 </li>
                 {/* <li>
                   <Link to="/">Login</Link>
@@ -80,7 +80,7 @@ const Navbar = () => {
                 <Link to="/">About Us</Link>
               </li>
               <li>
-                <Link to="/">Cart</Link>
+                <Link to="/cart">Cart</Link>
               </li>
             </ul>
             <IoPersonCircleSharp size={30} className={`mx-4 hover:cursor-pointer`} />
@@ -94,16 +94,16 @@ const Navbar = () => {
               <Link to="/" className={`hover:text-green hover:bg-lightGreen`}>Houseplants</Link>
             </li>
             <li>
-              <Link to="/outdoorplants" className={`hover:text-green hover:bg-lightGreen`}>Outdoor</Link>
+              <Link to="/Outdoor" className={`hover:text-green hover:bg-lightGreen`}>Outdoor</Link>
             </li>
             <li>
-              <Link to="/orchidplants" className={`hover:text-green hover:bg-lightGreen`}>Orchids</Link>
+              <Link to="/Orchid" className={`hover:text-green hover:bg-lightGreen`}>Orchids</Link>
             </li>
             <li>
               <Link to="/" className={`hover:text-green hover:bg-lightGreen`}>Gifts</Link>
             </li>
             <li>
-              <Link to="/" className={`hover:text-green hover:bg-lightGreen`}>Plant Care</Link>
+              <Link to="/plantcare" className={`hover:text-green hover:bg-lightGreen`}>Plant Care</Link>
             </li>
           </ul>
         </div>

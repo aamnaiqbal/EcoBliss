@@ -4,8 +4,10 @@ import {createBrowserRouter } from 'react-router-dom'
 import App from "../App"
 import Home from "../pages/home/Home"
 import OutdoorPlant from '../pages/categories/OutdoorPlant';
-import PlantDetails from '../components/PlantDetails';
+import ProductDetails from '../components/ProductDetails';
+import Cart from '../components/Cart';
 import OrchidPlant from '../pages/categories/OrchidPlant';
+import PlantCare from '../pages/categories/PlantCare';
 
 const router = createBrowserRouter([
     {
@@ -17,16 +19,33 @@ const router = createBrowserRouter([
           element: <Home/>
         },
         {
-          path: '/outdoorplants',
+          path: '/Outdoor',
           element: <OutdoorPlant/>
         },
         {
-          path: '/orchidplants',
+          path: '/Orchid',
           element: <OrchidPlant/>
         },
         {
-          path: '/plant/:id',
-          element: <PlantDetails/>
+          path: '/plantcare',
+          element: <PlantCare/>
+        },
+        {
+          path: '/Outdoor/:id',
+          element: <ProductDetails/>
+        },
+        {
+          path: '/Orchid/:id',
+          element: <ProductDetails/>
+        },
+        
+        {
+          path: '/plantcare/:id',
+          element: <ProductDetails/>
+        },
+        {
+          path: '/cart',
+          element: <Cart/>
         }
       ]
     },

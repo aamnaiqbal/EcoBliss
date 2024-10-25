@@ -3,11 +3,13 @@ import React from "react";
 import { Autoplay } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
+import 'swiper/css/navigation';
+import { Navigation} from 'swiper/modules';
 
 import Card from "./Card";
 import SlideNavButtons from "./SlideNavButtons";
 
-const Slider = ({items}) => {
+const Slider = ({items, url}) => {
 
   return (
     <>
@@ -23,7 +25,7 @@ const Slider = ({items}) => {
               spaceBetween: 15,
             },
           }}
-          modules={[Autoplay]}
+          modules={[Autoplay, Navigation]}
           navigation
           autoplay={
             {
@@ -34,10 +36,10 @@ const Slider = ({items}) => {
           }
           className={`z-0 relative`}
         >
-          <SlideNavButtons />
+          {/* <SlideNavButtons /> */}
           {items.map((item, i) => (
             <SwiperSlide key={i} className={`mt-20 mb-8 pl-12`}>
-              <Card item={item} />
+              <Card item={item} url={url}/>
             </SwiperSlide>
           ))}
         </Swiper>

@@ -26,7 +26,7 @@
     
     {
         "name": "Petite Sunset Orchid",
-        "size":{"S": 1000} ,
+        "size":{"S": 1000, "M": 3000} ,
         "category": "Orchid",
         "image": "/images/Orchid/img3.jpg",
         "subImg": {
@@ -38,7 +38,7 @@
     
     {
         "name": "White Orchid",
-        "size":{"S": 1200} ,
+        "size":{"S": 1200, "L": 4000} ,
         "category": "Orchid",
         "image": "/images/Orchid/img4.jpg",
         "subImg": {
@@ -51,7 +51,7 @@
     
     {
         "name": "Yellow Orchid",
-        "size":{"S": 600} ,
+        "size":{"S": 600, "M": 1500, "L": 3000} ,
         "category": "Orchid",
         "image": "/images/Orchid/img5.jpg",
         "subImg": {
@@ -63,7 +63,7 @@
     
     {
         "name": "Petite White Orchid",
-        "size":{"S": 800} ,
+        "size":{"S": 800, "M": 2000} ,
         "category": "Orchid",
         "image": "/images/Orchid/img6.jpg",
         "subImg": {
@@ -76,7 +76,7 @@
     
     {
         "name": "Blue Watercolor Orchid",
-        "size":{"S": 1500} ,
+        "size":{"S": 1500, "M": 3000, "L": 4000} ,
         "category": "Orchid",
         "image": "/images/Orchid/img7.jpg",
         "subImg": {
@@ -88,7 +88,7 @@
     
     {
         "name": "Pink Watercolor Orchid",
-        "size":{"S": 2500} ,
+        "size":{"S": 2500, "M": 4000, "L": 5000} ,
         "category": "Orchid",
         "image": "/images/Orchid/img8.jpg",
         "subImg": {
@@ -100,13 +100,13 @@
     
     {
         "name": "Petite Pink Orchid",
-        "size":{"S": 1800} ,
+        "size":{"S": 500, "M": 1500, "L": 3000} ,
         "category": "Orchid",
         "image": "/images/Orchid/img9.jpg",
         "subImg": {
           "subImg1": "/images/Orchid/img9-1.jpg",
           "subImg2": "/images/Orchid/img9-2.jpg"
         },
-        "description": ""
+        "description": "The Petite Pink Orchid is a delicate, charming flower known for its soft pink petals and elegant form. Its compact size makes it a perfect choice for indoor decor or small spaces. This orchid symbolizes beauty and grace, often blooming with intricate details and vibrant hues that add a touch of sophistication to any setting. "
     }
     ]

@@ -1,24 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import Card from "./Card";
-import CustomPagination from "./customPagination";
+import CustomPagination from "./CustomPagination";
+import { PlantContext } from "../../context/PlantContext";
 
 const OutdoorPlant = () => {
-  const [outdoorPlants, setOutdoorPlants] = useState([]);
+  const {outdoorPlants}=useContext(PlantContext)
   const [currentPage, setCurrentPage]= useState(1);
-  const [rowsPerPage, setRowsPerPage]= useState(12);
+  const [rowsPerPage, setRowsPerPage]= useState(8);
   const indexOfLastItem= currentPage * rowsPerPage;
   const indexOfFirstItem= indexOfLastItem-rowsPerPage;
   const currentItems= outdoorPlants?.slice(indexOfFirstItem, indexOfLastItem);
   const totalPages= Math.ceil(outdoorPlants?.length/rowsPerPage)
-
-  useEffect(() => {
-    fetch("./outdoor.json")
-      .then((res) => res.json())
-      .then((data) => {
-        // console.log(data);
-        setOutdoorPlants(data);
-      });
-  }, []);
   return (
     <div
       className={`max-w-screen-2xl container mx-auto xl:px-16 pt-48 `}
@@ -33,7 +25,7 @@ const OutdoorPlant = () => {
         color, freshness, and life to your surroundings.
       </p>
       <div className=" flex flex-wrap gap-x-5 gap-y-20 px-auto my-12">
-        {currentItems.map((item, i)=> <Card item={item} key={i}/>)}
+        {currentItems.map((item, i)=> <Card item={item} key={i} url={"Outdoor"}/>)}
       </div>
       <CustomPagination setCurrentPage={setCurrentPage} currentPage={currentPage} totalPages={totalPages}/>
     </div>

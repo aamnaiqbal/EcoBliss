@@ -143,6 +143,33 @@
     "image": "/images/home/OutdoorPlants/img4.png",
     "price": 7000,
     "category": "Outdoor Plant"
+  },
+
+
+
+  {
+    "name": "Zigzag Planter",
+    "price": 3000,
+    "image": "/images/home/PlantCare/img1.png",
+    "description": ""
+  },
+  {
+    "name": "Ceramicclanter",
+    "price": 3000,
+    "image": "/images/home/PlantCare/img2.png",
+    "description": ""
+  },
+  {
+    "name": "Majestic Pot",
+    "price": 1500,
+    "image": "/images/home/PlantCare/img3.png",
+    "description": ""
+  },
+  {
+    "name": "Polka Dots",
+    "price": 3000,
+    "image": "/images/home/PlantCare/img4.png",
+    "description": ""
   }
 ]
 

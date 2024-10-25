@@ -1,18 +1,16 @@
 import React, { useContext, useEffect, useState } from "react";
 import Card from "./Card";
 import CustomPagination from "./CustomPagination";
-import { PlantContext} from "../../context/PlantContext"
+import { PlantCareContext } from "../../context/plantCareContext";
 
-
-const OrchidPlant = () => {
-  const {orchidPlants}=useContext(PlantContext)
+const PlantCare = () => {
+  const {plantCareProducts}=useContext(PlantCareContext)
   const [currentPage, setCurrentPage]= useState(1);
-  const [rowsPerPage, setRowsPerPage]= useState(8);
+  const [rowsPerPage, setRowsPerPage]= useState(12);
   const indexOfLastItem= currentPage * rowsPerPage;
   const indexOfFirstItem= indexOfLastItem-rowsPerPage;
-  const currentItems= orchidPlants?.slice(indexOfFirstItem, indexOfLastItem);
-  const totalPages= Math.ceil(orchidPlants?.length/rowsPerPage)
-
+  const currentItems= plantCareProducts?.slice(indexOfFirstItem, indexOfLastItem);
+  const totalPages= Math.ceil(plantCareProducts?.length/rowsPerPage)
 
 
   return (
@@ -20,20 +18,17 @@ const OrchidPlant = () => {
       className={`max-w-screen-2xl container mx-auto xl:px-16 pt-48 `}
     >
       <h1 className="marcellus text-lightGreen font-medium text-5xl mb-4">
-        Orchid Plants
+      Plant Care Accessories
       </h1>
       <p className="petrona text-lg font-normal text-grey">
-        Transform your outdoor space into a lush oasis with our selection of
-        hardy and vibrant outdoor plants. From blooming flowers to resilient
-        shrubs, our collection is designed to thrive in any garden, adding
-        color, freshness, and life to your surroundings.
+      From organic potting mix to all-natural fertilizer, shop essentials every plant parent needs.
       </p>
       <div className=" flex flex-wrap gap-x-5 gap-y-20 px-auto my-12">
-        {currentItems.map((item, i)=> <Card item={item} key={i} url={"Orchid"}/>)}
+        {currentItems.map((item, i)=> <Card item={item} key={i} url={"plantcare"}/>)}
       </div>
       <CustomPagination setCurrentPage={setCurrentPage} currentPage={currentPage} totalPages={totalPages}/>
     </div>
   );
 };
 
-export default OrchidPlant;
+export default PlantCare;
