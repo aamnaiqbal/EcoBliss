@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import Card from "./Card";
 import CustomPagination from "./CustomPagination";
-import { PlantContext} from "../../context/PlantContext"
+import { PlantContext } from "../../store/plantContext";
 
 
 const OrchidPlant = () => {

@@ -1,12 +1,13 @@
 import React from "react";
 import { IoPersonCircleSharp } from "react-icons/io5";
 import { Link } from "react-router-dom";
+import Logo from "/images/Logo.png"
 
 const Navbar = () => {
   return (
     <div className={`fixed top-0 left-0 right-0 bg-slate-400 z-20`}>
       <header
-        className={`max-w-screen-2xl container mx-auto border-b-[2px] border-black marcellus font-medium`}
+        className={`max-w-screen-2xl container mx-auto border-b-[2px] border-[#76767642] marcellus font-medium`}
       >
         <div className="navbar bg-base-100 xl:px-16">
           <div className="navbar-start">
@@ -69,7 +70,7 @@ const Navbar = () => {
                 </li>
               </ul>
             </div>
-            <a className="text-xl">EcoBliss</a>
+            <Link to="/" className="text-xl"><img src={Logo} alt="EcoBliss" className="h-12"/></Link>
           </div>
           <div className="navbar-end">
             <ul className="menu menu-horizontal px-1 hidden lg:flex text-lg">
@@ -82,12 +83,15 @@ const Navbar = () => {
               <li>
                 <Link to="/cart">Cart</Link>
               </li>
+              <li>
+                <Link to="/user/login">Login</Link>
+              </li>
             </ul>
-            <IoPersonCircleSharp size={30} className={`mx-4 hover:cursor-pointer`} />
+            {/* <IoPersonCircleSharp size={30} className={`mx-4 hover:cursor-pointer`} /> */}
           </div>
         </div>
       </header>
-      <header className={`max-w-screen-2xl container mx-auto marcellus font-medium border-b-[2px] border-grey`}>
+      <header className={`max-w-screen-2xl container mx-auto marcellus font-medium border-b-[2px] border-[#76767642]`}>
         <div className="navbar bg-base-100 xl:px-16 hidden lg:flex">
           <ul className="menu menu-horizontal px-1 gap-28 mx-auto text-lg">
             <li>

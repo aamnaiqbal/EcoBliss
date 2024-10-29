@@ -3,7 +3,7 @@ import axios from 'axios'
 
 export const PlantContext=createContext();
 
-export const PlantContextProvider=({children})=>{
+export const PlantProvider=({children})=>{
     const [orchidPlants, setOrchidPlants]= useState([])
     const [outdoorPlants, setOutdoorPlants]= useState([])
     const [housePlants, setHousePlants]= useState([])
@@ -11,6 +11,7 @@ export const PlantContextProvider=({children})=>{
     useEffect(()=>{
         const fetchData=async()=>{
             try{
+                console.log("Plant data is fetched")
                 const response= await axios.get("http://localhost:8000/api/v1/plant")
                 const data=response.data.data.plants;
                 setOutdoorPlants(data.filter((item)=>item.category==='Outdoor'))

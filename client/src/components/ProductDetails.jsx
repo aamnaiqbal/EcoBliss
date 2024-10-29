@@ -3,18 +3,24 @@ import { TbLetterSSmall, TbLetterLSmall, TbLetterMSmall } from "react-icons/tb";
 import Slider from "./Slider";
 import axios from "axios";
 import { useLocation, useParams } from "react-router-dom";
-import { PlantCareContext } from "../context/plantCareContext";
-import { PlantContext } from "../context/PlantContext";
+import { PlantCareContext } from "../store/plantCareContext";
+import { PlantContext } from "../store/PlantContext";
+import { CartContext } from "../store/CartContext";
+import { AuthContext } from "../store/AuthContext";
 
 const productDetails = () => {
   const {plantCareProducts}=useContext(PlantCareContext);
   const {orchidPlants, housePlants, outdoorPlants}=useContext(PlantContext);
-  let [category, setCategory] = useState([]);
+  const {addToCart}= useContext(CartContext)
+  const { auth } = useContext(AuthContext);
 
+  let [category, setCategory] = useState([]);
   const { pathname } = useLocation();
+  const productType= pathname.includes('plantcare')? 'PlantCare': 'Plant'
+
   const { id } = useParams();
   const [productDetails, setProductDetails] = useState([]);
-  const [selectedSize, setSelectedSize] = useState("S");
+  const [selectedSize, setSelectedSize] = useState(null);
   const [price, setPrice] = useState(
     productDetails.size?.S || (productDetails.price && productDetails.price)
   );
@@ -33,6 +39,10 @@ const productDetails = () => {
       setPrice(productDetails.size.L);
     }
   };
+
+  useEffect(()=>{
+    console.log("Hello")
+  }, [])
 
   useEffect(() => {
     const fetchData = async () => {
@@ -53,7 +63,7 @@ const productDetails = () => {
     
     
   }, [id, pathname]);
-
+  // console.log(productDetails)
   useEffect(()=>{
     if(pathname.includes("Outdoor")) setCategory(outdoorPlants)
     else if(pathname.includes('Orchid')) setCategory(orchidPlants)
@@ -67,6 +77,8 @@ const productDetails = () => {
         productDetails.size?.S || (productDetails.price && productDetails.price)
       );
       setImg(productDetails.image)
+      setSelectedSize(productDetails.size && "S");
+      console.log("product Details", productDetails)
     }
   }, [productDetails]);
   return (
@@ -194,6 +206,7 @@ const productDetails = () => {
           </div>
           <button
             className={`btn  text-green text-base bg-lightGreen  hover:bg-[#3cb371] hover:text-white outline-none border-0 w-full mt-8`}
+            onClick={()=>addToCart(auth.id, productDetails._id, productType, quantity, selectedSize, productDetails.image, productDetails.name,productDetails.size,  productDetails.price )}
           >
             Add to Cart
           </button>

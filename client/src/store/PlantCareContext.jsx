@@ -3,7 +3,7 @@ import { createContext, useEffect, useState } from "react";
 
 export const PlantCareContext = createContext();
 
-export const PlantCareContextProvider = ({ children }) => {
+export const PlantCareProvider = ({ children }) => {
   const [plantCareProducts, setPlantCareProducts] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
