@@ -78,7 +78,7 @@ const productDetails = () => {
       );
       setImg(productDetails.image)
       setSelectedSize(productDetails.size && "S");
-      console.log("product Details", productDetails)
+      // console.log("product Details", productDetails)
     }
   }, [productDetails]);
   return (
@@ -206,7 +206,7 @@ const productDetails = () => {
           </div>
           <button
             className={`btn  text-green text-base bg-lightGreen  hover:bg-[#3cb371] hover:text-white outline-none border-0 w-full mt-8`}
-            onClick={()=>addToCart(auth.id, productDetails._id, productType, quantity, selectedSize, productDetails.image, productDetails.name,productDetails.size,  productDetails.price )}
+            onClick={()=>addToCart(auth?.id, productDetails._id, productType, quantity, selectedSize, productDetails.image, productDetails.name,productDetails.size,  productDetails.price )}
           >
             Add to Cart
           </button>

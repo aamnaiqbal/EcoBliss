@@ -21,13 +21,13 @@ const Card = ({ item, url }) => {
               only
             </p>
           </div>
-          <div className="card-actions bg-slate-400">
+          {/* <div className="card-actions bg-slate-400">
             <button
               className={`btn  text-green text-base bg-lightGreen  hover:bg-[#3cb371] hover:text-white outline-none border-0 w-full`}
             >
               Add to Cart
             </button>
-          </div>
+          </div> */}
         </div>
       </div>
     </Link>

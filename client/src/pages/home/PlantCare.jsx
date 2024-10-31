@@ -46,7 +46,7 @@ const PlantCare = () => {
           }
           className={`z-0 relative`}
         >
-          <SlideNavButtons />
+          {/* <SlideNavButtons /> */}
           {plants.map((item, i) => (
             <SwiperSlide key={i} className={`mt-20 mb-8 pl-12`}>
               <Card item={item} />

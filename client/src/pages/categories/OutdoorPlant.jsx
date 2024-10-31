@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import Card from "./Card";
 import CustomPagination from "./CustomPagination";
-import { PlantContext } from "../../store/plantContext";
+import { PlantContext } from "../../store/PlantContext";
 
 const OutdoorPlant = () => {
   const {outdoorPlants}=useContext(PlantContext)

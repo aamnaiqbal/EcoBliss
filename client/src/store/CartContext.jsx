@@ -2,6 +2,10 @@ import axios from "axios";
 import { createContext, useContext, useEffect, useState } from "react";
 import { AuthContext } from "./AuthContext";
 
+import {  toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from "react-router-dom";
+
 export const CartContext = createContext({
   cartItems: [],
   setCartItems: () => {},
@@ -12,7 +16,9 @@ export const CartContext = createContext({
 
 const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([]);
+  const [subtotal, setSubtotal]= useState(0)
   const { auth } = useContext(AuthContext);
+  const navigate= useNavigate()
 
   useEffect(() => {
     if (auth) {
@@ -47,7 +53,13 @@ const CartProvider = ({ children }) => {
     price
   ) => {
     const req = { customerId, productId, productType, quantity, size: selectedSize };
-    console.log("selected SIze", selectedSize)
+    if(!auth?.id){
+      toast.error("Please login to add item to the cart.")
+      setTimeout(()=>{
+        return navigate("/user/login")
+      }, 1700)
+    }
+    // console.log("selected SIze", selectedSize)
     try {
       const response = await axios.post(
         "http://localhost:8000/api/v1/cart/add",
@@ -85,7 +97,7 @@ const CartProvider = ({ children }) => {
             }
           }
       }
-      console.log("CartItems: ", cartItems);
+      // console.log("CartItems: ", cartItems);
     } catch (err) {
       console.log("There is some error adding data to the cart.", err);
     }
@@ -127,6 +139,8 @@ const CartProvider = ({ children }) => {
         setCartItems,
         addToCart,
         deleteCartItem,
+        subtotal,
+        setSubtotal
       }}
     >
       {children}

@@ -8,6 +8,8 @@ import { PlantCareProvider } from "./store/plantCareContext";
 import CartProvider from "./store/CartContext";
 import ScrollToTop from "./components/ScrollToTop";
 import { AuthProvider } from "./store/AuthContext";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   return (
@@ -17,6 +19,19 @@ function App() {
         <PlantProvider>
           <PlantCareProvider>
             <CartProvider>
+              <ToastContainer
+                position="top-center"
+                autoClose={1000}
+                hideProgressBar={true}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="colored"
+                transition:Bounce
+              />
               <Outlet />
             </CartProvider>
           </PlantCareProvider>

@@ -6,7 +6,8 @@ import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../store/AuthContext";
 import {Link} from "react-router-dom"
 
-import Bg from "/images/loginBg.jpg";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import Cookies from "universal-cookie";
 import { jwtDecode } from "jwt-decode";
@@ -42,15 +43,17 @@ export default function Signup() {
         cookies.set("jwt_authorization", token, {
           expires: new Date(decoded.exp * 1000),
         });
-        alert("Registeration successful");
+        toast.success("Registeration successful");
         console.log(auth);
         navigate("/");
-      } else {
-        alert(response.data.message);
-      }
-    } catch (e) {
-      console.error("There was an error inserting the data!", e);
-      alert("There was an error inserting the data!");
+      } 
+    } catch (err) {
+      console.error("There was an error inserting the data!", err);
+      if(err.response.data.message.includes("E11000 duplicate key error")) return toast.error("An account with this email already exists.")
+      // alert("There was an error inserting the data!");
+      let formattedMessage = err.response.data.message
+    .replace("Customer validation failed:", "");
+      toast.error(formattedMessage)
     }
   };
 
@@ -84,6 +87,7 @@ export default function Signup() {
             name="password"
             ref={password}
             required
+            minLength={8}
             className="p-[10px] border border-lightGreen outline-none rounded-md"
           />
           <input
@@ -92,6 +96,7 @@ export default function Signup() {
             name="password"
             ref={confirmPassword}
             required
+            minLength={8}
             className="p-[10px] border border-lightGreen outline-none rounded-md"
           />
           <div className="mx-auto ">

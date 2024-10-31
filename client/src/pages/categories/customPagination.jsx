@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 const CustomPagination = ({ currentPage, setCurrentPage, totalPages }) => {
+  useEffect(()=>{
+    window.scrollTo(0, 0);
+  }, [currentPage])
   return (
     <div className="join flex justify-center my-8 items-center">
       <button

@@ -15,23 +15,10 @@
   height: 100%;
   background-image: url("/images/loginBg.jpg");
   background-size: cover;
-  opacity: 0.6; /* Adjust the opacity for the background */
-  z-index: -1; /* Ensure it stays behind any content */
+  opacity: 0.6; 
+  z-index: -1; 
 }
 
-/* /* Targeting the placeholder text */
-input::placeholder {
-  color: lightgreen; /* Replace with desired color */
-  opacity: 1; /* Set to 1 to make the color fully opaque */
-}
 
-/* Additional support for older browsers */
-input::-webkit-input-placeholder {
-  color: lightgreen;
-}
-
-input:-ms-input-placeholder {
-  color: lightgreen;
-}
  
 

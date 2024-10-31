@@ -6,13 +6,16 @@ import { FaUser, FaLock } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../store/AuthContext";
 
+import {  toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 
 import Cookies from "universal-cookie";
 import {jwtDecode } from 'jwt-decode'
 
 const Login = () => {
-  const { setAuth, auth } = useContext(AuthContext);
+  const { setAuth, auth, lastPage, setLastPage } = useContext(AuthContext);
   const cookies = new Cookies(); //initializing the cookies
 
   const email = useRef(null);
@@ -30,30 +33,32 @@ const Login = () => {
           password: password.current.value,
         }
       );
+      console.log(response)
 
       if (response.data.status === "success") {
         const token = response.data.token;
         const decoded = jwtDecode(token);
-        console.log(decoded)
+        // console.log(decoded)
         setAuth(decoded)
         
         //setCookie
         cookies.set('jwt_authorization', token, {
           expires: new Date(decoded.exp*1000)
         })
-        alert("Login successful");
-        console.log(auth);
-        navigate("/");
-      } else {
-        alert(response.data.message);
-      }
+        // alert("Login successful");
+        toast.success("Login Successful")
+        // console.log(auth);
+        navigate(lastPage || '/');
+        setLastPage(null)
+      } 
+      
     } catch (error) {
-      console.error("Error logging in:", error);
+      toast.error(error.response.data.message)
+      // console.error("Error logging in:", error);
       // alert("An error occurred while logging in. Please try again.");
     }
   };
   return (  <div className={styles.backgroundImageContainer}>
-    {/* Your sign-up form or other content goes here */}
     <div className="bg-[#FFFFFFBA] flex justify-center items-center flex-col mx-auto my-24 py-12 rounded-2xl petrona w-[60%]">
       <h2 className="text-4xl font-semibold mb-8">Login</h2>
       <form onSubmit={handleSubmit} className="w-[60%]">

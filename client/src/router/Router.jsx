@@ -11,6 +11,8 @@ import PlantCare from "../pages/categories/PlantCare";
 import Login from "../components/Login/Login";
 import Signup from "../components/Signup/Signup";
 import Index from "../layout/Index";
+import Checkout from "../pages/checkout/Checkout";
+import AboutUs from "../pages/aboutus/AboutUs";
 
 const router = createBrowserRouter([
   {
@@ -54,14 +56,24 @@ const router = createBrowserRouter([
             path: "/cart",
             element: <Cart />,
           },
+          {
+            path: "/checkout",
+            element: <Checkout />,
+          },
+          {
+            path: "/about",
+            element: <AboutUs />,
+          },
         ],
-      },{
+      },
+      {
         path: "/user/login",
-        element: <Login/>
-      },{
+        element: <Login />,
+      },
+      {
         path: "/user/signup",
-        element: <Signup/>
-      }
+        element: <Signup />,
+      },
     ],
   },
 ]);

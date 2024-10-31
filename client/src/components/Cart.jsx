@@ -2,11 +2,11 @@ import React, { useContext, useEffect, useState } from "react";
 import { CartContext } from "../store/CartContext";
 import { AuthContext } from "../store/AuthContext";
 import CartItem from "./CartItem";
+import { Link } from "react-router-dom";
 
 const Cart = () => {
-  const { fetchCartItems, cartItems } = useContext(CartContext);
+  const { fetchCartItems, cartItems , subtotal, setSubtotal} = useContext(CartContext);
   const { auth } = useContext(AuthContext);
-  const [subtotal, setSubtotal]= useState(0)
   
   // useEffect(() => {
   //   if (auth?.id) {
@@ -25,7 +25,7 @@ const Cart = () => {
     setSubtotal(newSubtotal);
   }, [cartItems]);
   return (
-    <div className="max-w-screen-2xl container mx-auto xl:px-16 pt-44">
+    <div className="max-w-screen-2xl container mx-auto xl:px-16 pt-44 mb-8">
       <h2 className="marcellus text-3xl font-md">Cart</h2>
       <div className="">
         {cartItems.map((item, i) => (
@@ -37,11 +37,11 @@ const Cart = () => {
           <h4 className=" text-2xl font-md">Subtotal</h4>
           <p className="text-2xl font-md">Rs. {subtotal}</p>
         </div>
-        <button
+        <Link to="/checkout"><button
           className={`btn  text-green text-lg bg-lightGreen  hover:bg-[#3cb371] hover:text-white outline-none border-0 w-full mt-8 `}
         >
           Check Out
-        </button>
+        </button></Link>
       </div>
     </div>
   );
