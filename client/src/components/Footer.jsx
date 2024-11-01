@@ -2,12 +2,12 @@ import React from "react";
 import Logo from "/images/Logo.png"
 const Footer = () => {
   return (
-    <footer className="footer bg-bgSky petrona py-10 max-w-screen-2xl container mx-auto xl:px-16 font-medium text-md ">
+    <footer className="footer bg-bgSky petrona py-10 max-w-screen-2xl container mx-auto xl:px-16 font-medium sm:text-md text-lg px-4">
       <aside>
         <p className="marcellus text-lg">
-        <img src={Logo} alt="EcoBliss" className="h-20"/>
+        <img src={Logo} alt="EcoBliss" className="md:h-20 h-16"/>
           {/* <br /> */}
-          <span className="petrona text-sm italic">Your favourite online nursery since 1992</span>
+          <span className="petrona sm:text-sm text-md italic">Your favourite online nursery since 1992</span>
         </p>
       </aside>
       <nav>

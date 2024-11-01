@@ -1,12 +1,11 @@
 import React, { useContext } from "react";
 import { IoPersonCircleSharp } from "react-icons/io5";
-import { Link, useLocation} from "react-router-dom";
-import Logo from "/images/Logo.png"
+import { Link, useLocation } from "react-router-dom";
+import Logo from "/images/Logo.png";
 import { AuthContext } from "../store/AuthContext";
 
-
 const Navbar = () => {
-  const {auth, handleLogout, setLastPage}=useContext(AuthContext);
+  const { auth, handleLogout, setLastPage } = useContext(AuthContext);
   const { pathname } = useLocation();
 
   return (
@@ -45,37 +44,57 @@ const Navbar = () => {
                   <Link to="/">Home</Link>
                 </li>
                 <li>
-                  <Link to="/">About Us</Link>
+                  <Link to="/about">About Us</Link>
                 </li>
                 <li>
                   <Link to="/cart">Cart</Link>
                 </li>
-                {/* <li>
-                  <Link to="/">Login</Link>
-                </li> */}
+                {auth ? (
+                  <li>
+                    <Link
+                      to="/"
+                      onClick={() => {
+                        handleLogout();
+                      }}
+                    >
+                      Logout
+                    </Link>
+                  </li>
+                ) : (
+                  <li>
+                    <Link
+                      to="/user/login"
+                      onClick={() => setLastPage(pathname)}
+                    >
+                      Login
+                    </Link>
+                  </li>
+                )}
                 <li>
-                  <a>Categories</a>
+                  <Link>Categories</Link>
                   <ul className="p-2">
                     <li>
-                      <a>Houseplants</a>
+                      <Link to="/HousePlants">Houseplants</Link>
                     </li>
                     <li>
-                      <a>Outdoor</a>
+                      <Link to="/Outdoor">Outdoor</Link>
                     </li>
                     <li>
-                      <a>Orchids</a>
+                      <Link to="/Orchid">Orchids</Link>
                     </li>
                     <li>
-                      <a>Gifts</a>
+                      <Link>Gifts</Link>
                     </li>
                     <li>
-                      <a>Plant Care</a>
+                      <Link to="/plantcare">Plant Care</Link>
                     </li>
                   </ul>
                 </li>
               </ul>
             </div>
-            <Link to="/" className="text-xl"><img src={Logo} alt="EcoBliss" className="h-12"/></Link>
+            <Link to="/" className="text-xl">
+              <img src={Logo} alt="EcoBliss" className="h-12" />
+            </Link>
           </div>
           <div className="navbar-end">
             <ul className="menu menu-horizontal px-1 hidden lg:flex text-lg">
@@ -88,33 +107,70 @@ const Navbar = () => {
               <li>
                 <Link to="/cart">Cart</Link>
               </li>
-              {auth? <li>
-                <Link to="/" onClick={()=>{handleLogout()}}>Logout</Link>
-              </li>: <li>
-                <Link to="/user/login" onClick={()=>setLastPage(pathname)}>Login</Link>
-              </li>}
+              {auth ? (
+                <li>
+                  <Link
+                    to="/"
+                    onClick={() => {
+                      handleLogout();
+                    }}
+                  >
+                    Logout
+                  </Link>
+                </li>
+              ) : (
+                <li>
+                  <Link to="/user/login" onClick={() => setLastPage(pathname)}>
+                    Login
+                  </Link>
+                </li>
+              )}
             </ul>
             {/* <IoPersonCircleSharp size={30} className={`mx-4 hover:cursor-pointer`} /> */}
           </div>
         </div>
       </header>
-      <header className={`max-w-screen-2xl container mx-auto marcellus font-medium border-b-[2px] border-[#76767642]`}>
+      <header
+        className={`max-w-screen-2xl container mx-auto marcellus font-medium border-b-[2px] border-[#76767642]`}
+      >
         <div className="navbar bg-base-100 xl:px-16 hidden lg:flex">
           <ul className="menu menu-horizontal px-1 gap-28 mx-auto text-lg">
             <li>
-              <Link to="/HousePlants" className={`hover:text-green hover:bg-lightGreen`}>Houseplants</Link>
+              <Link
+                to="/HousePlants"
+                className={`hover:text-green hover:bg-lightGreen`}
+              >
+                Houseplants
+              </Link>
             </li>
             <li>
-              <Link to="/Outdoor" className={`hover:text-green hover:bg-lightGreen`}>Outdoor</Link>
+              <Link
+                to="/Outdoor"
+                className={`hover:text-green hover:bg-lightGreen`}
+              >
+                Outdoor
+              </Link>
             </li>
             <li>
-              <Link to="/Orchid" className={`hover:text-green hover:bg-lightGreen`}>Orchids</Link>
+              <Link
+                to="/Orchid"
+                className={`hover:text-green hover:bg-lightGreen`}
+              >
+                Orchids
+              </Link>
             </li>
             <li>
-              <Link to="/" className={`hover:text-green hover:bg-lightGreen`}>Gifts</Link>
+              <Link to="/" className={`hover:text-green hover:bg-lightGreen`}>
+                Gifts
+              </Link>
             </li>
             <li>
-              <Link to="/plantcare" className={`hover:text-green hover:bg-lightGreen`}>Plant Care</Link>
+              <Link
+                to="/plantcare"
+                className={`hover:text-green hover:bg-lightGreen`}
+              >
+                Plant Care
+              </Link>
             </li>
           </ul>
         </div>

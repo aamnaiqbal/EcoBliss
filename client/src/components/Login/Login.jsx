@@ -59,9 +59,9 @@ const Login = () => {
     }
   };
   return (  <div className={styles.backgroundImageContainer}>
-    <div className="bg-[#FFFFFFBA] flex justify-center items-center flex-col mx-auto my-24 py-12 rounded-2xl petrona w-[60%]">
+    <div className="bg-[#FFFFFFBA] flex justify-center items-center flex-col mx-auto lg:my-24 my-40  py-12 rounded-2xl petrona md:w-[60%]">
       <h2 className="text-4xl font-semibold mb-8">Login</h2>
-      <form onSubmit={handleSubmit} className="w-[60%]">
+      <form onSubmit={handleSubmit} className="lg:w-[60%] w-[80%]">
       <div className="flex flex-col gap-8  ">
         
         <input

@@ -25,14 +25,14 @@ const Cart = () => {
     setSubtotal(newSubtotal);
   }, [cartItems]);
   return (
-    <div className="max-w-screen-2xl container mx-auto xl:px-16 pt-44 mb-8">
+    <div className="max-w-screen-2xl container mx-auto xl:px-24 md:px-16 px-4 lg:pt-48 pt-24  mb-8">
       <h2 className="marcellus text-3xl font-md">Cart</h2>
       {auth? <div className="">
         {cartItems.map((item, i) => (
           <CartItem item={item} setSubtotal={setSubtotal} subtotal={subtotal} key={`${item.productId._id}-${item.size}`}/> 
         ))}
-      </div>: <div className="text-xl md: my-28 text-center text-grey">Please login to see your cart items.</div>}
-      {cartItems.length===0 && auth && <div className="text-xl md: my-28 text-center text-grey"><p>Please add items to your cart.</p><p>Happy Shopping.</p> </div>}
+      </div>: <div className="text-xl my-28 text-center text-grey">Please login to see your cart items.</div>}
+      {cartItems.length===0 && auth && <div className="text-xl my-28 text-center text-grey"><p>Please add items to your cart.</p><p>Happy Shopping.</p> </div>}
       <div className="px-12">
         <div className="flex justify-between petrona">
           <h4 className=" text-2xl font-md">Subtotal</h4>
