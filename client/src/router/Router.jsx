@@ -7,12 +7,14 @@ import OutdoorPlant from "../pages/categories/OutdoorPlant";
 import ProductDetails from "../components/ProductDetails";
 import Cart from "../components/Cart";
 import OrchidPlant from "../pages/categories/OrchidPlant";
+import HousePlant from "../pages/categories/HousePlant";
 import PlantCare from "../pages/categories/PlantCare";
 import Login from "../components/Login/Login";
 import Signup from "../components/Signup/Signup";
 import Index from "../layout/Index";
 import Checkout from "../pages/checkout/Checkout";
 import AboutUs from "../pages/aboutus/AboutUs";
+import OrderMessage from "../pages/checkout/OrderMessage";
 
 const router = createBrowserRouter([
   {
@@ -28,6 +30,10 @@ const router = createBrowserRouter([
             element: <Home />,
           },
           {
+            path: "/HousePlants",
+            element: <HousePlant />,
+          },
+          {
             path: "/Outdoor",
             element: <OutdoorPlant />,
           },
@@ -38,6 +44,10 @@ const router = createBrowserRouter([
           {
             path: "/plantcare",
             element: <PlantCare />,
+          },
+          {
+            path: "/HousePlants/:id",
+            element: <ProductDetails />,
           },
           {
             path: "/Outdoor/:id",
@@ -59,6 +69,10 @@ const router = createBrowserRouter([
           {
             path: "/checkout",
             element: <Checkout />,
+          },
+          {
+            path: "/checkout/message",
+            element: <OrderMessage/>
           },
           {
             path: "/about",

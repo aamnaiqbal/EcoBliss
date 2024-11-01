@@ -102,7 +102,7 @@ const Navbar = () => {
         <div className="navbar bg-base-100 xl:px-16 hidden lg:flex">
           <ul className="menu menu-horizontal px-1 gap-28 mx-auto text-lg">
             <li>
-              <Link to="/" className={`hover:text-green hover:bg-lightGreen`}>Houseplants</Link>
+              <Link to="/HousePlants" className={`hover:text-green hover:bg-lightGreen`}>Houseplants</Link>
             </li>
             <li>
               <Link to="/Outdoor" className={`hover:text-green hover:bg-lightGreen`}>Outdoor</Link>

@@ -8,7 +8,7 @@ const Card = ({ item, url }) => {
         <figure>
           <img
             src={item.image}
-            className={`hover:scale-105 transition-all duration-300 md:h-72 object-cover`}
+            className={`hover:scale-105 transition-all duration-300 md:h-72  w-60 object-cover`}
           />
         </figure>
       </Link>

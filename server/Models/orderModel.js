@@ -33,7 +33,7 @@ const orderSchema= new mongoose.Schema({
         }
     ],
     shippingCharges:{
-        type: Numer
+        type: Number
     },
     totalAmount:{
         type: Number,

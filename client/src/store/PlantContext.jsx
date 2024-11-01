@@ -7,6 +7,7 @@ export const PlantProvider=({children})=>{
     const [orchidPlants, setOrchidPlants]= useState([])
     const [outdoorPlants, setOutdoorPlants]= useState([])
     const [housePlants, setHousePlants]= useState([])
+    const [popularPlants, setPopularPlants]= useState([])
 
     useEffect(()=>{
         const fetchData=async()=>{
@@ -16,7 +17,8 @@ export const PlantProvider=({children})=>{
                 const data=response.data.data.plants;
                 setOutdoorPlants(data.filter((item)=>item.category==='Outdoor'))
                 setOrchidPlants(data.filter((item)=>item.category==="Orchid"))
-                setHousePlants(data.filter((item)=>item.category==="House"))
+                setHousePlants(data.filter((item)=>item.category==="HousePlants"))
+                setPopularPlants(data.filter((item)=>item.popular))
 
             }
             catch(err){
@@ -25,6 +27,6 @@ export const PlantProvider=({children})=>{
         }
         fetchData();
     }, [])
-    return <PlantContext.Provider value={{orchidPlants, housePlants, outdoorPlants}}>{children}</PlantContext.Provider>
+    return <PlantContext.Provider value={{orchidPlants, housePlants, outdoorPlants, popularPlants}}>{children}</PlantContext.Provider>
 
 }

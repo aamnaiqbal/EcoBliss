@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import Card from "./Card";
+import Card from "../../components/Card";
 import CustomPagination from "./CustomPagination";
 import { PlantContext } from "../../store/PlantContext";
 

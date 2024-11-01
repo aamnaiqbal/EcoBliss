@@ -9,11 +9,12 @@ import { Navigation} from 'swiper/modules';
 import Card from "./Card";
 import SlideNavButtons from "./SlideNavButtons";
 
+
 const Slider = ({items, url}) => {
 
   return (
     <>
-      <div className="max-w-screen-2xl container mx-auto px-4 relative ">
+      <div className="max-w-screen-2xl container mx-auto relative ">
         <Swiper
           breakpoints={{
             340: {
@@ -34,11 +35,11 @@ const Slider = ({items, url}) => {
               pauseOnMouseEnter: true,
             }
           }
-          className={`z-0 relative`}
+          className={`z-0 relative px-4`}
         >
           {/* <SlideNavButtons /> */}
           {items.map((item, i) => (
-            <SwiperSlide key={i} className={`mt-20 mb-8 pl-12`}>
+            <SwiperSlide key={i} className={`mt-8 mb-8 px-[42px] `}>
               <Card item={item} url={url}/>
             </SwiperSlide>
           ))}

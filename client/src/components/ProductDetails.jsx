@@ -67,7 +67,7 @@ const productDetails = () => {
   useEffect(()=>{
     if(pathname.includes("Outdoor")) setCategory(outdoorPlants)
     else if(pathname.includes('Orchid')) setCategory(orchidPlants)
-    else if(pathname.includes("Houseplants")) setCategory(housePlants)
+    else if(pathname.includes("HousePlants")) setCategory(housePlants)
     else setCategory(plantCareProducts)
   }, [pathname, outdoorPlants, orchidPlants, housePlants, plantCareProducts])
 
@@ -205,7 +205,7 @@ const productDetails = () => {
             </div>
           </div>
           <button
-            className={`btn  text-green text-base bg-lightGreen  hover:bg-[#3cb371] hover:text-white outline-none border-0 w-full mt-8`}
+            className={`btn  text-white text-base bg-lightGreen  hover:bg-lightestGreen hover:text-white outline-none border-0 w-full mt-8`}
             onClick={()=>addToCart(auth?.id, productDetails._id, productType, quantity, selectedSize, productDetails.image, productDetails.name,productDetails.size,  productDetails.price )}
           >
             Add to Cart
