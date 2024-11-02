@@ -16,8 +16,8 @@ const AboutUs = () => {
       <div className={styles.videooverlay}></div>
       <div className={styles.content}>
         <h2 className="marcellus text-4xl text-center mb-4">About Us</h2>
-        {paragraphs.map((item) => (
-          <p className="text-grey petrona text-xl text-justify mb-4">{item}</p>
+        {paragraphs.map((item, i) => (
+          <p className="text-grey petrona text-xl text-justify mb-4" key={idevi}>{item}</p>
         ))}
       </div>
     </div>
