@@ -5,7 +5,6 @@ const asyncErrorHandler = require("../utils/asyncErrorHandler");
 const customError = require("../utils/customError");
 
 exports.addItemToCart = asyncErrorHandler(async (req, res) => {
-  console.log(req.body)
   const { customerId, productId, productType, quantity, size } = req.body;
   let cart = await Cart.findOne({ customerId });
 
@@ -82,8 +81,6 @@ exports.updateQuantity=asyncErrorHandler(async(req,res,next)=>{
 
 exports.deleteProduct= asyncErrorHandler(async(req,res,next)=>{
   const {customerId, productId, size}=req.params;
-  // const {size}= req.b
-  console.log(size);
   const cart= await Cart.findOne({customerId})
   if(!cart) return next(new customError("Cart not found", 404));
   let productIndex;

@@ -6,21 +6,21 @@ import img4 from "/images/home/Banner/img4.png";
 import { Link } from "react-router-dom";
 const Banner = () => {
   return (
-    <div className={`max-w-screen-2xl container mx-auto xl:px-16 bg-bgSky pt-44 `}>
-      <div className={`flex gap-[12px]`}>
-        <div className={`w-3/4 mt-16`}>
-          <h1 className="text-6xl font-normal text-black mb-8 petrona">
+    <div className={`max-w-screen-2xl container mx-auto bg-bgSky xl:px-24 md:px-16 px-4 lg:pt-48 pt-24 pb-8 lg:pb-4`}>
+      <div className={`flex lg:gap-[12px] flex-col lg:flex-row`}>
+        <div className={`lg:w-3/4 mt-4`}>
+          <h1 className="md:text-6xl font-normal text-black mb-8 petrona text-3xl">
             Customize your home with EcoBliss - your <i>favourite</i> online nursery
           </h1>
-          <p className={`text-3xl font-normal text-grey w-[70%] mb-8 marcellus`}>
+          <p className={`lg:text-3xl text-xl font-normal text-grey lg:w-[70%] mb-8 marcellus`}>
             Decorate your house with best of the best plant solutions that match
             your aesthetic.
           </p>
-          <Link to="/Orchid"><button className="btn text-white text-2xl bg-green px-8 hover:bg-lightGreen rounded-2xl marcellus">
+          <Link to="/HousePlants" className="flex  justify-center  md:justify-start"><button className="btn text-white text-2xl bg-green px-8 hover:bg-lightGreen rounded-2xl marcellus">
             Buy Now!
           </button></Link>
         </div>
-        <div className={`flex w-1/2 gap-4 mb-4`}>
+        <div className={`lg:flex w-1/2 gap-4 mb-4 hidden`}>
           <div className="">
             <img src={img1} className={`mb-4 w-[90%]`}></img>
             <img src={img2} className=""></img>

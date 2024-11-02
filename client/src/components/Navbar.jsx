@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext , useEffect} from "react";
 import { IoPersonCircleSharp } from "react-icons/io5";
 import { Link, useLocation } from "react-router-dom";
 import Logo from "/images/Logo.png";
@@ -7,6 +7,9 @@ import { AuthContext } from "../store/AuthContext";
 const Navbar = () => {
   const { auth, handleLogout, setLastPage } = useContext(AuthContext);
   const { pathname } = useLocation();
+  useEffect(()=>{
+    setLastPage(pathname)
+  },[pathname])
 
   return (
     <div className={`fixed top-0 left-0 right-0 bg-slate-400 z-20`}>
@@ -44,7 +47,7 @@ const Navbar = () => {
                   <Link to="/">Home</Link>
                 </li>
                 <li>
-                  <Link to="/about">About Us</Link>
+                  {/* <Link to="/about">About Us</Link>  */}
                 </li>
                 <li>
                   <Link to="/cart">Cart</Link>
@@ -92,7 +95,7 @@ const Navbar = () => {
                 </li>
               </ul>
             </div>
-            <Link to="/" className="text-xl">
+            <Link to="/" className="text-xl ">
               <img src={Logo} alt="EcoBliss" className="h-12" />
             </Link>
           </div>

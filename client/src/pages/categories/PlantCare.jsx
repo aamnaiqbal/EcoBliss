@@ -15,7 +15,7 @@ const PlantCare = () => {
 
   return (
     <div
-      className={`max-w-screen-2xl container mx-auto xl:px-24 md:px-16 px-4 lg:pt-48 pt-24  `}
+      className={`max-w-screen-2xl container mx-auto md:px-16 xxl:px-24 px-4 lg:pt-48 pt-24`}
     >
       <h1 className="marcellus text-lightGreen font-medium text-5xl mb-4">
       Plant Care Accessories

@@ -45,23 +45,20 @@ const Login = () => {
         cookies.set('jwt_authorization', token, {
           expires: new Date(decoded.exp*1000)
         })
-        // alert("Login successful");
         toast.success("Login Successful")
-        // console.log(auth);
         navigate(lastPage || '/');
         setLastPage(null)
       } 
       
     } catch (error) {
       toast.error(error.response.data.message)
-      // console.error("Error logging in:", error);
-      // alert("An error occurred while logging in. Please try again.");
+      console.error("Error logging in:", error);
     }
   };
   return (  <div className={styles.backgroundImageContainer}>
-    <div className="bg-[#FFFFFFBA] flex justify-center items-center flex-col mx-auto lg:my-24 my-40  py-12 rounded-2xl petrona md:w-[60%]">
+    <div className="bg-[#FFFFFFBA] flex justify-center items-center flex-col mx-auto  py-12 rounded-2xl petrona md:w-[60%] w-[90%]">
       <h2 className="text-4xl font-semibold mb-8">Login</h2>
-      <form onSubmit={handleSubmit} className="lg:w-[60%] w-[80%]">
+      <form onSubmit={handleSubmit} className="lg:w-[60%] w-[90%]">
       <div className="flex flex-col gap-8  ">
         
         <input

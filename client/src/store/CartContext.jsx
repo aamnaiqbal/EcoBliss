@@ -22,15 +22,14 @@ const CartProvider = ({ children }) => {
 
   useEffect(() => {
     if (auth) {
-      console.log(auth, "Cart");
+      // console.log(auth, "Cart");
       const fetchData = async () => {
         try {
-          console.log("Fetch item has fetched.");
           const response = await axios.get(
             `http://localhost:8000/api/v1/cart/${auth.id}`
           );
           // console.log(response);
-          console.log(response.data.data.cart.items);
+          // console.log(response.data.data.cart.items);
           setCartItems(response.data.data.cart.items);
           // console.log(cartItems)
         } catch (err) {
@@ -58,6 +57,7 @@ const CartProvider = ({ children }) => {
       setTimeout(()=>{
         return navigate("/user/login")
       }, 1700)
+      return;
     }
     // console.log("selected SIze", selectedSize)
     try {
@@ -66,7 +66,7 @@ const CartProvider = ({ children }) => {
         { customerId, productId, productType, quantity, size: selectedSize }
       );
       // console.log(response);
-      console.log("item has added to cart.");
+      // console.log("item has added to cart.");
       
       if (cartItems.length==0) {
         if (size) {

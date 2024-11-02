@@ -20,11 +20,11 @@ const Item = ({ item }) => {
   
 
   return (
-    <div className="flex items-center justify-between my-4  pb-4 ">
+    <div className="flex flex-col gap-y-4 md:flex-row items-center justify-between my-4  pb-4 ">
       <img src={item.productId.image} className="h-28 w-32 rounded-md"></img>
       <div className="w-44">
-      <h4 className="marcellus font-medium text-md ">{item.productId.name}</h4>
-      <p className="text-sm text-grey mx-auto italic">{Size}</p>
+      <h4 className="marcellus font-medium text-md text-center">{item.productId.name}</h4>
+      <p className="text-sm text-grey mx-auto italic text-center">{Size}</p>
       </div>
       <p className="font-semibold  w-16">Qty: {quantity} </p>
       <p

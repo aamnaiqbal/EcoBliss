@@ -17,14 +17,27 @@ const Slider = ({items, url}) => {
       <div className="max-w-screen-2xl container mx-auto relative ">
         <Swiper
           breakpoints={{
-            340: {
+            320: {     // Very small screens like phones
+              slidesPerView: 1,
+              spaceBetween: 10,
+            },
+            480: {     // Small screens like smaller phones
+              slidesPerView: 1,
+              spaceBetween: 15,
+            },
+            640: {     // Tablets in portrait mode
               slidesPerView: 2,
               spaceBetween: 15,
             },
-            700: {
+            768: {     // Tablets in landscape mode
+              slidesPerView: 2,
+              spaceBetween: 20,
+            },
+            1024: {    // Small laptops
               slidesPerView: 3,
               spaceBetween: 15,
             },
+        
           }}
           modules={[Autoplay, Navigation]}
           navigation
@@ -35,11 +48,11 @@ const Slider = ({items, url}) => {
               pauseOnMouseEnter: true,
             }
           }
-          className={`z-0 relative px-4`}
+          className={`z-0 relative `}
         >
           {/* <SlideNavButtons /> */}
           {items.map((item, i) => (
-            <SwiperSlide key={i} className={`mt-8 mb-8 px-[42px] `}>
+            <SwiperSlide key={i} className={`mt-8 mb-8 lg:px-10  px-8 `}>
               <Card item={item} url={url}/>
             </SwiperSlide>
           ))}

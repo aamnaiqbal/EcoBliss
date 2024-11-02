@@ -11,7 +11,7 @@ const PlantCare = () => {
   return (
     <>
       <div className="max-w-screen-2xl container mx-auto xl:px-24 px-4 relative py-12">
-        <h1 className={`marcellus text-6xl  text-center`}>
+        <h1 className={`marcellus md:text-6xl text-3xl  text-center`}>
         Plant Care
         </h1>
         <Slider items={plantCareProducts} url="plantcare"></Slider>

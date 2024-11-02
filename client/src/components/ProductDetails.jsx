@@ -9,14 +9,14 @@ import { CartContext } from "../store/CartContext";
 import { AuthContext } from "../store/AuthContext";
 
 const productDetails = () => {
-  const {plantCareProducts}=useContext(PlantCareContext);
-  const {orchidPlants, housePlants, outdoorPlants}=useContext(PlantContext);
-  const {addToCart}= useContext(CartContext)
+  const { plantCareProducts } = useContext(PlantCareContext);
+  const { orchidPlants, housePlants, outdoorPlants } = useContext(PlantContext);
+  const { addToCart } = useContext(CartContext);
   const { auth } = useContext(AuthContext);
 
   let [category, setCategory] = useState([]);
   const { pathname } = useLocation();
-  const productType= pathname.includes('plantcare')? 'PlantCare': 'Plant'
+  const productType = pathname.includes("plantcare") ? "PlantCare" : "Plant";
 
   const { id } = useParams();
   const [productDetails, setProductDetails] = useState([]);
@@ -31,18 +31,24 @@ const productDetails = () => {
     if (size === "S") {
       setSelectedSize("S");
       setPrice(productDetails.size.S);
+      setQuantity(1);
+
     } else if (size === "M") {
       setSelectedSize("M");
       setPrice(productDetails.size.M);
+      setQuantity(1);
     } else if (size === "L") {
       setSelectedSize("L");
       setPrice(productDetails.size.L);
+      setQuantity(1);
     }
   };
 
-  useEffect(()=>{
-    console.log("Hello")
-  }, [])
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    
+  }, [img]);
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -60,84 +66,87 @@ const productDetails = () => {
       }
     };
     fetchData();
-    
-    
   }, [id, pathname]);
   // console.log(productDetails)
-  useEffect(()=>{
-    if(pathname.includes("Outdoor")) setCategory(outdoorPlants)
-    else if(pathname.includes('Orchid')) setCategory(orchidPlants)
-    else if(pathname.includes("HousePlants")) setCategory(housePlants)
-    else setCategory(plantCareProducts)
-  }, [pathname, outdoorPlants, orchidPlants, housePlants, plantCareProducts])
+  useEffect(() => {
+    if (pathname.includes("Outdoor")) setCategory(outdoorPlants);
+    else if (pathname.includes("Orchid")) setCategory(orchidPlants);
+    else if (pathname.includes("HousePlants")) setCategory(housePlants);
+    else setCategory(plantCareProducts);
+  }, [pathname, outdoorPlants, orchidPlants, housePlants, plantCareProducts]);
 
   useEffect(() => {
     if (productDetails) {
       setPrice(
         productDetails.size?.S || (productDetails.price && productDetails.price)
       );
-      setImg(productDetails.image)
+      setImg(productDetails.image);
       setSelectedSize(productDetails.size && "S");
+      setQuantity(1);
       // console.log("product Details", productDetails)
     }
   }, [productDetails]);
   return (
-    <div className={`max-w-screen-2xl container mx-auto xl:px-24 pt-44 `}>
-      <div className="flex">
-        <div className={`w-1/2 flex gap-4  justify-center `}>
-          <div className="flex flex-col gap-y-4 ">
-            <div className="w-32  h-36 ">
+    <div
+      className={`max-w-screen-2xl container mx-auto xl:px-24 md:px-16 px-4 lg:pt-48 pt-24 `}
+    >
+      <div className="flex flex-col lg:flex-row lg:gap-x-8">
+        <div
+          className={`lg:w-1/2 flex flex-col flex-col-reverse md:flex-row gap-4  justify-center items-center mx-auto md:justify-start md:items-start`}
+        >
+          <div className="flex flex-row flex-wrap lg:flex-col gap-x-4 gap-y-4 justify-center items-center mx-auto">
+            <div className="w-32  h-32 ">
               <img
                 src={productDetails.image}
-                className={`w-32 h-36 object-contain-fit hover:cursor-pointer ${
+                className={`w-32 h-32 object-contain-fit hover:cursor-pointer ${
                   img === productDetails.image && "border-2 border-black"
                 } `}
                 onClick={() => setImg(productDetails.image)}
               ></img>
             </div>
-            {productDetails.subImg?.subImg1 && (
-              <div className="w-32  h-36 ">
+              {productDetails.subImg?.subImg1 && (
+            <div className="w-32  h-32 ">
                 <img
                   src={productDetails.subImg?.subImg1}
-                  className={`w-32 h-36 object-contain-fit hover:cursor-pointer ${
+                  className={`w-32 h-32 object-contain-fit hover:cursor-pointer ${
                     img === productDetails.subImg?.subImg1 &&
                     "border-2 border-black"
                   } `}
                   onClick={() => setImg(productDetails.subImg?.subImg1)}
                 ></img>
-              </div>
-            )}
-            {productDetails.subImg?.subImg2 && (
-              <div className="w-32  h-36 ">
+            </div>
+              )}
+              {productDetails.subImg?.subImg2 && (
+            <div className="w-32  h-32 ">
                 <img
                   src={productDetails.subImg?.subImg2}
-                  className={`w-32 h-36 object-contain-fit hover:cursor-pointer ${
+                  className={`w-32 h-32 object-contain-fit hover:cursor-pointer ${
                     img === productDetails.subImg?.subImg2 &&
                     "border-2 border-black"
                   } `}
                   onClick={() => setImg(productDetails.subImg?.subImg2)}
                 ></img>
-              </div>
-            )}
-            {productDetails.subImg?.subImg3 && (
-              <div className="w-32  h-36 border-0">
+            </div>
+              )}
+              {productDetails.subImg?.subImg3 && (
+            <div className="w-32  h-32 border-0">
                 <img
                   src={productDetails.subImg?.subImg3}
-                  className={`w-32 h-36 object-contain-fit hover:cursor-pointer ${
+                  className={`w-32 h-32 object-contain-fit hover:cursor-pointer ${
                     img === productDetails.subImg?.subImg3 &&
                     "border-2 border-black"
                   } `}
                   onClick={() => setImg(productDetails.subImg?.subImg3)}
                 ></img>
-              </div>
-            )}
+            </div>
+              )}
           </div>
-          <div className="w-78 h-fit bg-lightGreen">
-            <img src={img} className="w-78 h-fit object-contain mx-auto"></img>
+          <div className="md:w-78 lg:h-fit h-96 ">
+            <img src={img} className="md:w-78 lg:h-fit h-96 object-contain mx-auto"></img>
           </div>
         </div>
-        <div className={`w-1/2 px-8  petrona`}>
-          <div className="border-b border-grey pb-4">
+        <div className={`lg:w-1/2  petrona `}>
+          <div className="border-b border-grey py-4 ">
             <h1 className="marcellus text-4xl font-normal mb-4">
               {productDetails.name}
             </h1>
@@ -206,7 +215,19 @@ const productDetails = () => {
           </div>
           <button
             className={`btn  text-white text-base bg-lightGreen  hover:bg-lightestGreen hover:text-white outline-none border-0 w-full mt-8`}
-            onClick={()=>addToCart(auth?.id, productDetails._id, productType, quantity, selectedSize, productDetails.image, productDetails.name,productDetails.size,  productDetails.price )}
+            onClick={() =>
+              addToCart(
+                auth?.id,
+                productDetails._id,
+                productType,
+                quantity,
+                selectedSize,
+                productDetails.image,
+                productDetails.name,
+                productDetails.size,
+                productDetails.price
+              )
+            }
           >
             Add to Cart
           </button>
@@ -216,7 +237,12 @@ const productDetails = () => {
         <h1 className="marcellus text-4xl font-md md:pl-8">
           You May Also Like
         </h1>
-        <Slider items={category} url={pathname.includes('plantcare')? "plantcare": category[0]?.category}/>
+        <Slider
+          items={category}
+          url={
+            pathname.includes("plantcare") ? "plantcare" : category[0]?.category
+          }
+        />
       </div>
     </div>
   );

@@ -54,11 +54,11 @@ const CartItem = ({ item }) => {
   };
 
   return (
-    <div className="flex items-center justify-between my-8 border-b border-[#76767642] pb-8 ">
-      <img src={item.productId.image} className="max-h-40 w-36"></img>
-      <h4 className="marcellus font-semibold w-48">{item.productId.name}</h4>
+    <div className="flex items-center justify-between flex-col md:flex-row my-8 border-b border-[#76767642] pb-8 gap-y-4">
+      <img src={item.productId.image} className="max-h-40 w-36 "></img>
+      <h4 className="marcellus font-semibold lg:w-48">{item.productId.name}</h4>
       <p
-        className="marcellus font-semibold  w-28 "
+        className="marcellus font-semibold  lg:w-28 "
       >
         Rs. {price * quantity}
       </p>

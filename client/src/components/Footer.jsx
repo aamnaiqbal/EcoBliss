@@ -2,7 +2,7 @@ import React from "react";
 import Logo from "/images/Logo.png"
 const Footer = () => {
   return (
-    <footer className="footer bg-bgSky petrona py-10 max-w-screen-2xl container mx-auto xl:px-16 font-medium sm:text-md text-lg px-4">
+    <footer className="footer bg-bgSky petrona py-10 max-w-screen-2xl container mx-auto lg:px-16 font-medium sm:text-md text-lg px-4">
       <aside>
         <p className="marcellus text-lg">
         <img src={Logo} alt="EcoBliss" className="md:h-20 h-16"/>

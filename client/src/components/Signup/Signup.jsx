@@ -61,9 +61,9 @@ export default function Signup() {
   return (
     <div className={styles.backgroundImageContainer}>
       {/* Your sign-up form or other content goes here */}
-      <div className="bg-[#FFFFFFBA] flex justify-center items-center flex-col mx-auto lg:my-16 my-40 py-12 rounded-2xl petrona md:w-[60%]">
+      <div className="bg-[#FFFFFFBA] flex justify-center items-center flex-col mx-auto py-12 rounded-2xl petrona md:w-[60%] w-[90%]">
         <h2 className="text-4xl font-semibold mb-8">Signup</h2>
-        <form onSubmit={signupUser} className="lg:w-[60%] w-[80%]">
+        <form onSubmit={signupUser} className="lg:w-[60%] w-[90%]">
         <div className="flex flex-col gap-4  ">
           <input
             type="text"

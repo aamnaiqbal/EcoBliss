@@ -16,7 +16,7 @@ const Cart = () => {
   };
 
   useEffect(() => {
-    console.log("Subtotal is calculated")
+    // console.log("Subtotal is calculated")
     // Calculate subtotal whenever cart items are updated
     const newSubtotal = cartItems.reduce((acc, item) => {
       const itemPrice = item.size ? item.productId.size[item.size] : item.productId.price;

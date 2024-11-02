@@ -68,8 +68,8 @@ const Checkout = () => {
   };
 
   return (
-    <div className="max-w-screen-2xl container mx-auto xl:px-16 pt-44 flex gap-4 mb-8 relative select-none">
-      <div className="w-[50%]">
+    <div className="max-w-screen-2xl container mx-auto px-4 md:px-16 xxl:px-24 lg:pt-48 pt-24 flex flex-col flex-col-reverse lg:flex-row gap-4 mb-8 relative select-none">
+      <div className="lg:w-[50%]">
         <div>
           <h3 className="marcellus font-medium text-xl mb-8">Delivery</h3>
           <div className="flex flex-col gap-4">
@@ -150,8 +150,8 @@ const Checkout = () => {
           </div>
         </div>
       </div>
-      <div className="w-1/2 border border-[#CAD6F1] px-4  h-max sticky top-8  mb-4">
-        <div style={{ maxHeight: "300px", overflowY: "scroll" }}>
+      <div className="lg:w-1/2 border border-[#CAD6F1] px-4  h-max sticky lg:top-8  mb-4">
+        <div className="md:max-h-72  max-h-[36rem] overflow-y-scroll">
           {cartItems.map((item, i) => (
             <Item key={i} item={item} />
           ))}

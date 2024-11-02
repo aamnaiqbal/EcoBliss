@@ -37,7 +37,7 @@ exports.getPlant= asyncErrorHandler(async(req,res,next)=>{
 })
 
 exports.getPopularPlants= asyncErrorHandler(async(req,res,next)=>{
-    const popularPlants= await Plant.find({popular: true}) 
+    const popularPlants= await Plant.find({popular: true}).select('name size category image subImg') 
     if(!popularPlants){
         return next(new customError("No popular plants not found", 404));
     }
