@@ -13,7 +13,7 @@ const HousePlant = () => {
   const totalPages = Math.ceil(housePlants?.length / rowsPerPage);
 
   return (
-    <div className={`max-w-screen-2xl container mx-auto xl:px-24 md:px-16 px-4 lg:pt-48 pt-24 `}>
+    <div className={`max-w-screen-2xl container mx-auto xxl:px-24 md:px-16 px-4 lg:pt-48 pt-24 `}>
       <h1 className="marcellus text-lightGreen font-medium text-5xl mb-4">
         House Plants
       </h1>
