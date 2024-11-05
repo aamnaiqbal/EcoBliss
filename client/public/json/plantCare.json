@@ -1,0 +1,103 @@
+[
+  {
+      "name": "All-Purpose Fertilizer",
+      "price": 2499,
+      "image": "/images/Plant-Care/img1.jpeg",
+      "subImg": {
+        "subImg1": "/images/Plant-Care/img1-1.jpeg",
+        "subImg2": "/images/Plant-Care/img1-2.jpeg"
+      },
+      "description": "Organic-based, Joyful Dirt’s All-Purpose Shaker works well for outdoor gardens and indoor houseplants and is safe to use around curious pets and kiddos.",
+      "popular":true
+  },
+  
+  {
+      "name": "Organic Potting Mix",
+      "price": 3000,
+      "image": "/images/Plant-Care/img2.jpeg",
+      "subImg": {
+        "subImg1": "/images/Plant-Care/img2-1.jpeg",
+        "subImg2": "/images/Plant-Care/img2-2.jpeg",
+        "subImg3": "/images/Plant-Care/img2-3.jpeg"
+      },
+      "description": "Our Organic Potting Mix gives your plant roots the preferred balance of air, moisture, and nutrition they need. This all-natural soil can be used for all types of indoor houseplants"
+  },
+  
+  {
+      "name": "Leaf Care Spray",
+      "price": 5000,
+      "image": "/images/Plant-Care/img3.jpeg",
+      "subImg": {
+        "subImg1": "/images/Plant-Care/img3-1.jpeg"
+      },
+      "description": "This leaf care spray is carefully formulated to keep plants looking and feeling their best! The specialty blend of high-quality, natural ingredients will clean and polish your plants"
+  },
+  
+  {
+      "name": "Soil Moisture Meter",
+      "price": 3599,
+      "image": "/images/Plant-Care/img4.jpeg",
+      "subImg": {
+        "subImg1": "/images/Plant-Care/img4-1.jpeg",
+        "subImg2": "/images/Plant-Care/img4-2.jpeg"
+      },
+      "description": "The 3-in-1 Soil Moisture Meter ensures the health and quality of your plants by helping you know when to water, control pH level and light. "
+  },
+  
+  {
+      "name": "Coco Coir Pole",
+      "price": 1499,
+      "image": "/images/Plant-Care/img5.jpeg",
+      "subImg": {
+      "subImg1": "/images/Plant-Care/img5-1.jpeg",
+      "subImg2": "/images/Plant-Care/img5-2.jpeg"
+      },
+      "description": "The Coco Coir Pole is the ideal plant support for indoor climbing plants and vines while maintaining moisture for aerial roots absorption"
+  },
+  
+  {
+      "name": "Potting Supplies Duo",
+      "price": 4000,
+      "image": "/images/Plant-Care/img6.jpeg",
+      "subImg": {
+        "subImg1": "/images/Plant-Care/img6-1.jpeg",
+        "subImg2": "/images/Plant-Care/img6-2.jpeg"
+      },
+      "description": "Our Potting Supplies Duo is all you need to pot your plants at home. Our all-natural, well-draining potting mix gives your plant roots the preferred balance of air, moisture,"
+  },
+  
+  {
+      "name": "Reusable Potting Mat",
+      "price": 4999,
+      "image": "/images/Plant-Care/img7.jpeg",
+      "subImg": {
+        "subImg1": "/images/Plant-Care/img7-1.jpeg",
+        "subImg2": "/images/Plant-Care/img7-2.jpeg"
+      },
+      "description": "This daisy plant potting mat is cute, practical, and handmade! It is perfect for plant parents that do not have an ideal place to pot within their homes",
+      "popular":true
+  },
+  
+  {
+      "name": "Fertilizer",
+      "price": 5000,
+      "image": "/images/Plant-Care/img8.jpeg",
+      "subImg": {
+        "subImg1": "/images/Plant-Care/img8-1.jpeg",
+        "subImg2": "/images/Plant-Care/img8-2.jpeg"
+      },
+      "description": "Our all-natural fertilizer is specifically formulated to supply macronutrients and essential trace elements in one easy-to-use liquid concentrate.",
+      "popular":true
+  },
+  
+  {
+      "name": "Adjustable Plant Stand",
+      "price": 5000,
+      "image": "/images/Plant-Care/img9.jpeg",
+      "subImg": {
+        "subImg1": "/images/Plant-Care/img9-1.jpeg",
+        "subImg2": "/images/Plant-Care/img9-2.jpeg"
+      },
+      "description": "Elevate your favorite houseplants with our adjustable plant stand. Stylish, mid-century modern design made from sustainable bamboo and hand-finished."
+  }
+  ]

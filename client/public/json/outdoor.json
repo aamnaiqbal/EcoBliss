@@ -1,0 +1,110 @@
+[
+  {
+    "name": "Large Braided Gardenia",
+    "size": { "S": 700 },
+    "category": "Outdoor",
+    "image": "/images/Outdoor/img1.jpeg",
+    "subImg": {
+      "subImg1": "/images/Outdoor/img1-1.jpeg"
+    },
+    "description": "The Braided Gardenia is a sophisticated addition to any garden or indoor space, featuring beautifully braided trunks and glossy, dark green leaves.",
+    "popular": true
+  },
+
+  {
+    "name": "Olive Tree",
+    "size": { "S": 400 },
+    "category": "Outdoor",
+    "image": "/images/Outdoor/img2.jpeg",
+    "subImg": {
+      "subImg1": "/images/Outdoor/img2-1.jpeg",
+      "subImg2": "/images/Outdoor/img2-2.jpeg",
+      "subImg3": "/images/Outdoor/img2-3.jpeg"
+    },
+    "description": "Imagine a touch of the Mediterranean in your own backyard. The Olive Tree is not just a plant; it's a passport to a world of rustic charm and serene beauty."
+  },
+
+  {
+    "name": "Calamondin Tree",
+    "size": { "S": 2400 },
+    "category": "Outdoor",
+    "image": "/images/Outdoor/img3.jpeg",
+    "subImg": {
+      "subImg1": "/images/Outdoor/img3-1.jpeg",
+      "subImg2": "/images/Outdoor/img3-2.jpeg"
+    },
+    "description": "We’re very excited to offer the delightful Calamondin tree. Native to the Philippines, the Calamondin (also known as Calamansi) produces an abundance of small, tart fruits ."
+  },
+
+  {
+    "name": "Meyer Lemon Bush",
+    "size": { "S": 900 },
+    "category": "Outdoor",
+    "image": "/images/Outdoor/img4.jpeg",
+    "subImg": {
+      "subImg1": "/images/Outdoor/img4-1.jpeg",
+      "subImg2": "/images/Outdoor/img4-2.jpeg"
+    },
+    "description": "This isn't just any lemon bush; it's a sweeter, juicier, and more resilient variety that's perfect for both green thumbs and gardening newbies."
+  },
+
+  {
+    "name": "Key Lime Bush",
+    "size": { "S": 1600 },
+    "category": "Outdoor",
+    "image": "/images/Outdoor/img5.jpeg",
+    "subImg": {
+      "subImg1": "/images/Outdoor/img5-1.jpeg"
+    },
+    "description": "This compact plant is perfect for patios, sunny kitchen windows, or even your garden bed. It's not just a plant; it's a ticket to homemade limeade and zesty culinary adventures."
+  },
+
+  {
+    "name": "Thuja Green Giant",
+    "size": { "S": 800 },
+    "category": "Outdoor",
+    "image": "/images/Outdoor/img6.jpeg",
+    "subImg": {
+      "subImg1": "/images/Outdoor/img6-1.jpeg",
+      "subImg2": "/images/Outdoor/img6-2.jpeg"
+    },
+    "description": "This evergreen is not just a giant by name; it's a towering beacon of lush green that'll give your garden the privacy screen it deserves."
+  },
+
+  {
+    "name": "Fiddle-Leaf Fig Tree",
+    "size": { "S": 500 },
+    "category": "Outdoor",
+    "image": "/images/Outdoor/img7.jpeg",
+    "subImg": {
+      "subImg1": "/images/Outdoor/img7-1.jpeg",
+      "subImg2": "/images/Outdoor/img7-2.jpeg"
+    },
+    "description": "a plant that's not just a pretty face but a master of indoor charm. With its iconic, violin-shaped leaves, this beauty is sure to strike a chord with plant lovers and interior design enthusiasts alike.",
+    "popular": true
+  },
+
+  {
+    "name": "Black Knight Bush",
+    "size": { "S": 600 },
+    "category": "Outdoor",
+    "image": "/images/Outdoor/img8.jpeg",
+    "subImg": {
+      "subImg1": "/images/Outdoor/img8-1.jpeg"
+    },
+    "description": "This hardy shrub is not just a pretty face; it's a butterfly magnet that will bring your garden to life!",
+    "popular": true
+  },
+
+  {
+    "name": "Bloomerang Lilac Bush",
+    "size": { "S": 1000, "L": 4000 },
+    "category": "Outdoor",
+    "image": "/images/Outdoor/img9.jpeg",
+    "subImg": {
+      "subImg1": "/images/Outdoor/img9-1.jpeg",
+      "subImg2": "/images/Outdoor/img9-2.jpeg"
+    },
+    "description": "The Bloomerang Lilac Bush is not your average lilac. This deciduous darling is a re-blooming marvel, ensuring your garden is never without the sweet scent and vibrant purple hues that only a lilac can provide."
+  }
+]
