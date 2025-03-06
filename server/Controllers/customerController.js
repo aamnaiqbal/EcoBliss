@@ -3,13 +3,7 @@ const asyncErrorHandler = require("../utils/asyncErrorHandler");
 const customError = require("../utils/customError");
 const jwt= require('jsonwebtoken')
 const util = require('util')
-require("dotenv").config();
-
-const signToken = (_id) => {
-  return jwt.sign({ id: _id }, process.env.SECRET_STR, {
-    expiresIn: process.env.LOGIN_EXPIRES,
-  });
-};
+const signToken = require("../utils/signToken");
 
 exports.login = asyncErrorHandler(async (req, res, next) => {
   const { email, password } = req.body;
@@ -39,7 +33,7 @@ exports.login = asyncErrorHandler(async (req, res, next) => {
 
 exports.signup = asyncErrorHandler(async (req, res, next) => {
   const customer = await Customer.create(req.body);
-  const token = signToken(customer._id);
+  const token = signToken(customer._id, "buyer");
   res.status(201).json({
     status: "success",
     token: token,

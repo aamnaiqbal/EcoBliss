@@ -1,5 +1,6 @@
 const app = require("./app");
 const mongoose = require("mongoose");
+require("dotenv").config();
 
 mongoose
   .connect(
@@ -11,4 +12,3 @@ mongoose
 app.listen(8000, () => {
   console.log("Server has started.");
 });
-
