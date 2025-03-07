@@ -15,6 +15,7 @@ import Index from "../layout/Index";
 import Checkout from "../pages/checkout/Checkout";
 import AboutUs from "../pages/aboutus/AboutUs";
 import OrderMessage from "../pages/checkout/OrderMessage";
+import VendorSignup from "../auth/vendor/vendorSignUp";
 
 const router = createBrowserRouter([
   {
@@ -62,7 +63,7 @@ const router = createBrowserRouter([
             path: "/plantcare/:id",
             element: <ProductDetails />,
           },
-  
+
           {
             path: "/popularplant/:id",
             element: <ProductDetails />,
@@ -77,7 +78,7 @@ const router = createBrowserRouter([
           },
           {
             path: "/checkout/message",
-            element: <OrderMessage/>
+            element: <OrderMessage />,
           },
           {
             path: "/about",
@@ -92,6 +93,10 @@ const router = createBrowserRouter([
       {
         path: "/user/signup",
         element: <Signup />,
+      },
+      {
+        path: "/vendor/signup",
+        element: <VendorSignup />,
       },
     ],
   },
