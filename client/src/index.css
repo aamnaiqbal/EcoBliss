@@ -15,6 +15,11 @@
 .marcellus {
   font-family: "Marcellus", serif;
 }
+.poppins {
+  font-family: "Poppins", sans-serif;
+  /* font-weight: 400;
+  font-style: normal; */
+}
 
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
@@ -26,8 +31,8 @@ input:-webkit-autofill:focus {
 
 /* /* Targeting the placeholder text */
 input::placeholder {
-  color: lightgreen; 
-  opacity: 1; 
+  color: lightgreen;
+  opacity: 1;
 }
 
 /* Additional support for older browsers */
@@ -38,6 +43,3 @@ input::-webkit-input-placeholder {
 input:-ms-input-placeholder {
   color: lightgreen;
 }
-
-
-

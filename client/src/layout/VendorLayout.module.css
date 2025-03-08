@@ -1,0 +1,11 @@
+.backgroundContainer {
+  background-image: url("/images/vendor/bgImg.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  /* opacity: 0.5; */
+}

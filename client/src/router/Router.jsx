@@ -16,6 +16,8 @@ import Checkout from "../pages/checkout/Checkout";
 import AboutUs from "../pages/aboutus/AboutUs";
 import OrderMessage from "../pages/checkout/OrderMessage";
 import VendorSignup from "../auth/vendor/vendorSignUp";
+import VendorLayout from "../layout/vendorLayout";
+import ViewProducts from "../pages/vendor/Products/ViewProducts";
 
 const router = createBrowserRouter([
   {
@@ -93,6 +95,16 @@ const router = createBrowserRouter([
       {
         path: "/user/signup",
         element: <Signup />,
+      },
+      {
+        path: "/vendor",
+        element: <VendorLayout />,
+        children: [
+          {
+            path: "products/view",
+            element: <ViewProducts />,
+          },
+        ],
       },
       {
         path: "/vendor/signup",
