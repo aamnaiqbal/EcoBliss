@@ -18,6 +18,7 @@ import OrderMessage from "../pages/checkout/OrderMessage";
 import VendorSignup from "../auth/vendor/vendorSignUp";
 import VendorLayout from "../layout/vendorLayout";
 import ViewProducts from "../pages/vendor/Products/ViewProducts";
+import ProductDetail from "../pages/vendor/Products/ProductDetail";
 
 const router = createBrowserRouter([
   {
@@ -103,6 +104,10 @@ const router = createBrowserRouter([
           {
             path: "products/view",
             element: <ViewProducts />,
+          },
+          {
+            path: "products/details",
+            element: <ProductDetail />,
           },
         ],
       },

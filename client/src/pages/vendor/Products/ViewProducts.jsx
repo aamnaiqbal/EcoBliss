@@ -1,6 +1,7 @@
 import React from "react";
 import { IoIosAddCircle } from "react-icons/io";
 import { MdKeyboardArrowRight } from "react-icons/md";
+import { Link } from "react-router-dom";
 
 const ViewProducts = () => {
   return (
@@ -21,11 +22,9 @@ const ViewProducts = () => {
           <h4 className="poppins font-medium ">671a40b179ecced09c18b59c</h4>
           <p className="poppins font-medium ">Stock 4</p>
           <p className="poppins font-medium  lg:w-28 ">Rs. 700</p>
-          <MdKeyboardArrowRight
-            size={28}
-            className="cursor-pointer "
-            // onClick={() => deleteCartItem(auth.id, item.productId._id, Size)}
-          />
+          <Link to="/vendor/products/details">
+            <MdKeyboardArrowRight size={28} className="cursor-pointer " />
+          </Link>
         </div>
         <div className="flex items-center justify-between flex-col md:flex-row my-8 border-b border-[#76767642] pb-8 gap-y-4 text-grey ">
           <img
@@ -63,11 +62,9 @@ const ViewProducts = () => {
           <h4 className="poppins font-medium ">671a40b179ecced09c18b59c</h4>
           <p className="poppins font-medium ">Stock 4</p>
           <p className="poppins font-medium  lg:w-28 ">Rs. 700</p>
-          <MdKeyboardArrowRight
-            size={28}
-            className="cursor-pointer "
-            // onClick={() => deleteCartItem(auth.id, item.productId._id, Size)}
-          />
+          <Link to="/vendor/products/details">
+            <MdKeyboardArrowRight size={28} className="cursor-pointer " />
+          </Link>
         </div>
       </div>
     </div>
