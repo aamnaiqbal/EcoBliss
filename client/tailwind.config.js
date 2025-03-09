@@ -12,6 +12,7 @@ export default {
         bgSky: "#52B7884D",
         lightGreen: "#52B788",
         lightestGreen: "#83C1A4",
+        red: "#EB121F",
       },
     },
   },
