@@ -6,8 +6,8 @@ import { Link } from "react-router-dom";
 const ViewProducts = () => {
   return (
     <div className="bg-white my-16 mx-8 p-8 rounded-xl">
-      <div className="flex justify-between">
-        <h2 className="text-black font-bold text-lg">My Products</h2>
+      <div className="flex justify-between poppins">
+        <h3 className="font-semibold text-xl">My Products</h3>
         <div className="text-lightGreen flex gap-3 items-center">
           <IoIosAddCircle size={20} />
           <h4 className="font-semibold text-lg">Add more</h4>

@@ -19,6 +19,7 @@ import VendorSignup from "../auth/vendor/vendorSignUp";
 import VendorLayout from "../layout/vendorLayout";
 import ViewProducts from "../pages/vendor/Products/ViewProducts";
 import ProductDetail from "../pages/vendor/Products/ProductDetail";
+import AddProduct from "../pages/vendor/Products/addProduct";
 
 const router = createBrowserRouter([
   {
@@ -104,6 +105,10 @@ const router = createBrowserRouter([
           {
             path: "products/view",
             element: <ViewProducts />,
+          },
+          {
+            path: "products/add",
+            element: <AddProduct />,
           },
           {
             path: "products/details",
