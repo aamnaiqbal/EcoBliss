@@ -124,21 +124,14 @@ exports.updateQuantity = asyncErrorHandler(async (req, res, next) => {
 });
 
 exports.deleteProduct = asyncErrorHandler(async (req, res, next) => {
-  const { customerId, productId, size } = req.params;
+  const { customerId, cartItemId } = req.params;
   const cart = await Cart.findOne({ customerId });
   if (!cart) return next(new customError("Cart not found", 404));
-  let productIndex;
-  if (size) {
-    productIndex = cart.items.findIndex(
-      (item) => item.productId.toString() === productId && item.size === size
-    );
-  } else {
-    productIndex = cart.items.findIndex(
-      (item) => item.productId.toString() === productId
-    );
-  }
+  const productIndex = cart.items.findIndex(
+    (item) => item._id.toString() === cartItemId
+  );
   if (productIndex === -1)
-    return next(new customError("Product not found in cart.", 404));
+    return next(new customError("Item not found in cart.", 404));
   cart.items.splice(productIndex, 1);
   await cart.save();
   res.status(204).json({
