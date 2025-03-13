@@ -27,6 +27,7 @@ const authSlice = createSlice({
   reducers: {
     login: (state, action) => {
       state.auth = action.payload;
+      console.log(JSON.parse(JSON.stringify(state.auth)));
       cookies.set("jwt_authorization", action.payload.token, { path: "/" }); // Save token in cookies
     },
     logout: (state) => {
