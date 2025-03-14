@@ -1,17 +1,29 @@
-import React, { useContext } from "react";
+import React, { useEffect } from "react";
 import Slider from "../../components/Slider";
-import { PlantContext } from "../../store/PlantContext";
+
+import { useDispatch, useSelector } from "react-redux";
+import { fetchPlants } from "../../redux/slices/PlantSlice";
 
 const OutdoorPlants = () => {
-  const {outdoorPlants}= useContext(PlantContext)
- 
+  const dispatch = useDispatch();
+  const { outdoorPlants, status, error } = useSelector((state) => state.plants);
+
+  useEffect(() => {
+    if (status === "idle") {
+      dispatch(fetchPlants());
+    }
+  }, [dispatch, status]);
+
+  if (status === "loading") return <p>Loading...</p>;
+  if (status === "failed") return <p>Error: {error}</p>;
+
   return (
     <>
       <div className="max-w-screen-2xl container mx-auto xl:px-24 px-4 relative py-12">
         <h1 className={`marcellus md:text-6xl text-center text-3xl`}>
-        Best Outdoor Plants
+          Best Outdoor Plants
         </h1>
-        <Slider items={outdoorPlants} url="Outdoor"/>
+        <Slider items={outdoorPlants} url="Outdoor" />
       </div>
     </>
   );

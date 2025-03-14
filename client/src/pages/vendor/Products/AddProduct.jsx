@@ -120,8 +120,9 @@ const AddProduct = () => {
         <select
           {...register("plantCategory")}
           className="my-4 p-[10px] border border-lightGreen outline-none rounded-md bg-white mb-2 w-full md:w-3/4 lg:w-1/2 mx-auto"
+          defaultValue={""}
         >
-          <option value="" disabled selected>
+          <option value="" disabled>
             Choose category from dropdown
           </option>
           <option value="HousePlants">House Plant</option>

@@ -1,32 +1,57 @@
 import React, { useContext, useEffect, useState } from "react";
 import Card from "../../components/Card";
 import CustomPagination from "./CustomPagination";
-import { PlantCareContext } from "../../store/plantCareContext";
+// import { PlantCareContext } from "../../store/plantCareContext";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchPlantCareProducts } from "../../redux/slices/PlantCareSlice";
 
 const PlantCare = () => {
-  const {plantCareProducts}=useContext(PlantCareContext)
-  const [currentPage, setCurrentPage]= useState(1);
-  const [rowsPerPage, setRowsPerPage]= useState(12);
-  const indexOfLastItem= currentPage * rowsPerPage;
-  const indexOfFirstItem= indexOfLastItem-rowsPerPage;
-  const currentItems= plantCareProducts?.slice(indexOfFirstItem, indexOfLastItem);
-  const totalPages= Math.ceil(plantCareProducts?.length/rowsPerPage)
+  // const { plantCareProducts } = useContext(PlantCareContext);
 
+  const dispatch = useDispatch();
+  const { plantCareProducts, status, error } = useSelector(
+    (state) => state.plantCare
+  );
+  const [currentPage, setCurrentPage] = useState(1);
+  const [rowsPerPage, setRowsPerPage] = useState(12);
+  const indexOfLastItem = currentPage * rowsPerPage;
+  const indexOfFirstItem = indexOfLastItem - rowsPerPage;
+  const currentItems = plantCareProducts?.slice(
+    indexOfFirstItem,
+    indexOfLastItem
+  );
+  const totalPages = Math.ceil(plantCareProducts?.length / rowsPerPage);
+
+  useEffect(() => {
+    if (status === "idle") {
+      dispatch(fetchPlantCareProducts()); // Fetch products only if idle
+    }
+  }, [dispatch, status]);
+
+  if (status === "loading") return <p>Loading...</p>;
+  if (status === "failed") return <p>Error: {error}</p>;
 
   return (
     <div
       className={`max-w-screen-2xl container mx-auto md:px-16 xxl:px-24 px-4 lg:pt-48 pt-24`}
     >
       <h1 className="marcellus text-lightGreen font-medium text-5xl mb-4">
-      Plant Care Accessories
+        Plant Care Accessories
       </h1>
       <p className="petrona lg:text-lg text-xl font-normal text-grey text-justify">
-      From organic potting mix to all-natural fertilizer, shop essentials every plant parent needs.
+        From organic potting mix to all-natural fertilizer, shop essentials
+        every plant parent needs.
       </p>
       <div className="flex flex-wrap gap-x-5 gap-y-20 px-auto mx-auto  my-12 items-center justify-center">
-        {currentItems.map((item, i)=> <Card item={item} key={i} url={"plantcare"}/>)}
+        {currentItems.map((item, i) => (
+          <Card item={item} key={i} url={"plantcare"} />
+        ))}
       </div>
-      <CustomPagination setCurrentPage={setCurrentPage} currentPage={currentPage} totalPages={totalPages}/>
+      <CustomPagination
+        setCurrentPage={setCurrentPage}
+        currentPage={currentPage}
+        totalPages={totalPages}
+      />
     </div>
   );
 };

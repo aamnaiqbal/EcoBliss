@@ -1,10 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
 import Card from "../../components/Card";
 import CustomPagination from "./CustomPagination";
-import { PlantContext } from "../../store/PlantContext";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchPlants } from "../../redux/slices/PlantSlice";
 
 const HousePlant = () => {
-  const { housePlants } = useContext(PlantContext);
+  const dispatch = useDispatch();
+  const { housePlants, status, error } = useSelector((state) => state.plants);
+
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(8);
   const indexOfLastItem = currentPage * rowsPerPage;
@@ -12,8 +15,19 @@ const HousePlant = () => {
   const currentItems = housePlants?.slice(indexOfFirstItem, indexOfLastItem);
   const totalPages = Math.ceil(housePlants?.length / rowsPerPage);
 
+  useEffect(() => {
+    if (status === "idle") {
+      dispatch(fetchPlants());
+    }
+  }, [dispatch, status]);
+
+  if (status === "loading") return <p>Loading...</p>;
+  if (status === "failed") return <p>Error: {error}</p>;
+
   return (
-    <div className={`max-w-screen-2xl container mx-auto md:px-16 xxl:px-24 px-4 lg:pt-48 pt-24 `}>
+    <div
+      className={`max-w-screen-2xl container mx-auto md:px-16 xxl:px-24 px-4 lg:pt-48 pt-24 `}
+    >
       <h1 className="marcellus text-lightGreen font-medium text-5xl mb-4">
         House Plants
       </h1>
@@ -24,9 +38,13 @@ const HousePlant = () => {
         and lively.
       </p>
       <div className=" flex flex-wrap gap-x-5 gap-y-20 px-auto mx-auto my-12 justify-center items-center">
-        {currentItems.map((item, i) => (
-          <Card item={item} key={i} url={"HousePlants"} />
-        ))}
+        {currentItems?.length > 0 ? (
+          currentItems.map((item, i) => (
+            <Card item={item} key={i} url={"HousePlants"} />
+          ))
+        ) : (
+          <p>No house plants available.</p>
+        )}
       </div>
       <CustomPagination
         setCurrentPage={setCurrentPage}

@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import axios from 'axios'
+import axios from "axios";
 import { useContext } from "react";
 import { BsCashCoin } from "react-icons/bs";
 import { FaCcVisa } from "react-icons/fa";
@@ -7,15 +7,19 @@ import { CartContext } from "../../store/CartContext";
 import Item from "./Item";
 
 import { AuthContext } from "../../store/AuthContext";
-import {toast} from "react-toastify" 
+import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 
 const Checkout = () => {
-  const { cartItems, subtotal , setCartItems, setSubtotal} = useContext(CartContext);
-  const { auth } = useContext(AuthContext);
+  // const { cartItems, subtotal, setCartItems, setSubtotal } =useContext(CartContext);
+  const { cartItems, subtotal } = useSelector((state) => state.cart);
+  const dispatch = useDispatch();
+  const { auth } = useSelector((state) => state.auth);
+
   const [shippingCharges] = useState(500);
   const [paymentMethod, setPaymentMethod] = useState("Cash on Delivery");
-  const navigate= useNavigate();
+  const navigate = useNavigate();
 
   const fullname = useRef(null);
   const address = useRef(null);
@@ -27,7 +31,7 @@ const Checkout = () => {
 
   console.log(cartItems);
 
-  const handleCheckout =async () => {
+  const handleCheckout = async () => {
     const orderData = {
       customerId: auth.id,
       items: cartItems.map((item) => ({
@@ -51,19 +55,24 @@ const Checkout = () => {
     };
 
     // console.log(orderData);
-    try{
-      const response=await axios.post("http://localhost:8000/api/v1/order", orderData);
+    try {
+      const response = await axios.post(
+        "http://localhost:8000/api/v1/order",
+        orderData
+      );
       console.log("response", response);
       // toast.success("Order Placed successfully.")
-      const orderId=response.data.data._id
+      const orderId = response.data.data._id;
       setCartItems([]);
       setSubtotal(0);
-      navigate('/checkout/message', {state: {orderId}})
-    }catch(err){
+      navigate("/checkout/message", { state: { orderId } });
+    } catch (err) {
       console.log("There was some error in checking out.", err);
-      let formattedMessage = err.response.data.message
-    .replace("Order validation failed:", "");
-      toast.error(formattedMessage)
+      let formattedMessage = err.response.data.message.replace(
+        "Order validation failed:",
+        ""
+      );
+      toast.error(formattedMessage);
     }
   };
 
@@ -99,7 +108,7 @@ const Checkout = () => {
             className={`btn  text-white text-lg bg-lightGreen  hover:bg-lightestGreen hover:text-white outline-none border-0 w-full mt-8 flex items-center justify-center gap-4`}
             onClick={() => {
               setPaymentMethod("Cash on Delivery");
-              handleCheckout()
+              handleCheckout();
             }}
           >
             <BsCashCoin size={24} /> <span>Cash On Delivery</span>
@@ -141,8 +150,8 @@ const Checkout = () => {
             />
             <button
               className={`btn  text-white text-lg bg-lightGreen  hover:bg-lightestGreen hover:text-white outline-none border-0 mt-4 w-1/2 mx-auto`}
-              onClick={()=>{
-                handleCheckout()
+              onClick={() => {
+                handleCheckout();
               }}
             >
               Pay Now

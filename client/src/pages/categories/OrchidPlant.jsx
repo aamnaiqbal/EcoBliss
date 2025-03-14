@@ -1,19 +1,31 @@
 import React, { useContext, useEffect, useState } from "react";
 import Card from "../../components/Card";
 import CustomPagination from "./CustomPagination";
-import { PlantContext } from "../../store/PlantContext";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchPlants } from "../../redux/slices/PlantSlice";
 
 const OrchidPlant = () => {
-  const { orchidPlants } = useContext(PlantContext);
+  const dispatch = useDispatch();
+  const { orchidPlants, status, error } = useSelector((state) => state.plants);
+
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(8);
   const indexOfLastItem = currentPage * rowsPerPage;
   const indexOfFirstItem = indexOfLastItem - rowsPerPage;
   const currentItems = orchidPlants?.slice(indexOfFirstItem, indexOfLastItem);
   const totalPages = Math.ceil(orchidPlants?.length / rowsPerPage);
+  useEffect(() => {
+    if (status === "idle") {
+      dispatch(fetchPlants());
+    }
+  }, [dispatch, status]);
+  if (status === "loading") return <p>Loading...</p>;
+  if (status === "failed") return <p>Error: {error}</p>;
 
   return (
-    <div className={`max-w-screen-2xl container mx-auto md:px-16 xxl:px-24 px-4 lg:pt-48 pt-24 `}>
+    <div
+      className={`max-w-screen-2xl container mx-auto md:px-16 xxl:px-24 px-4 lg:pt-48 pt-24 `}
+    >
       <h1 className="marcellus text-lightGreen font-medium text-5xl mb-4">
         Orchid Plants
       </h1>
