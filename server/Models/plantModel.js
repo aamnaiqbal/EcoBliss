@@ -1,21 +1,22 @@
 const mongoose = require("mongoose");
-const validator=require('validator')
+const validator = require("validator");
+const Vendor = require("./vendorModel");
 const plantSchema = new mongoose.Schema({
   name: {
     type: String,
     required: [true, "name is required field."],
     trim: true,
   },
-  size:{
-    S:{
-        type: Number,
+  size: {
+    S: {
+      type: Number,
     },
-    M:{
-        type: Number,
+    M: {
+      type: Number,
     },
-    L:{
-        type: Number,
-    }
+    L: {
+      type: Number,
+    },
   },
   category: {
     type: String,
@@ -43,9 +44,14 @@ const plantSchema = new mongoose.Schema({
   },
   popular: {
     type: Boolean,
-    default: false
+    default: false,
+  },
+  vendorId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: Vendor,
+    required: [true, "VendorId is required"],
   },
 });
 
-const Plant=mongoose.model('Plant', plantSchema);
-module.exports= Plant;
+const Plant = mongoose.model("Plant", plantSchema);
+module.exports = Plant;

@@ -8,4 +8,7 @@ router.route("/login").post(vendorController.login);
 router.route("/verify-otp").post(vendorController.verifyOTP);
 router.route("/resend-otp").post(vendorController.resendOTP);
 
+router.route("/plants/:vendorId").get(vendorController.getVendorPlants);
+router.route("/plants/:id/:vendorId").get(vendorController.getVendorPlant);
+
 module.exports = router;
