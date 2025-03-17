@@ -42,6 +42,17 @@ const plantSchema = new mongoose.Schema({
     type: String,
     required: [true, "Please enter the description of the plant"],
   },
+  stockQuantity: {
+    S: {
+      type: Number,
+    },
+    M: {
+      type: Number,
+    },
+    L: {
+      type: Number,
+    },
+  },
   popular: {
     type: Boolean,
     default: false,
