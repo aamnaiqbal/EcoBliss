@@ -1,11 +1,13 @@
 import React, { useEffect } from "react";
 import Slider from "../../components/Slider";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchPlants } from "../../redux/slices/PlantSlice";
+import { fetchPlants } from "../../redux/slices/BuyerPlantSlice";
 
 const PopularPlants = () => {
   const dispatch = useDispatch();
-  const { orchidPlants, status, error } = useSelector((state) => state.plants);
+  const { orchidPlants, status, error } = useSelector(
+    (state) => state.buyerPlants
+  );
 
   useEffect(() => {
     if (status === "idle") {

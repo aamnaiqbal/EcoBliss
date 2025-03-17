@@ -1,55 +1,60 @@
 import React, { useState, useEffect, useContext } from "react";
 import { MdDelete } from "react-icons/md";
-import { AuthContext } from "../store/AuthContext";
-import { CartContext } from "../store/CartContext";
 import axios from "axios";
-
+import { useDispatch, useSelector } from "react-redux";
+import { setCartItems, deleteCartItem } from "../redux/slices/CartSlice";
 const CartItem = ({ item }) => {
-  const { auth } = useContext(AuthContext);
-  const { setCartItems, deleteCartItem , cartItems} = useContext(CartContext);
+  const dispatch = useDispatch();
+  const { cartItems } = useSelector((state) => state.cart);
+  const auth = useSelector((state) => state.auth.auth);
   const [quantity, setQuantity] = useState(item.quantity);
   const Size = item.size;
-  // console.log(Size);
-  const [price, setPrice] = useState(
-    Size ? item.productId.size[Size] : item.productId.price
-  );
+  const [price, setPrice] = useState(() => {
+    if (Size && item.productId.size && item.productId.size[Size]) {
+      return item.productId.size[Size];
+    }
+    return item.productId.price;
+  });
 
   const handleIncrease = async (productId) => {
-    // console.log(auth.id)
     try {
-      const newQuantity= quantity+1
+      const newQuantity = quantity + 1;
       const response = await axios.patch(
         `http://localhost:8000/api/v1/cart/${auth.id}/${productId}`,
-        { quantity: newQuantity, size: Size}
+        { quantity: newQuantity, size: Size }
       );
       // console.log(response)
       setQuantity(newQuantity);
-      console.log(newQuantity)
-      setCartItems((prevItems) =>
-        prevItems.map((item) =>
-          item.productId._id === productId && item.size===Size? { ...item, quantity: newQuantity} : item
-        )
+      console.log(newQuantity);
+      const items = cartItems.map((item) =>
+        item.productId._id === productId && item.size === Size
+          ? { ...item, quantity: newQuantity }
+          : item
       );
+      dispatch(setCartItems(items));
     } catch (err) {
       console.log("There is some error updating the data.", err);
     }
   };
+
   const handleDecrease = async (productId) => {
+    if (quantity <= 1) return;
     try {
-      const newQuantity= quantity-1;
-      const response = await axios.patch(
+      const newQuantity = quantity - 1;
+      await axios.patch(
         `http://localhost:8000/api/v1/cart/${auth.id}/${productId}`,
-        { quantity: newQuantity , size: Size}
+        { quantity: newQuantity, size: Size }
       );
-      // console.log(response)
       setQuantity(newQuantity);
-      setCartItems((prevItems) =>
-        prevItems.map((item) =>
-          item.productId._id === productId  && item.size===Size? { ...item, quantity:newQuantity} : item
-        )
+      console.log(newQuantity);
+      const items = cartItems.map((item) =>
+        item.productId._id === productId && item.size === Size
+          ? { ...item, quantity: newQuantity }
+          : item
       );
+      dispatch(setCartItems(items));
     } catch (err) {
-      console.log("There is some error updating the data.", err);
+      console.log("Error updating quantity:", err);
     }
   };
 
@@ -57,9 +62,7 @@ const CartItem = ({ item }) => {
     <div className="flex items-center justify-between flex-col md:flex-row my-8 border-b border-[#76767642] pb-8 gap-y-4">
       <img src={item.productId.image} className="max-h-40 w-36 "></img>
       <h4 className="marcellus font-semibold lg:w-48">{item.productId.name}</h4>
-      <p
-        className="marcellus font-semibold  lg:w-28 "
-      >
+      <p className="marcellus font-semibold  lg:w-28 ">
         Rs. {price * quantity}
       </p>
       {Size ? (
@@ -91,7 +94,18 @@ const CartItem = ({ item }) => {
           +
         </button>
       </div>
-      <MdDelete size={24}  className="cursor-pointer text-[#990000]" onClick={()=>deleteCartItem(auth.id, item.productId._id, Size)}/>
+      <MdDelete
+        size={24}
+        className="cursor-pointer text-[#990000]"
+        onClick={() =>
+          dispatch(
+            deleteCartItem({
+              customerId: auth?.id,
+              cartItemId: item._id,
+            })
+          )
+        }
+      />
     </div>
   );
 };

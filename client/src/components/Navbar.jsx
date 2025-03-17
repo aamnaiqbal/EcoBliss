@@ -1,15 +1,19 @@
-import React, { useContext , useEffect} from "react";
-import { IoPersonCircleSharp } from "react-icons/io5";
+import { React, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import Logo from "/images/Logo.png";
-import { AuthContext } from "../store/AuthContext";
+import { useDispatch, useSelector } from "react-redux";
+import { logout, setLastPage } from "../redux/slices/AuthSlice";
+import { clearCart } from "../redux/slices/CartSlice";
 
 const Navbar = () => {
-  const { auth, handleLogout, setLastPage } = useContext(AuthContext);
+  const dispatch = useDispatch();
+  const auth = useSelector((state) => state.auth.auth);
+  console.log(auth);
+
   const { pathname } = useLocation();
-  useEffect(()=>{
-    setLastPage(pathname)
-  },[pathname])
+  useEffect(() => {
+    dispatch(setLastPage(pathname));
+  }, [pathname, dispatch]);
 
   return (
     <div className={`fixed top-0 left-0 right-0 bg-slate-400 z-20`}>
@@ -46,9 +50,7 @@ const Navbar = () => {
                 <li>
                   <Link to="/">Home</Link>
                 </li>
-                <li>
-                  {/* <Link to="/about">About Us</Link>  */}
-                </li>
+                <li>{/* <Link to="/about">About Us</Link>  */}</li>
                 <li>
                   <Link to="/cart">Cart</Link>
                 </li>
@@ -57,7 +59,8 @@ const Navbar = () => {
                     <Link
                       to="/"
                       onClick={() => {
-                        handleLogout();
+                        dispatch(logout());
+                        dispatch(clearCart());
                       }}
                     >
                       Logout
@@ -67,7 +70,7 @@ const Navbar = () => {
                   <li>
                     <Link
                       to="/user/login"
-                      onClick={() => setLastPage(pathname)}
+                      onClick={() => dispatch(setLastPage(pathname))}
                     >
                       Login
                     </Link>
@@ -112,18 +115,16 @@ const Navbar = () => {
               </li>
               {auth ? (
                 <li>
-                  <Link
-                    to="/"
-                    onClick={() => {
-                      handleLogout();
-                    }}
-                  >
+                  <Link to="/" onClick={() => dispatch(logout())}>
                     Logout
                   </Link>
                 </li>
               ) : (
                 <li>
-                  <Link to="/user/login" onClick={() => setLastPage(pathname)}>
+                  <Link
+                    to="/user/login"
+                    onClick={() => dispatch(setLastPage(pathname))}
+                  >
                     Login
                   </Link>
                 </li>

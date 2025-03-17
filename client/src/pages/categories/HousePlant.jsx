@@ -2,11 +2,13 @@ import React, { useContext, useEffect, useState } from "react";
 import Card from "../../components/Card";
 import CustomPagination from "./CustomPagination";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchPlants } from "../../redux/slices/PlantSlice";
+import { fetchPlants } from "../../redux/slices/BuyerPlantSlice";
 
 const HousePlant = () => {
   const dispatch = useDispatch();
-  const { housePlants, status, error } = useSelector((state) => state.plants);
+  const { housePlants, status, error } = useSelector(
+    (state) => state.buyerPlants
+  );
 
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(8);
