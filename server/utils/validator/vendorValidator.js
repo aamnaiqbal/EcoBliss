@@ -44,10 +44,6 @@ const vendorSchema = z.object({
     .nonempty({ message: "Please provide nursery name" })
     .min(3, "Nursery name must be at least 3 characters long"),
   address: z.string().nonempty({ message: "Please provide address" }),
-  otp: z
-    .string()
-    .nonempty({ message: "Please provide OTP." })
-    .length(6, "Invalid OTP. OTP must consist of 6 digits"),
 });
 
 module.exports = vendorSchema;
