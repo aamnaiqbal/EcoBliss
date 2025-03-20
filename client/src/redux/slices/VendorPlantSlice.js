@@ -20,6 +20,26 @@ export const fetchPlants = createAsyncThunk(
   }
 );
 
+export const updatePlant = createAsyncThunk(
+  "plant/update",
+  async ({ plantId, formData }, { rejectWithValue }) => {
+    console.log([...formData]);
+    try {
+      const response = await axios.patch(
+        `http://localhost:8000/api/v1/vendor/plants/${plantId}`,
+        formData,
+        { headers: { "Content-Type": "multipart/form-data" } }
+      );
+      console.log(response);
+      return { plantId };
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data || "Failed to update the plant data."
+      );
+    }
+  }
+);
+
 export const deletePlant = createAsyncThunk(
   "plant/delete",
   async ({ vendorId, plantId }, { rejectWithValue }) => {

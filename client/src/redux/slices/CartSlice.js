@@ -10,7 +10,7 @@ export const fetchCartItems = createAsyncThunk(
       const response = await axios.get(
         `http://localhost:8000/api/v1/cart/${userId}`
       );
-      console.log("CartItems fetched", response.data.data.cart.items);
+      // console.log("CartItems fetched", response.data.data.cart.items);
       return response.data.data.cart.items;
     } catch (err) {
       return rejectWithValue(
@@ -23,17 +23,17 @@ export const fetchCartItems = createAsyncThunk(
 export const addToCart = createAsyncThunk(
   "cart/addToCart",
   async (
-    { customerId, productId, productType, quantity, selectedSize, price },
-    { rejectWithValue }
-  ) => {
-    console.log(
+    {
       customerId,
+      vendorId,
       productId,
       productType,
       quantity,
       selectedSize,
-      price
-    );
+      price,
+    },
+    { rejectWithValue }
+  ) => {
     if (!customerId) {
       toast.error("Please login to add items to the cart.");
       return rejectWithValue("User not logged in");
@@ -43,6 +43,7 @@ export const addToCart = createAsyncThunk(
       if (productType == "Plant") {
         response = await axios.post("http://localhost:8000/api/v1/cart/add", {
           customerId,
+          vendorId,
           productId,
           productType,
           quantity,
@@ -51,14 +52,13 @@ export const addToCart = createAsyncThunk(
       } else {
         response = await axios.post("http://localhost:8000/api/v1/cart/add", {
           customerId,
+          vendorId,
           productId,
           productType,
           quantity,
           price,
         });
       }
-
-      console.log("Item added", response);
       return response.data.cartItem; // Return updated cart items
     } catch (err) {
       return rejectWithValue(
@@ -75,7 +75,7 @@ export const deleteCartItem = createAsyncThunk(
       const response = await axios.delete(
         `http://localhost:8000/api/v1/cart/${customerId}/${cartItemId}`
       );
-      console.log(response);
+      // console.log(response);
 
       return { cartItemId }; // Return deleted item info
     } catch (err) {
@@ -87,7 +87,7 @@ export const deleteCartItem = createAsyncThunk(
 );
 
 const calculateSubtotal = (cartItems) => {
-  console.log("subtotal", cartItems);
+  // console.log("subtotal", cartItems);
   const subtotal = cartItems.reduce((acc, item) => {
     const itemPrice = item.size
       ? item.productId.size[item.size]
