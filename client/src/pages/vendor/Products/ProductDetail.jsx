@@ -1,21 +1,43 @@
-import React from "react";
+import React, { useState } from "react";
 import { MdEdit, MdDelete } from "react-icons/md";
 import { TiTick } from "react-icons/ti";
 import { ImCross } from "react-icons/im";
+import { useLocation, useNavigate } from "react-router-dom";
+import { deletePlant } from "../../../redux/slices/VendorPlantSlice";
+import { useDispatch } from "react-redux";
+
 const ProductDetail = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const item = location.state;
+  console.log("Product Detail", item);
+  const handleUpdate = () => {
+    navigate("/vendor/products/update", { state: { item } });
+  };
   return (
     <div className="bg-white my-16 mx-8 p-8 rounded-xl">
       <div className="flex justify-between">
         <div className="poppins flex flex-col items-center">
-          <h2 className="  text-black font-bold text-3xl">Monstera Delicosa</h2>
-          <p className="text-grey text-sm"> 671a40b179ecced09c18b59c</p>
+          <h2 className="  text-black font-bold text-3xl">{item.name}</h2>
+          <p className="text-grey text-sm"> {item._id}</p>
         </div>
         <div className="text-lightGreen flex gap-3 items-center">
-          <div className="flex items-center justify-center px-4 py-2 gap-2 text-white bg-red rounded-lg min-w-28">
+          <div
+            className="flex items-center justify-center px-4 py-2 gap-2 text-white bg-red rounded-lg min-w-28"
+            onClick={() =>
+              dispatch(
+                deletePlant({ vendorId: item.vendorId, plantId: item._id })
+              )
+            }
+          >
             <MdDelete size={20} />
             <span className="poppins font-semibold">Delete</span>
           </div>
-          <div className="flex items-center justify-center px-4 py-2 gap-2 text-white bg-lightGreen rounded-lg min-w-28">
+          <div
+            className="flex items-center justify-center px-4 py-2 gap-2 text-white bg-lightGreen rounded-lg min-w-28"
+            onClick={handleUpdate}
+          >
             <MdEdit size={20} />
             <span className="poppins font-semibold">Edit</span>
           </div>
@@ -26,9 +48,44 @@ const ProductDetail = () => {
           </div>
         </div>
       </div>
-      <div className="poppins text-grey flex justify-between mb-2">
+      {/* Top Image */}
+      <div className="flex justify-center  my-8">
+        <div className="w-52 h-64 border rounded flex items-center justify-center bg-gray-100">
+          {item.image ? (
+            <img
+              src={item.image}
+              alt=""
+              className="w-full h-full object-cover rounded"
+            />
+          ) : (
+            "+"
+          )}
+        </div>
+      </div>
+
+      {/* Three Images in a Row */}
+      <div className="grid grid-cols-3 gap-2 my-4 mx-auto">
+        {[1, 2, 3].map((index) => (
+          <div className="w-52 h-64 border rounded flex items-center justify-center bg-gray-100">
+            {item.subImg[`subImg${index}`] ? (
+              <img
+                src={item.subImg[`subImg${index}`]}
+                alt=""
+                className="w-full h-full object-cover rounded"
+              />
+            ) : (
+              "+"
+            )}
+          </div>
+        ))}
+      </div>
+      <div className="poppins text-grey flex justify-between my-8">
         <h3 className="font-semibold text-xl">Product Category</h3>
-        <h5 className="text-lg">Outdoor Plants</h5>
+        <h5 className="text-lg">
+          {item.category == "HousePlants"
+            ? "House Plants"
+            : `${item.category} Plants`}
+        </h5>
       </div>
       <hr />
       <div className="my-8">
@@ -36,16 +93,7 @@ const ProductDetail = () => {
           Product Description
         </h3>
         <p className="marcellus text-black text-base text-justify">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu
-          turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec
-          fringilla accumsan, risus sem sollicitudin lacus, ut interdum tellus
-          elit sed risus. Maecenas eget condimentum velit, sit amet feugiat
-          lectus. Class aptent taciti sociosqu ad litora torquent per conubia
-          nostra, per inceptos himenaeos. Praesent auctor purus luctus enim
-          egestas, ac scelerisque ante pulvinar. Donec ut rhoncus ex.
-          Suspendisse ac rhoncus nisl, eu tempor urna. Curabitur vel bibendum
-          lorem. Morbi convallis convallis diam sit amet lacinia. Aliquam in
-          elementum tellus.
+          {item.description}
         </p>
       </div>
       <hr />
@@ -57,26 +105,50 @@ const ProductDetail = () => {
             </td>
             <td className="text-center text-lg p-6 ">
               <div className="flex items-center justify-center gap-x-2 ">
-                <div className="bg-lightGreen p-2 rounded-sm">
-                  <TiTick color="white" size={16} />
+                <div
+                  className={`${
+                    item.size.S ? "bg-lightGreen" : "bg-red"
+                  } p-2 rounded-sm`}
+                >
+                  {item.size.S ? (
+                    <TiTick color="white" size={16} />
+                  ) : (
+                    <ImCross color="white" size={16} />
+                  )}
                 </div>
                 <span>Small</span>
               </div>
             </td>
             <td className="text-center text-lg p-6 ">
               <div className="flex items-center justify-center gap-x-2 ">
-                <div className="bg-lightGreen p-2 rounded-sm">
-                  <TiTick color="white" size={16} />
+                <div
+                  className={`${
+                    item.size.M ? "bg-lightGreen" : "bg-red"
+                  } p-2 rounded-sm`}
+                >
+                  {item.size.M ? (
+                    <TiTick color="white" size={16} />
+                  ) : (
+                    <ImCross color="white" size={16} />
+                  )}
                 </div>
                 <span>Medium</span>
               </div>
             </td>
             <td className="text-center text-lg p-6 ">
               <div className="flex items-center justify-center gap-x-2 ">
-                <div className="bg-red p-2 rounded-sm">
-                  <ImCross color="white" size={16} />
+                <div
+                  className={`${
+                    item.size.L ? "bg-lightGreen" : "bg-red"
+                  } p-2 rounded-sm`}
+                >
+                  {item.size.L ? (
+                    <TiTick color="white" size={16} />
+                  ) : (
+                    <ImCross color="white" size={16} />
+                  )}
                 </div>
-                <span>Small</span>
+                <span>Large</span>
               </div>
             </td>
           </tr>
@@ -84,17 +156,29 @@ const ProductDetail = () => {
             <td className="p-6">
               <span className="font-semibold text-xl">Prices (Rs)</span>
             </td>
-            <td className="text-center text-lg p-6 ">500</td>
-            <td className="text-center text-lg p-6">1000</td>
-            <td className="text-center  text-lg p-6">-</td>
+            <td className="text-center text-lg p-6 ">
+              {item.size.S ? item.size.S : "-"}
+            </td>
+            <td className="text-center text-lg p-6">
+              {item.size.M ? item.size.M : "-"}
+            </td>
+            <td className="text-center  text-lg p-6">
+              {item.size.L ? item.size.L : "-"}
+            </td>
           </tr>
           <tr>
             <td className="p-6">
               <span className="font-semibold text-xl">Stock Quantity</span>
             </td>
-            <td className="text-center text-lg p-6">13</td>
-            <td className="text-center text-lg p-6">25</td>
-            <td className="text-center text-lg p-6">-</td>
+            <td className="text-center text-lg p-6">
+              {item.stockQuantity.S ? item.stockQuantity.S : "-"}
+            </td>
+            <td className="text-center text-lg p-6">
+              {item.stockQuantity.M ? item.stockQuantity.M : "-"}
+            </td>
+            <td className="text-center text-lg p-6">
+              {item.stockQuantity.L ? item.stockQuantity.L : "-"}
+            </td>
           </tr>
         </tbody>
       </table>

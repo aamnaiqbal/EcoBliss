@@ -1,9 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { IoIosAddCircle } from "react-icons/io";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchPlants } from "../../../redux/slices/VendorPlantSlice";
 
 const ViewProducts = () => {
+  const { plants, status, error } = useSelector((state) => state.vendorPlants);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (status === "idle") {
+      dispatch(fetchPlants());
+    }
+  }, [dispatch, status]);
+
+  if (status === "loading") return <p>Loading...</p>;
+  if (status === "failed") return <p>Error</p>;
   return (
     <div className="bg-white my-16 mx-8 p-8 rounded-xl">
       <div className="flex justify-between poppins">
@@ -13,60 +25,30 @@ const ViewProducts = () => {
           <h4 className="font-semibold text-lg">Add more</h4>
         </div>
       </div>
-      <div>
-        <div className="flex items-center justify-between flex-col md:flex-row my-8 border-b border-[#76767642] pb-8 gap-y-4 text-grey ">
+      {plants.map((item, i) => (
+        <div
+          className="flex items-center justify-between flex-col md:flex-row my-8 border-b border-[#76767642] pb-8 gap-y-4 text-grey "
+          key={item._id}
+        >
           <img
-            src="/images/Orchid/img1.jpg"
+            src={item.image}
             className="max-h-40 w-36 border-2 border-black"
           ></img>
-          <h4 className="poppins font-medium ">671a40b179ecced09c18b59c</h4>
-          <p className="poppins font-medium ">Stock 4</p>
-          <p className="poppins font-medium  lg:w-28 ">Rs. 700</p>
-          <Link to="/vendor/products/details">
+          <h4 className="poppins font-medium ">{item._id}</h4>
+          <p className="poppins font-medium ">
+            {item.stockQuantity.S ? item.stockQuantity.S : "-"}
+          </p>
+          <p className="poppins font-medium ">
+            {item.stockQuantity.M ? item.stockQuantity.M : "-"}
+          </p>
+          <p className="poppins font-medium ">
+            {item.stockQuantity.L ? item.stockQuantity.L : "-"}
+          </p>
+          <Link to={`/vendor/products/details/${item._id}`} state={item}>
             <MdKeyboardArrowRight size={28} className="cursor-pointer " />
           </Link>
         </div>
-        <div className="flex items-center justify-between flex-col md:flex-row my-8 border-b border-[#76767642] pb-8 gap-y-4 text-grey ">
-          <img
-            src="/images/Orchid/img1.jpg"
-            className="max-h-40 w-36 border-2 border-black"
-          ></img>
-          <h4 className="poppins font-medium ">671a40b179ecced09c18b59c</h4>
-          <p className="poppins font-medium ">Stock 4</p>
-          <p className="poppins font-medium  lg:w-28 ">Rs. 700</p>
-          <MdKeyboardArrowRight
-            size={28}
-            className="cursor-pointer "
-            // onClick={() => deleteCartItem(auth.id, item.productId._id, Size)}
-          />
-        </div>
-        <div className="flex items-center justify-between flex-col md:flex-row my-8 border-b border-[#76767642] pb-8 gap-y-4 text-grey ">
-          <img
-            src="/images/Orchid/img1.jpg"
-            className="max-h-40 w-36 border-2 border-black"
-          ></img>
-          <h4 className="poppins font-medium ">671a40b179ecced09c18b59c</h4>
-          <p className="poppins font-medium ">Stock 4</p>
-          <p className="poppins font-medium  lg:w-28 ">Rs. 700</p>
-          <MdKeyboardArrowRight
-            size={28}
-            className="cursor-pointer "
-            // onClick={() => deleteCartItem(auth.id, item.productId._id, Size)}
-          />
-        </div>
-        <div className="flex items-center justify-between flex-col md:flex-row my-8 border-b border-[#76767642] pb-8 gap-y-4 text-grey ">
-          <img
-            src="/images/Orchid/img1.jpg"
-            className="max-h-40 w-36 border-2 border-black"
-          ></img>
-          <h4 className="poppins font-medium ">671a40b179ecced09c18b59c</h4>
-          <p className="poppins font-medium ">Stock 4</p>
-          <p className="poppins font-medium  lg:w-28 ">Rs. 700</p>
-          <Link to="/vendor/products/details">
-            <MdKeyboardArrowRight size={28} className="cursor-pointer " />
-          </Link>
-        </div>
-      </div>
+      ))}
     </div>
   );
 };

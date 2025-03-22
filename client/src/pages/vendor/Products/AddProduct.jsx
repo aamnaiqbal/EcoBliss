@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addPlant, updatePlant } from "../../../redux/slices/VendorPlantSlice";
 const AddProduct = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();
-  const existingProduct = location.state?.item || {};
+  const existingProduct = location.state?.item;
   console.log("existing Product ", existingProduct);
   const [selectedSizes, setSelectedSizes] = useState({
-    S: !!existingProduct.size?.S || false,
-    M: !!existingProduct.size?.M || false,
-    L: !!existingProduct.size?.L || false,
+    S: !!existingProduct?.size?.S || false,
+    M: !!existingProduct?.size?.M || false,
+    L: !!existingProduct?.size?.L || false,
   });
   const [images, setImages] = useState([null, null, null, null]);
   const [imgPreview, setImgPreview] = useState([null, null, null, null]);
@@ -28,18 +29,18 @@ const AddProduct = () => {
     formState: { errors, isSubmitting },
   } = useForm({
     defaultValues: {
-      plantName: existingProduct.name,
-      plantCategory: existingProduct.category,
-      plantDescription: existingProduct.description,
+      plantName: existingProduct?.name,
+      plantCategory: existingProduct?.category,
+      plantDescription: existingProduct?.description,
       S: selectedSizes.S,
       M: selectedSizes.M,
       L: selectedSizes.L,
-      SPrice: existingProduct.size?.S || "",
-      MPrice: existingProduct.size?.M || "",
-      LPrice: existingProduct.size?.L || "",
-      SStock: existingProduct.stockQuantity?.S || "",
-      MStock: existingProduct.stockQuantity?.M || "",
-      LStock: existingProduct.stockQuantity?.L || "",
+      SPrice: existingProduct?.size?.S || "",
+      MPrice: existingProduct?.size?.M || "",
+      LPrice: existingProduct?.size?.L || "",
+      SStock: existingProduct?.stockQuantity?.S || "",
+      MStock: existingProduct?.stockQuantity?.M || "",
+      LStock: existingProduct?.stockQuantity?.L || "",
     },
   });
 
@@ -56,7 +57,7 @@ const AddProduct = () => {
       //Track which image has been updated
       setUpdatedImg((prev) => ({
         ...prev,
-        [index === 0 ? main : `subImg${index}`]: true,
+        [index === 0 ? "main" : `subImg${index}`]: true,
       }));
     }
   };
@@ -91,12 +92,15 @@ const AddProduct = () => {
       }
     });
 
-    console.log([...formData]);
+    // console.log([...formData]);
 
-    if (existingProduct._id) {
-      formData.append("updatedImages", JSON.stringify(updatedImages));
+    if (existingProduct?._id) {
+      formData.append("updatedImages", JSON.stringify(updatedImg));
+      // console.log([...formData]);
       dispatch(updatePlant({ plantId: existingProduct._id, formData }));
+      navigate(`/vendor/products/view`);
     } else {
+      console.log("Plant added");
       dispatch(addPlant(formData));
     }
   };
