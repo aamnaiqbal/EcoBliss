@@ -5,6 +5,11 @@ const Plant = require("../Models/plantModel");
 const nodemailer = require("nodemailer");
 const crypto = require("crypto");
 const signToken = require("../utils/signToken");
+const {
+  uploadOnCloudinary,
+  deleteFromCloudinary,
+} = require("../utils/cloudinary");
+const fs = require("fs");
 
 const transporter = nodemailer.createTransport({
   service: "gmail",
@@ -160,6 +165,99 @@ exports.getVendorPlant = asyncErrorHandler(async (req, res, next) => {
     status: "success",
     data: {
       plant,
+    },
+  });
+});
+
+function getPublicId(url) {
+  const parts = url.split("/");
+  const filename = parts[parts.length - 1]; // Get the last part (filename)
+  return filename.split(".")[0]; // return publicId
+}
+
+exports.deletePlant = asyncErrorHandler(async (req, res, next) => {
+  const vendorId = req.params.vendorId;
+  const productId = req.params.id;
+  // console.log(vendorId, productId);
+  const plant = await Plant.findOne({ _id: productId, vendorId });
+  if (!plant) return next(new customError("Produt not found or unauthorized."));
+  let publicIds = [];
+  publicIds.push(getPublicId(plant.image));
+  if (plant.subImg.subImg1) publicIds.push(getPublicId(plant.subImg.subImg1));
+  if (plant.subImg.subImg2) publicIds.push(getPublicId(plant.subImg.subImg2));
+  if (plant.subImg.subImg3) publicIds.push(getPublicId(plant.subImg.subImg3));
+  // console.log(publicIds);
+  // Delete multiple images
+  await deleteFromCloudinary(publicIds);
+  // console.log("deleted");
+
+  await Plant.findByIdAndDelete(productId);
+  res.status(204).json({
+    status: "success",
+    data: null,
+  });
+});
+
+exports.updatePlant = asyncErrorHandler(async (req, res, next) => {
+  const productId = req.params.id;
+  const vendorId = "671a40b179ecced09c18b59c";
+  // console.log(req.files);
+
+  const plant = await Plant.findOne({ _id: productId, vendorId });
+  if (!plant)
+    return next(new customError("Product not found or unauthorized."));
+  //Store uploaded images URLs
+  let imagePaths = [];
+  //Upload on CLoudinary
+  if (req.files && req.files.length > 0) {
+    for (let file of req.files) {
+      const localFilePath = file.path; //path whre Multer saved the file
+      const uploadResult = await uploadOnCloudinary(localFilePath);
+      if (uploadResult) {
+        imagePaths.push(uploadResult.url); //Store cloudinary url
+        fs.unlinkSync(localFilePath);
+        console.log("Uploaded successfully.");
+      } else {
+        return next(new customError("Cloudinary upload failed.", 500));
+      }
+    }
+  }
+  let publicIdsToDelete = [];
+  const updatedImages = JSON.parse(req.body.updatedImages);
+  delete req.body.updatedImages;
+  // Identify which old images should be deleted
+  if (updatedImages.main && plant.image) {
+    publicIdsToDelete.push(getPublicId(plant.image));
+  }
+  if (updatedImages.subImg1 && plant.subImg?.subImg1) {
+    publicIdsToDelete.push(getPublicId(plant.subImg.subImg1));
+  }
+  if (updatedImages.subImg2 && plant.subImg?.subImg2) {
+    publicIdsToDelete.push(getPublicId(plant.subImg.subImg2));
+  }
+  if (updatedImages.subImg3 && plant.subImg?.subImg3) {
+    publicIdsToDelete.push(getPublicId(plant.subImg.subImg3));
+  }
+  // Update images with new ones
+  req.body.image = updatedImages.main ? imagePaths.shift() : plant.image;
+  req.body.subImg = {
+    subImg1: updatedImages.subImg1 ? imagePaths.shift() : plant.subImg?.subImg1,
+    subImg2: updatedImages.subImg2 ? imagePaths.shift() : plant.subImg?.subImg2,
+    subImg3: updatedImages.subImg3 ? imagePaths.shift() : plant.subImg?.subImg3,
+  };
+
+  await deleteFromCloudinary(publicIdsToDelete);
+
+  const updatedPlant = await Plant.findByIdAndUpdate(
+    { _id: productId },
+    { $set: req.body },
+    { new: true }
+  );
+
+  res.status(200).json({
+    status: "success",
+    data: {
+      updatedPlant,
     },
   });
 });

@@ -3,10 +3,10 @@ const Plant = require("../Models/plantModel");
 const asyncErrorHandler = require("../utils/asyncErrorHandler");
 const customError = require("../utils/customError");
 const Vendor = require("../Models/vendorModel");
-const uploadOnCloudinary = require("../utils/cloudinary");
+const { uploadOnCloudinary } = require("../utils/cloudinary");
 
 exports.getAllPlants = asyncErrorHandler(async (req, res, next) => {
-  const plants = await Plant.find().select("name size category image subImg");
+  const plants = await Plant.find();
   res.status(200).json({
     status: "success",
     data: {
@@ -60,7 +60,7 @@ exports.addPlant = asyncErrorHandler(async (req, res, next) => {
     next(new customError("No files uploaded", 400));
   }
   const { vendorId } = req.body;
-  console.log(req.body);
+  // console.log(req.body);
   const vendor = Vendor.findById(vendorId);
   if (!vendor) return next(new customError("Vendor not found.", 404));
 
@@ -84,9 +84,9 @@ exports.addPlant = asyncErrorHandler(async (req, res, next) => {
     subImg3: imagePaths[3] || null,
   };
 
-  console.log(req.body);
+  // console.log(req.body);
   const plant = await Plant.create(req.body);
-  console.log("iploaded");
+  // console.log("iploaded");
   res.status(201).json({
     status: "success",
     data: {
