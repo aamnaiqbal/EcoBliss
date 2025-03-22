@@ -1,8 +1,9 @@
-const { v2 } = require("cloudinary");
-const cloudinary = v2;
-const fs = require("fs");
-const uploadOnCloudinary = async (localFilePath) => {
-  //configuration
+import { v2 as cloudinary } from "cloudinary";
+import fs from "fs";
+
+//configuration
+
+export const uploadOnCloudinary = async (localFilePath) => {
   cloudinary.config({
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
     api_key: process.env.CLOUDINARY_API_KEY,
@@ -18,8 +19,8 @@ const uploadOnCloudinary = async (localFilePath) => {
     });
     // console.log(
     //   "Image is successfuly uploaded on the cloudinary",
-    //   uploadResult
-    //  );
+    //   uploadResult.url
+    // );
     return uploadResult;
   } catch (error) {
     console.log(error);
@@ -28,4 +29,21 @@ const uploadOnCloudinary = async (localFilePath) => {
   }
 };
 
-module.exports = uploadOnCloudinary;
+export const deleteFromCloudinary = async (publicIds) => {
+  cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET,
+  });
+  try {
+    if (!publicIds || publicIds.length === 0) {
+      return null;
+    }
+    const result = await cloudinary.api.delete_resources(publicIds);
+    // console.log("Cloudinary Delete Response:", result);
+    return result;
+  } catch (error) {
+    console.error("Error deleting images from Cloudinary:", error);
+    return null;
+  }
+};
