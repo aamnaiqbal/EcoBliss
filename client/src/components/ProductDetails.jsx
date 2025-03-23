@@ -82,7 +82,7 @@ const productDetails = () => {
       setImg(selectedProduct?.image);
       setSelectedSize(selectedProduct?.size && "S");
       setQuantity(1);
-      console.log("product Details", selectedProduct);
+      // console.log("product Details", selectedProduct);
     }
   }, [selectedProduct]);
   return (
