@@ -20,6 +20,9 @@ import VendorLayout from "../layout/vendorLayout";
 import ViewProducts from "../pages/vendor/Products/ViewProducts";
 import ProductDetail from "../pages/vendor/Products/ProductDetail";
 import AddProduct from "../pages/vendor/Products/AddProduct";
+import OrdersPage from "../pages/vendor/Order";
+import AdminLogin from "../auth/admin/AdminLogin";
+import AdminLayout from "../layout/AdminLayout";
 
 const router = createBrowserRouter([
   {
@@ -99,9 +102,18 @@ const router = createBrowserRouter([
         element: <Signup />,
       },
       {
+        path: "/admin",
+        element: <AdminLayout />,
+        children: [],
+      },
+      {
         path: "/vendor",
         element: <VendorLayout />,
         children: [
+          {
+            path: "orders",
+            element: <OrdersPage />,
+          },
           {
             path: "products/view",
             element: <ViewProducts />,
@@ -123,6 +135,10 @@ const router = createBrowserRouter([
       {
         path: "/vendor/signup",
         element: <VendorSignup />,
+      },
+      {
+        path: "/admin/login",
+        element: <AdminLogin />,
       },
     ],
   },
