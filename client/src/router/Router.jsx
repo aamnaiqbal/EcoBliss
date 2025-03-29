@@ -23,6 +23,7 @@ import AddProduct from "../pages/vendor/Products/AddProduct";
 import OrdersPage from "../pages/vendor/Order";
 import AdminLogin from "../auth/admin/AdminLogin";
 import AdminLayout from "../layout/AdminLayout";
+import Dashboard from "../pages/admin/Dashboard";
 
 const router = createBrowserRouter([
   {
@@ -104,7 +105,12 @@ const router = createBrowserRouter([
       {
         path: "/admin",
         element: <AdminLayout />,
-        children: [],
+        children: [
+          {
+            path: "dashboard",
+            element: <Dashboard />,
+          },
+        ],
       },
       {
         path: "/vendor",
