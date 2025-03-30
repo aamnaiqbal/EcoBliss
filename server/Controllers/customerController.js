@@ -1,8 +1,8 @@
 const Customer = require("../Models/customerModel");
 const asyncErrorHandler = require("../utils/asyncErrorHandler");
 const customError = require("../utils/customError");
-const jwt= require('jsonwebtoken')
-const util = require('util')
+const jwt = require("jsonwebtoken");
+const util = require("util");
 const signToken = require("../utils/signToken");
 
 exports.login = asyncErrorHandler(async (req, res, next) => {
@@ -43,26 +43,32 @@ exports.signup = asyncErrorHandler(async (req, res, next) => {
   });
 });
 
-exports.protect= asyncErrorHandler(async(req,res,next)=>{
-  const testToken= req.headers.authorization;
+exports.protect = asyncErrorHandler(async (req, res, next) => {
+  const testToken = req.headers.authorization;
   let token;
-  if(testToken && testToken.startsWith('bearer')){
-    token=testToken.split(' ')[1];
+  if (testToken && testToken.startsWith("bearer")) {
+    token = testToken.split(" ")[1];
   }
-  if(!token){
-    return next(new customError('You are not logged in.',401))
+  if (!token) {
+    return next(new customError("You are not logged in.", 401));
   }
-  const decodedToken= await util.promisify(jwt.verify)(token, process.env.SECRET_STR)  
+  const decodedToken = await util.promisify(jwt.verify)(
+    token,
+    process.env.SECRET_STR
+  );
   console.log("Hey", decodedToken);
   //if the token has expired then verify() throw an error with named 'TokenExpiredError'
-  
-  const customer= await Customer.findById(decodedToken.id);
-  if(!customer) return next(new customError("The user with given token does not exist",401))
- 
+
+  const customer = await Customer.findById(decodedToken.id);
+  if (!customer)
+    return next(
+      new customError("The user with given token does not exist", 401)
+    );
+
   // if(await user.isPasswordChanged(decodedToken.iat)){
   //   return next(new customError('The password has changed recently, Please login again', 401))
   // }
 
-  req.customer=customer;
+  req.customer = customer;
   next();
-})
+});

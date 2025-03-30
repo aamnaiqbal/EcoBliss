@@ -3,9 +3,7 @@ const mongoose = require("mongoose");
 require("dotenv").config();
 
 mongoose
-  .connect(
-    "mongodb+srv://aamnaiqbal17:AnMgQ03YDUE3NTtv@legalassist.3cuqg.mongodb.net/?retryWrites=true&w=majority&appName=LegalAssist"
-  )
+  .connect(process.env.MONGODBCLUSTER)
   .then(() => console.log("Successfully connected to DB"))
   .catch((err) => console.log("Some error has occured in connecting to DB."));
 

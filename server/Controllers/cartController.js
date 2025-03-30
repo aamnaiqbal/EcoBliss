@@ -5,7 +5,8 @@ const asyncErrorHandler = require("../utils/asyncErrorHandler");
 const customError = require("../utils/customError");
 
 exports.addItemToCart = asyncErrorHandler(async (req, res) => {
-  const { customerId, productId, productType, quantity, size } = req.body;
+  const { customerId, vendorId, productId, productType, quantity, size } =
+    req.body;
   // console.log(req.body);
   let updatedQuantity = quantity;
   let cart = await Cart.findOne({ customerId });
@@ -13,18 +14,19 @@ exports.addItemToCart = asyncErrorHandler(async (req, res) => {
   if (!cart) {
     cart = new Cart({
       customerId,
-      items: [{ productId, productType, quantity, size }],
+      items: [{ productId, vendorId, productType, quantity, size }],
     });
   } else {
     const itemIndex = cart.items.findIndex(
-      (item) => item.productId.equals(productId) && item.size === size
+      (item) =>
+        item.productId.equals(productId) && (item.size === size || !size)
     );
 
     if (itemIndex > -1) {
       cart.items[itemIndex].quantity += quantity;
       updatedQuantity = cart.items[itemIndex].quantity;
     } else {
-      cart.items.push({ productId, productType, quantity, size });
+      cart.items.push({ productId, vendorId, productType, quantity, size });
     }
   }
 
@@ -32,10 +34,13 @@ exports.addItemToCart = asyncErrorHandler(async (req, res) => {
   // Fetch the newly added/updated item with full details
   let newItem;
   if (productType === "Plant") {
-    const plant = await Plant.findById(productId).select("name image size");
+    const plant = await Plant.findById(productId).select(
+      "name image size vendorId"
+    );
     newItem = {
       productId: {
         _id: plant._id,
+        vendorId: plant.vendorId,
         name: plant.name,
         image: plant.image,
         size: plant.size, // Get the correct price for the selected size
@@ -46,11 +51,12 @@ exports.addItemToCart = asyncErrorHandler(async (req, res) => {
     };
   } else if (productType === "PlantCare") {
     const plantCare = await PlantCare.findById(productId).select(
-      "name image price"
+      "name image price vendorId"
     );
     newItem = {
       productId: {
         _id: plantCare._id,
+        vendorId: plantCare.vendorId,
         name: plantCare.name,
         image: plantCare.image,
         price: plantCare.price,
@@ -78,12 +84,12 @@ exports.getCart = asyncErrorHandler(async (req, res, next) => {
     cart.items.map(async (item) => {
       if (item.productType === "Plant") {
         const plant = await Plant.findById(item.productId).select(
-          "name image size "
+          "name image size vendorId "
         );
         item.productId = plant; // Set the populated plant
       } else if (item.productType === "PlantCare") {
         const plantCare = await PlantCare.findById(item.productId).select(
-          "name price image "
+          "name price image vendorId"
         );
         item.productId = plantCare; // Set the populated plant care
       }
@@ -135,7 +141,7 @@ exports.deleteProduct = asyncErrorHandler(async (req, res, next) => {
   cart.items.splice(productIndex, 1);
   await cart.save();
   res.status(204).json({
-    success: true,
+    status: "success",
     data: null,
   });
 });
