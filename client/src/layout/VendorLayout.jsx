@@ -131,7 +131,7 @@ const VendorLayout = () => {
             </li>
             <li>
               <Link
-                to="/vendor/review&ratings"
+                to="/vendor/messages"
                 className="flex items-center gap-3 p-3 hover:bg-green-100 rounded-lg"
               >
                 <img
