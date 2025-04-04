@@ -6,14 +6,18 @@ const orderSchema = new mongoose.Schema({
     ref: "Customer",
     required: true,
   },
-  items: [
+  subOrders: [
     {
+      _id: {
+        type: mongoose.Schema.Types.ObjectId,
+        auto: true,
+      },
       vendorId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Vendor",
         required: [true, "Vendor Id is required."],
       },
-      products: [
+      items: [
         {
           productId: {
             type: mongoose.Schema.Types.ObjectId,
@@ -25,7 +29,6 @@ const orderSchema = new mongoose.Schema({
             enum: ["Plant", "PlantCare"],
             required: true,
           },
-          name: String,
           quantity: {
             type: Number,
             required: true,
@@ -42,6 +45,12 @@ const orderSchema = new mongoose.Schema({
           },
         },
       ],
+      status: {
+        type: String,
+        enum: ["Pending", "Ready to ship", "Shipped", "Delivered"],
+        default: "Pending",
+      },
+      totalAmount: { type: Number, required: true },
     },
   ],
   shippingCharges: {
@@ -72,11 +81,6 @@ const orderSchema = new mongoose.Schema({
   paymentStatus: {
     type: String,
     enum: ["Pending", "Paid", "Failed"],
-    default: "Pending",
-  },
-  status: {
-    type: String,
-    enum: ["Pending", "Processing", "Shipped", "Delivered"],
     default: "Pending",
   },
   createdAt: {
