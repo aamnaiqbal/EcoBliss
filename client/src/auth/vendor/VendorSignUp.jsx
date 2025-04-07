@@ -2,6 +2,11 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { FaArrowLeft } from "react-icons/fa";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const formSchema = z.object({
   fullName: z
@@ -39,10 +44,8 @@ const formSchema = z.object({
     .regex(/^\d+$/, "Account number must contain Only numbers")
     .min(6, "Account number must be atleat 6 digits long")
     .max(20, "Account number must not contain more than 20 digits"),
-  IBAN: z
-    .string()
-    .nonempty({ message: "IBAN is required field." })
-    .regex(/^PK\d{2}[A-Z]{4}\d{16}$/, "Invalid IBAN"),
+  IBANno: z.string().nonempty({ message: "IBAN is required field." }),
+  // .regex(/^PK\d{2}[A-Z]{4}\d{16}$/, "Invalid IBAN"),
   nurseryName: z
     .string()
     .nonempty({ message: "Nursery name is required field." })
@@ -51,6 +54,7 @@ const formSchema = z.object({
 });
 
 const VendorSignup = () => {
+  const navigate = useNavigate();
   const [step, setStep] = useState(1);
   const {
     register,
@@ -74,9 +78,25 @@ const VendorSignup = () => {
     if (isValid) setStep((prevStep) => prevStep + 1);
   };
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
+    console.log(data);
     try {
-      console.log(data);
+      const response = await axios.post(
+        "http://localhost:8000/api/v1/vendor/signup",
+        data,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log(response);
+      if (response.data.status === "success") {
+        toast.success(response.data.message);
+        navigate("/vendor/verify-otp", {
+          state: { email: response.data.data.vendor.email },
+        });
+      }
     } catch (error) {
       setError("root", {
         message: "This email is already taken.",
@@ -96,6 +116,14 @@ const VendorSignup = () => {
           </h1>
           <img src="/images/Logo.png" alt="EcoBliss" className="h-16" />
         </div>
+        {step !== 1 && (
+          <FaArrowLeft
+            onClick={() => {
+              setStep(step - 1);
+              console.log(step);
+            }}
+          />
+        )}
         <form className="lg:w-[60%] w-[90%]" onSubmit={handleSubmit(onSubmit)}>
           {step === 1 && (
             <div className="flex flex-col gap-1 ">
@@ -271,3 +299,5 @@ const VendorSignup = () => {
 };
 
 export default VendorSignup;
+
+//Adore you from Harrry Styles Tiki Tiki raat from Prince Narula
