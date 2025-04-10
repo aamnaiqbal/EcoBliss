@@ -6,13 +6,23 @@ import { toast } from "react-toastify";
 const cookies = new Cookies();
 
 // Retrieve token from cookies
-const token = cookies.get("jwt_authorization");
-let initialAuth = null;
+const userToken = cookies.get("jwt_authorization");
+const vendorToken = cookies.get("jwt_vendor_authorization");
+let initialUserAuth = null;
+let initialVendorAuth = null;
 
 // Decode token if available
-if (token) {
+if (userToken) {
   try {
-    initialAuth = jwtDecode(token);
+    initialUserAuth = jwtDecode(userToken);
+  } catch (error) {
+    console.error("Failed to decode token:", error);
+  }
+}
+
+if (vendorToken) {
+  try {
+    initialVendorAuth = jwtDecode(vendorToken);
   } catch (error) {
     console.error("Failed to decode token:", error);
   }
@@ -21,18 +31,29 @@ if (token) {
 const authSlice = createSlice({
   name: "auth",
   initialState: {
-    auth: initialAuth, // Store decoded token
+    userAuth: initialUserAuth, // Store decoded token
+    vendorAuth: initialVendorAuth, // Store decoded token
     lastPage: null, // Track last visited page
   },
   reducers: {
-    login: (state, action) => {
-      state.auth = action.payload;
-      console.log(JSON.parse(JSON.stringify(state.auth)));
+    userLogin: (state, action) => {
+      state.userAuth = action.payload;
+      console.log(JSON.parse(JSON.stringify(state.userAuth)));
       cookies.set("jwt_authorization", action.payload.token, { path: "/" }); // Save token in cookies
     },
-    logout: (state) => {
-      state.auth = null;
+    userLogout: (state) => {
+      state.userAuth = null;
       cookies.remove("jwt_authorization");
+      toast.success("Logged out");
+    },
+    vendorLogin: (state, action) => {
+      state.vendorAuth = action.payload;
+      console.log(JSON.parse(JSON.stringify(state.vendorAuth)));
+      cookies.set("jwt_vendor_authorization", action.payload.token); // Save token in cookies
+    },
+    vendorLogout: (state) => {
+      state.auth = null;
+      cookies.remove("jwt_vendor_authorization");
       toast.success("Logged out");
     },
     setLastPage: (state, action) => {
@@ -41,5 +62,6 @@ const authSlice = createSlice({
   },
 });
 
-export const { login, logout, setLastPage } = authSlice.actions;
+export const { userLogin, userLogout, vendorLogout, vendorLogin, setLastPage } =
+  authSlice.actions;
 export default authSlice.reducer;

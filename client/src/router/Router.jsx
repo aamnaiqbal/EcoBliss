@@ -16,6 +16,8 @@ import Checkout from "../pages/checkout/Checkout";
 import AboutUs from "../pages/aboutus/AboutUs";
 import OrderMessage from "../pages/checkout/OrderMessage";
 import VendorSignup from "../auth/vendor/vendorSignUp";
+import VendorVerifyOTP from "../auth/vendor/VendorOTP";
+import VendorLogin from "../auth/vendor/VendorLogin";
 import VendorLayout from "../layout/vendorLayout";
 import ViewProducts from "../pages/vendor/Products/ViewProducts";
 import ProductDetail from "../pages/vendor/Products/ProductDetail";
@@ -141,6 +143,14 @@ const router = createBrowserRouter([
       {
         path: "/vendor/signup",
         element: <VendorSignup />,
+      },
+      {
+        path: "/vendor/login",
+        element: <VendorLogin />,
+      },
+      {
+        path: "/vendor/verify-otp",
+        element: <VendorVerifyOTP />,
       },
       {
         path: "/admin/login",
