@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const validator = require("validator");
+const bcrypt = require("bcrypt");
 
 const vendorSchema = new mongoose.Schema({
   fullName: {
@@ -77,17 +78,17 @@ const vendorSchema = new mongoose.Schema({
         "Account number must be between 6 to 20 digits and contain only numbers",
     },
   },
-  IBAN: {
+  IBANno: {
     type: String,
     unique: true,
     required: [true, "IBAN is rquired field."],
-    validate: {
-      validator: (IBAN) => {
-        return validator.isIBAN(IBAN) && IBAN.startsWith("PK");
-      },
-      message:
-        "Invalid IBAN. Must be a valid Pakistani IBAN starting with 'PK'.",
-    },
+    // validate: {
+    //   validator: (IBAN) => {
+    //     return validator.isIBAN(IBAN) && IBAN.startsWith("PK");
+    //   },
+    //   message:
+    //     "Invalid IBAN. Must be a valid Pakistani IBAN starting with 'PK'.",
+    // },
   },
   nurseryName: {
     type: String,
@@ -116,6 +117,18 @@ const vendorSchema = new mongoose.Schema({
     default: false,
   },
 });
+
+vendorSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) return next();
+  this.password = await bcrypt.hash(this.password, 12); //12 is the cost factor
+  next();
+});
+vendorSchema.methods.comparePasswordInDB = async function (
+  password,
+  passwordDB
+) {
+  return await bcrypt.compare(password, passwordDB);
+};
 
 const Vendor = mongoose.model("Vendor", vendorSchema);
 module.exports = Vendor;

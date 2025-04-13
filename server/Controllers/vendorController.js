@@ -11,14 +11,6 @@ const {
 } = require("../utils/cloudinary");
 const fs = require("fs");
 
-const transporter = nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
-});
-
 function generateOTP() {
   const otp = crypto.randomInt(100000, 999999).toString();
   const expiresAt = Date.now() + 5 * 60 * 1000; //set expiry time 5 minutes from now
@@ -27,6 +19,16 @@ function generateOTP() {
 
 //Signup
 exports.signUp = asyncErrorHandler(async (req, res, next) => {
+  console.log("Body", req.body);
+  const transporter = nodemailer.createTransport({
+    host: "smtp.gmail.com",
+    port: 587,
+    secure: false,
+    auth: {
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS,
+    },
+  });
   const { email } = req.body;
   let vendor = await Vendor.findOne({ email });
   if (vendor) {
@@ -38,8 +40,6 @@ exports.signUp = asyncErrorHandler(async (req, res, next) => {
   req.body.otp = otp;
   req.body.otpExpiry = expiresAt;
   vendor = await Vendor.create(req.body);
-  console.log(process.env.EMAIL_USER);
-  console.log(process.env.EMAIL_PASS);
   await transporter.sendMail({
     from: process.env.EMAIL_USER, // sender address
     to: email,
@@ -55,7 +55,7 @@ exports.signUp = asyncErrorHandler(async (req, res, next) => {
   });
 });
 
-//Verify OTP
+// //Verify OTP
 exports.verifyOTP = asyncErrorHandler(async (req, res, next) => {
   const { email, otp } = req.body;
   let vendor = await Vendor.findOne({ email });
@@ -79,8 +79,17 @@ exports.verifyOTP = asyncErrorHandler(async (req, res, next) => {
   });
 });
 
-//Resend OTP
+// //Resend OTP
 exports.resendOTP = asyncErrorHandler(async (req, res, next) => {
+  const transporter = nodemailer.createTransport({
+    host: "smtp.gmail.com",
+    port: 587,
+    secure: false,
+    auth: {
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS,
+    },
+  });
   const { email } = req.body;
   if (!email)
     return next(
@@ -121,7 +130,10 @@ exports.login = asyncErrorHandler(async (req, res, next) => {
       new customError("Please provide email and password for login.", 400)
     );
   const vendor = await Vendor.findOne({ email });
-  if (!vendor || !(await comparePasswordInDB(password, vendor.password))) {
+  if (
+    !vendor ||
+    !(await vendor.comparePasswordInDB(password, vendor.password))
+  ) {
     return next(new customError("Incorrect email or password.", 400));
   }
   if (!vendor.isVerified) {
@@ -200,8 +212,8 @@ exports.deletePlant = asyncErrorHandler(async (req, res, next) => {
 
 exports.updatePlant = asyncErrorHandler(async (req, res, next) => {
   const productId = req.params.id;
-  const vendorId = "671a40b179ecced09c18b59c";
-  // console.log(req.files);
+  const vendorId = req.body.vendorId;
+  // console.log(vendorId);
 
   const plant = await Plant.findOne({ _id: productId, vendorId });
   if (!plant)

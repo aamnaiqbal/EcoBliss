@@ -35,10 +35,8 @@ const vendorSchema = z.object({
     .regex(/^\d+$/, "Account number must contain Only numbers")
     .min(6, "Account number must be atleat 6 digits long")
     .max(20, "Account number must not contain more than 20 digits"),
-  IBAN: z
-    .string()
-    .nonempty({ message: "Please provide IBAN" })
-    .regex(/^PK\d{2}[A-Z]{4}\d{16}$/, "Invalid IBAN"),
+  IBANno: z.string().nonempty({ message: "Please provide IBAN" }),
+  // .regex(/^PK\d{2}[A-Z]{4}\d{16}$/, "Invalid IBAN"),
   nurseryName: z
     .string()
     .nonempty({ message: "Please provide nursery name" })

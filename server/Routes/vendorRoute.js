@@ -1,5 +1,5 @@
 const express = require("express");
-const vendorController = require("../Controllers/vendorCOntroller");
+const vendorController = require("../Controllers/vendorController");
 const validateVendor = require("../Middlewares/validateVendorMiddleware");
 const upload = require("../Middlewares/multerMiddleware");
 const router = express.Router();

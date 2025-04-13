@@ -3,6 +3,7 @@ const asyncErrorHandler = require("../utils/asyncErrorHandler");
 
 const validateVendor = asyncErrorHandler(async (req, res, next) => {
   vendorSchema.parse(req.body);
+  console.log("Hello");
   next();
 });
 
