@@ -5,10 +5,10 @@ import axios from "axios";
 
 export const fetchPlants = createAsyncThunk(
   "plants/fetchPlants",
-  async (_, { rejectWithValue }) => {
+  async (vendorId, { rejectWithValue }) => {
     try {
       const response = await axios.get(
-        "http://localhost:8000/api/v1/vendor/plants/671a40b179ecced09c18b59c"
+        `http://localhost:8000/api/v1/vendor/plants/${vendorId}`
       );
       // console.log("Response", response.data.data.plants);
       return response.data.data.plants;
@@ -30,9 +30,10 @@ export const updatePlant = createAsyncThunk(
         formData,
         { headers: { "Content-Type": "multipart/form-data" } }
       );
-      // console.log(response.data.data.updatedPlant);
+      console.log(response.data.data.updatedPlant);
       return response.data.data.updatedPlant;
     } catch (error) {
+      console.log(error);
       return rejectWithValue(
         error.response?.data || "Failed to update the plant data."
       );

@@ -2,7 +2,7 @@ import axios from "axios";
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { login } from "../../redux/slices/AuthSlice";
+import { userLogin } from "../../redux/slices/AuthSlice";
 import { Link } from "react-router-dom";
 import styles from "./Signup.module.css";
 import { toast } from "react-toastify";
@@ -44,7 +44,7 @@ export default function Signup() {
         });
 
         // Dispatch login action to update Redux state
-        dispatch(login({ ...decoded, token }));
+        dispatch(userLogin({ ...decoded, token }));
 
         toast.success("Registration successful");
         navigate("/");

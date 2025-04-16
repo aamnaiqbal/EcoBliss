@@ -8,7 +8,7 @@ const Cart = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { cartItems, subtotal } = useSelector((state) => state.cart);
-  const auth = useSelector((state) => state.auth.auth);
+  const auth = useSelector((state) => state.auth.userAuth);
   const userId = auth?.id;
 
   const handleCheckout = () => {

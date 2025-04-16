@@ -6,7 +6,7 @@ import { FaUser, FaLock } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
-import { login, setLastPage } from "../../redux/slices/AuthSlice";
+import { userLogin, setLastPage } from "../../redux/slices/AuthSlice";
 
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -42,7 +42,7 @@ const Login = () => {
         const email = response.data.data.customer.email;
 
         // Dispatch login action to Redux
-        dispatch(login({ ...decoded, token, name, email }));
+        dispatch(userLogin({ ...decoded, token, name, email }));
 
         toast.success("Login Successful");
         navigate(lastPage || "/");

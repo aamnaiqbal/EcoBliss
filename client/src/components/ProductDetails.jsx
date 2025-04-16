@@ -14,7 +14,7 @@ const productDetails = () => {
   const { orchidPlants, housePlants, outdoorPlants } = useSelector(
     (state) => state.buyerPlants
   );
-  const auth = useSelector((state) => state.auth.auth);
+  const auth = useSelector((state) => state.auth.userAuth);
   const { selectedProduct, loading, error } = useSelector(
     (state) => state.product
   );

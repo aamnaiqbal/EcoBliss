@@ -2,12 +2,12 @@ import { React, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import Logo from "/images/Logo.png";
 import { useDispatch, useSelector } from "react-redux";
-import { logout, setLastPage } from "../redux/slices/AuthSlice";
+import { userLogout, setLastPage } from "../redux/slices/AuthSlice";
 import { clearCart } from "../redux/slices/CartSlice";
 
 const Navbar = () => {
   const dispatch = useDispatch();
-  const auth = useSelector((state) => state.auth.auth);
+  const auth = useSelector((state) => state.auth.userAuth);
   console.log(auth);
 
   const { pathname } = useLocation();
@@ -59,7 +59,7 @@ const Navbar = () => {
                     <Link
                       to="/"
                       onClick={() => {
-                        dispatch(logout());
+                        dispatch(userLogout());
                         dispatch(clearCart());
                       }}
                     >

@@ -6,7 +6,7 @@ import { setCartItems, deleteCartItem } from "../redux/slices/CartSlice";
 const CartItem = ({ item }) => {
   const dispatch = useDispatch();
   const { cartItems } = useSelector((state) => state.cart);
-  const auth = useSelector((state) => state.auth.auth);
+  const auth = useSelector((state) => state.auth.userAuth);
   const [quantity, setQuantity] = useState(item.quantity);
   const Size = item.size;
   const [price, setPrice] = useState(() => {
