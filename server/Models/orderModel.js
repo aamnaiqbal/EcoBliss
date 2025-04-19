@@ -51,6 +51,16 @@ const orderSchema = new mongoose.Schema({
         default: "Pending",
       },
       totalAmount: { type: Number, required: true },
+      shipmentRequestedAt: {
+        type: Date,
+      },
+      shipmentAcceptedAt: {
+        type: Date,
+      },
+      vehicleType: {
+        type: String,
+        enum: ["Delivery Bike", "Suzuki", "Truck"],
+      },
     },
   ],
   shippingCharges: {
