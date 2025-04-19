@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addPlant, updatePlant } from "../../../redux/slices/VendorPlantSlice";
 const AddProduct = () => {
+  const { id } = useSelector((state) => state.auth.vendorAuth);
+  const vendorId = id;
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();
@@ -72,7 +74,7 @@ const AddProduct = () => {
     formData.append("name", data.plantName);
     formData.append("category", data.plantCategory);
     formData.append("description", data.plantDescription);
-    formData.append("vendorId", "671a40b179ecced09c18b59c");
+    formData.append("vendorId", vendorId);
 
     if (data.S) {
       formData.append("size[S]", data.SPrice);
@@ -102,6 +104,7 @@ const AddProduct = () => {
     } else {
       console.log("Plant added");
       dispatch(addPlant(formData));
+      navigate(`/vendor/products/view`);
     }
   };
 

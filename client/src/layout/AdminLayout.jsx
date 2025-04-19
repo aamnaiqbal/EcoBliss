@@ -4,6 +4,7 @@ import { FaTimes, FaHome, FaBars, FaUserTie, FaLeaf } from "react-icons/fa";
 import { IoIosPeople } from "react-icons/io";
 import { PiMoneyFill, PiPathBold } from "react-icons/pi";
 import { Link, Outlet } from "react-router-dom";
+import styles from "./VendorLayout.module.css";
 const AdminLayout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   return (
@@ -131,7 +132,7 @@ const AdminLayout = () => {
           </header>
 
           {/* Page Content (Injected via Outlet) */}
-          <div className="">
+          <div className={styles.backgroundContainer}>
             <Outlet />
           </div>
         </main>

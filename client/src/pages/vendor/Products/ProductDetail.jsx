@@ -25,11 +25,12 @@ const ProductDetail = () => {
         <div className="text-lightGreen flex gap-3 items-center">
           <div
             className="flex items-center justify-center px-4 py-2 gap-2 text-white bg-red rounded-lg min-w-28"
-            onClick={() =>
+            onClick={() => {
               dispatch(
                 deletePlant({ vendorId: item.vendorId, plantId: item._id })
-              )
-            }
+              );
+              navigate(`/vendor/products/view`);
+            }}
           >
             <MdDelete size={20} />
             <span className="poppins font-semibold">Delete</span>

@@ -26,6 +26,8 @@ import OrdersPage from "../pages/vendor/Order";
 import AdminLogin from "../auth/admin/AdminLogin";
 import AdminLayout from "../layout/AdminLayout";
 import Dashboard from "../pages/admin/Dashboard";
+import AdminOrder from "../pages/admin/Order";
+import AdminOrderDetail from "../pages/admin/orderDetail";
 
 const router = createBrowserRouter([
   {
@@ -111,6 +113,14 @@ const router = createBrowserRouter([
           {
             path: "dashboard",
             element: <Dashboard />,
+          },
+          {
+            path: "orders",
+            element: <AdminOrder />,
+          },
+          {
+            path: "orders/detail/:id",
+            element: <AdminOrderDetail />,
           },
         ],
       },

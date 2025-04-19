@@ -7,10 +7,12 @@ import { fetchPlants } from "../../../redux/slices/VendorPlantSlice";
 
 const ViewProducts = () => {
   const { plants, status, error } = useSelector((state) => state.vendorPlants);
+  const { id } = useSelector((state) => state.auth.vendorAuth);
+  const vendorId = id;
   const dispatch = useDispatch();
   useEffect(() => {
     if (status === "idle") {
-      dispatch(fetchPlants());
+      dispatch(fetchPlants(vendorId));
     }
   }, [dispatch, status]);
 

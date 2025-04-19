@@ -1,12 +1,9 @@
 import React, { useState, useRef } from "react";
 import axios from "axios";
-import { useContext } from "react";
 import { BsCashCoin } from "react-icons/bs";
 import { FaCcVisa } from "react-icons/fa";
-import { CartContext } from "../../store/CartContext";
 import Item from "./Item";
-
-import { AuthContext } from "../../store/AuthContext";
+import { clearCart } from "../../redux/slices/CartSlice";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -15,7 +12,7 @@ const Checkout = () => {
   // const { cartItems, subtotal, setCartItems, setSubtotal } =useContext(CartContext);
   const { cartItems, subtotal } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
-  const { auth } = useSelector((state) => state.auth);
+  const auth = useSelector((state) => state.auth.userAuth);
 
   const [shippingCharges] = useState(500);
   const [paymentMethod, setPaymentMethod] = useState("Cash on Delivery");
@@ -29,21 +26,9 @@ const Checkout = () => {
   const securityCode = useRef(null);
   const nameOnCard = useRef(null);
 
-  console.log(cartItems);
-
   const handleCheckout = async () => {
     const orderData = {
       customerId: auth.id,
-      items: cartItems.map((item) => ({
-        productId: item.productId._id,
-        modelType: item.productType,
-        name: item.productId.name,
-        quantity: item.quantity,
-        size: item.size,
-        price: item.size
-          ? item.productId.size[item.size]
-          : item.productId.price,
-      })),
       shippingCharges,
       totalAmount: shippingCharges + subtotal,
       paymentMethod,
@@ -54,17 +39,16 @@ const Checkout = () => {
       },
     };
 
-    // console.log(orderData);
+    console.log(orderData);
     try {
       const response = await axios.post(
         "http://localhost:8000/api/v1/order",
         orderData
       );
       console.log("response", response);
-      // toast.success("Order Placed successfully.")
-      const orderId = response.data.data._id;
-      setCartItems([]);
-      setSubtotal(0);
+      toast.success("Order Placed successfully.");
+      const orderId = response.data.order._id;
+      dispatch(clearCart());
       navigate("/checkout/message", { state: { orderId } });
     } catch (err) {
       console.log("There was some error in checking out.", err);

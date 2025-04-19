@@ -2,10 +2,14 @@ import { Outlet, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import styles from "./VendorLayout.module.css";
 import { FaHome, FaBars, FaTimes } from "react-icons/fa";
+import { useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
 
 import { IoMdArrowDropdown, IoMdArrowDropup } from "react-icons/io";
 
 const VendorLayout = () => {
+  const vendorAuth = useSelector((state) => state.auth.vendorAuth);
+  console.log(vendorAuth);
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [openProductMenu, setOpenProductMenu] = useState(null);
   const [openSettingMenu, setOpenSettingMenu] = useState(null);
@@ -25,6 +29,35 @@ const VendorLayout = () => {
       setOpenSettingMenu(null);
     }
   }, [isSidebarOpen]);
+
+  const routeTitles = {
+    "/vendor/orders": {
+      title: "Order Management",
+      description: "Manage your orders here",
+    },
+    "/vendor/products/add": {
+      title: "Add Product",
+      description: "Add your new product here",
+    },
+    "/vendor/products/view": {
+      title: "View My Products",
+      description: "View your product listings here",
+    },
+    "/vendor/products/update": {
+      title: "Update Product",
+      description: "Update your product details",
+    },
+    "/vendor": {
+      title: "Welcome Savea",
+      description: "Here is your vendor dashboard.",
+    },
+  };
+  const location = useLocation();
+  const currentPath = location.pathname;
+  const currentRoute = routeTitles[currentPath] || {
+    title: "Product Details",
+    description: "Edit or Delete your product details",
+  };
   return (
     <div className="flex h-screen bg-gray-100">
       {/* Sidebar */}
@@ -202,7 +235,14 @@ const VendorLayout = () => {
       >
         {/* Header */}
         <header className="bg-white shadow-md p-4 flex justify-between items-center">
-          <h2 className="text-xl font-semibold">Vendor Dashboard</h2>
+          <div className="flex flex-col items-center">
+            <h2 className="text-xl md:text-3xl font-semibold petrona">
+              {currentRoute.title}
+            </h2>
+            <h2 className="text-sm font-semibold marcellus">
+              {currentRoute.description}
+            </h2>
+          </div>
           <div className="flex items-center space-x-4">
             <span className="text-gray-700">Welcome, Vendor!</span>
             <button className="bg-red-500 text-white px-4 py-2 rounded">
