@@ -28,6 +28,7 @@ import AdminLayout from "../layout/AdminLayout";
 import Dashboard from "../pages/admin/Dashboard";
 import AdminOrder from "../pages/admin/Order";
 import AdminOrderDetail from "../pages/admin/orderDetail";
+import VendorOrderDetail from "../pages/vendor/OrderDetail";
 
 const router = createBrowserRouter([
   {
@@ -131,6 +132,10 @@ const router = createBrowserRouter([
           {
             path: "orders",
             element: <OrdersPage />,
+          },
+          {
+            path: "orders/detail/:id",
+            element: <VendorOrderDetail />,
           },
           {
             path: "products/view",

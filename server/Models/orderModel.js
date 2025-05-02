@@ -51,6 +51,7 @@ const orderSchema = new mongoose.Schema({
         default: "Pending",
       },
       totalAmount: { type: Number, required: true },
+      totalItems: { type: Number, required: true },
       shipmentRequestedAt: {
         type: Date,
       },

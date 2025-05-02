@@ -47,8 +47,11 @@ const VendorLogin = () => {
   };
 
   return (
-    <div className="flex min-h-dvh">
-      <div className="w-1/2 ">
+    <div className="max-w-screen-2xl container min-h-screen flex">
+      <div className="md:w-1/2">
+        <img src="/images/loginBg.jpg" alt="Plant" className="h-full" />
+      </div>
+      <div className="md:w-1/2 bg-bgSky flex flex-col items-center py-20">
         <img src="/images/Logo.png" alt="EcoBliss" className="h-16" />
         <div className="flex flex-col items-center justify-center h-[90%]">
           <h4 className="marcellus text-2xl md:text-5xl font-bold mb-8 md:mb-16">
@@ -76,7 +79,7 @@ const VendorLogin = () => {
               <div className="mx-auto ">
                 <button
                   type="submit"
-                  className={`btn text-lg text-white bg-lightGreen border-0 hover:bg-lightestGreen xl:px-36 px-20`}
+                  className={`btn text-lg text-white bg-lightGreen border-0 hover:bg-lightestGreen xl:px-16 px-12`}
                 >
                   Login
                 </button>
@@ -84,9 +87,6 @@ const VendorLogin = () => {
             </div>
           </form>
         </div>
-      </div>
-      <div className="w-1/2">
-        <img src="/public/images/admin/login.png" className="" />
       </div>
     </div>
   );
