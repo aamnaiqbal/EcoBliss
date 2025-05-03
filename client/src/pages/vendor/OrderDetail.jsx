@@ -114,11 +114,15 @@ const VendorOrderDetail = () => {
 
         <button
           className={`w-1/4 mt-4 ${
-            order.subOrders[0].status === "Ready to ship"
+            order.subOrders[0].status === "Ready to ship" ||
+            order.subOrders[0].status === "Delivered"
               ? "bg-gray-300 text-gray-500 cursor-not-allowed"
               : "bg-lightGreen hover:bg-[#D9D9D9] text-white hover:text-lightGreen"
           } text-lg md:text-xl py-3 rounded-xl font-semibold p-2`}
-          disabled={order.subOrders[0].status === "Ready to ship"}
+          disabled={
+            order.subOrders[0].status === "Ready to ship" ||
+            order.subOrders[0].status === "Delivered"
+          }
           onClick={() =>
             dispatch(
               updateOrderStatus({

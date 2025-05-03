@@ -310,7 +310,7 @@ exports.placeOrder = asyncErrorHandler(async (req, res, next) => {
 
 exports.getVendorOrders = asyncErrorHandler(async (req, res, next) => {
   let { vendorId } = req.params;
-  const { status } = req.query; // 👈 accept status filter from query params
+  const { status } = req.query; //status filter from query params
   console.log("vendorId:", vendorId, "status:", status);
 
   vendorId = new mongoose.Types.ObjectId(vendorId);

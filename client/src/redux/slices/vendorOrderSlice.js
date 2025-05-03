@@ -12,14 +12,28 @@ const initialState = {
 export const fetchVendorOrders = createAsyncThunk(
   "vendorOrders/fetchVendorOrders",
 
-  async (vendorId, { rejectWithValue }) => {
-    console.log(vendorId);
+  // async ({ vendorId, status }, { rejectWithValue }) => {
+  //   console.log(vendorId);
+  //   try {
+  //     let url = `http://localhost:8000/api/v1/orders/vendor/${vendorId}`;
+  //     if (status) {
+  //       url += `?status=${status}`;
+  //     }
+  //     const response = await axios.get(url);
+  //     console.log(response);
+  //     // console.log(response.data.data);
+  //     return response.data.data;
+  //   } catch (error) {
+  //     return rejectWithValue(error.response?.data || "Failed to fetch order");
+  //   }
+  // }
+  async ({ vendorId, status }, { rejectWithValue }) => {
     try {
-      const response = await axios.get(
-        `http://localhost:8000/api/v1/order/${vendorId}`
-      );
-      console.log(response);
-      // console.log(response.data.data);
+      let url = `http://localhost:8000/api/v1/order/${vendorId}`;
+      if (status) {
+        url += `?status=${status}`;
+      }
+      const response = await axios.get(url);
       return response.data.data;
     } catch (error) {
       return rejectWithValue(error.response?.data || "Failed to fetch order");
