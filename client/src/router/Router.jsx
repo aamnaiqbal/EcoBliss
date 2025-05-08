@@ -120,7 +120,7 @@ const router = createBrowserRouter([
             element: <AdminOrder />,
           },
           {
-            path: "orders/detail/:id",
+            path: "orders/detail/:orderId/:subOrderId",
             element: <AdminOrderDetail />,
           },
         ],
@@ -134,7 +134,7 @@ const router = createBrowserRouter([
             element: <OrdersPage />,
           },
           {
-            path: "orders/detail/:id",
+            path: "orders/detail/:orderId/:subOrderId",
             element: <VendorOrderDetail />,
           },
           {

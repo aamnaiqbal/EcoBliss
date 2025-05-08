@@ -118,28 +118,27 @@ const OrdersPage = () => {
                 </div>
               </div>
               <div className="flex flex-row w-full justify-between">
-                <Link to={`detail/${order.subOrders[0]._id}`} state={{ order }}>
+                <Link
+                  to={`detail/${order._id}/${order.subOrders[0]._id}`}
+                  state={{ order }}
+                >
                   <button className="mt-4 bg-lightGreen hover:bg-lightestGreen text-white py-2 rounded-xl font-semibold p-2">
                     See Details
                   </button>
                 </Link>
                 <button
                   className={`mt-4 ${
-                    order.subOrders[0].status === "Ready to ship" ||
-                    order.subOrders[0].status === "Delivered"
+                    order?.subOrders[0]?.status !== "Pending"
                       ? "bg-gray-300 text-gray-500 cursor-not-allowed"
                       : "bg-lightGreen hover:bg-[#D9D9D9] text-white hover:text-lightGreen"
                   }  py-2 rounded-xl font-semibold p-2`}
-                  disabled={
-                    order.subOrders[0].status === "Ready to ship" ||
-                    order.subOrders[0].status === "Delivered"
-                  }
+                  disabled={order?.subOrders[0]?.status !== "Pending"}
                   onClick={() =>
                     dispatch(
                       updateOrderStatus({
-                        vendorId: order.subOrders[0].vendorId,
+                        vendorId: order?.subOrders[0]?.vendorId,
                         status: "Ready to ship",
-                        orderId: order._id,
+                        orderId: order?._id,
                       })
                     )
                   }

@@ -7,6 +7,7 @@ const plantCareRouter = require("./Routes/plantCareRoute");
 const customerRouter = require("./Routes/customerRoute");
 const cartRouter = require("./Routes/cartRoute");
 const orderRouter = require("./Routes/orderRoute");
+const adminRouter = require("./Routes/adminRoute");
 
 const vendorRouter = require("./Routes/vendorRoute");
 
@@ -20,6 +21,7 @@ app.use("/api/v1/plant", plantRouter);
 app.use("/api/v1/plantcare", plantCareRouter);
 app.use("/api/v1/cart", cartRouter);
 app.use("/api/v1/order", orderRouter);
+app.use("/api/v1/admin", adminRouter);
 
 app.use("/api/v1/vendor", vendorRouter);
 

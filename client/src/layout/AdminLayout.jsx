@@ -122,9 +122,9 @@ const AdminLayout = () => {
         >
           {/* Header */}
           <header className="bg-white shadow-md p-4 flex justify-between items-center">
-            <h2 className="text-xl font-semibold">Vendor Dashboard</h2>
+            <h2 className="text-xl font-semibold">Admin Dashboard</h2>
             <div className="flex items-center space-x-4">
-              <span className="text-gray-700">Welcome, Vendor!</span>
+              <span className="text-gray-700">Welcome, Admin!</span>
               <button className="bg-red-500 text-white px-4 py-2 rounded">
                 Logout
               </button>
@@ -132,7 +132,7 @@ const AdminLayout = () => {
           </header>
 
           {/* Page Content (Injected via Outlet) */}
-          <div className={styles.backgroundContainer}>
+          <div className="bg-[#E1F4EB] min-h-dvh w-full">
             <Outlet />
           </div>
         </main>

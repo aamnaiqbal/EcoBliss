@@ -5,7 +5,7 @@ import buyerPlantReducer from "./slices/BuyerPlantSlice";
 import plantCareReducer from "./slices/PlantCareSlice";
 import productReducer from "./slices/ProductSlice";
 import vendorPlantReducer from "./slices/VendorPlantSlice";
-// import adminOrderReducer from "./slices/AdminOrderSlice";
+import adminOrderReducer from "./slices/AdminOrderSlice";
 import vendorOrderReducer from "./slices/vendorOrderSlice";
 
 const store = configureStore({
@@ -17,6 +17,7 @@ const store = configureStore({
     plantCare: plantCareReducer,
     product: productReducer,
     vendorOrders: vendorOrderReducer,
+    adminOrders: adminOrderReducer,
   },
 });
 

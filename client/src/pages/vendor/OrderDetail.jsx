@@ -1,13 +1,41 @@
-import React from "react";
-import { useDispatch } from "react-redux";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { updateOrderStatus } from "../../redux/slices/vendorOrderSlice";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
+import {
+  updateOrderStatus,
+  fetchVendorOrders,
+} from "../../redux/slices/vendorOrderSlice";
 
 const VendorOrderDetail = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { order } = location.state;
+  // const { order } = location.state;
+  const { id } = useSelector((state) => state.auth.vendorAuth);
+  const vendorId = id;
+  const { orderId, subOrderId } = useParams();
+  console.log(orderId, subOrderId);
+
+  const order = useSelector((state) =>
+    state.vendorOrders.orders.find(
+      (o) => o._id == orderId && o.subOrders[0]?._id == subOrderId
+    )
+  );
+
+  console.log("order detail ", order);
+
+  useEffect(() => {
+    if (!order) {
+      dispatch(fetchVendorOrders({ vendorId, status: "All" }));
+    }
+  }, [dispatch, order]);
+  if (!order) {
+    return (
+      <div className="bg-white my-16 mx-8 p-8 rounded-xl">
+        <p className="text-center text-red-500">Loading order details...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-white my-16 mx-8 p-8 rounded-xl">
@@ -15,15 +43,15 @@ const VendorOrderDetail = () => {
         <p className="font-semibold  text-md md:text-lg text-black">
           Order Id:
           <span className="font-semibold  text-md md:text-lg text-grey italic">
-            {order.subOrders[0]._id}
+            {order?.subOrders[0]?._id}
           </span>
         </p>
         <p className="poppins text-lightGrey text-md italic">
-          {order.subOrders[0].status}
+          {order?.subOrders[0]?.status}
         </p>
       </div>
       <p className="poppins text-lightGrey text-lg mt-4">
-        Order received on: {order.createdAtFormatted}
+        Order received on: {order?.createdAtFormatted}
       </p>
       <h3 className="my-4 poppins text-black font-bold underline">
         Order Details
@@ -38,7 +66,7 @@ const VendorOrderDetail = () => {
           </tr>
         </thead>
         <tbody>
-          {order.subOrders[0].items.map((item, i) => (
+          {order?.subOrders[0]?.items.map((item, i) => (
             <tr className="text-black" key={i}>
               <td className="p-2">
                 <div className="flex flex-row items-center gap-x-2">
@@ -63,7 +91,7 @@ const VendorOrderDetail = () => {
             Total Items
           </p>
           <p className="font-semibold  text-md md:text-lg text-grey">
-            {order.subOrders[0].totalItems}
+            {order?.subOrders[0]?.totalItems}
           </p>
         </div>
         <div className="flex justify-between">
@@ -71,7 +99,7 @@ const VendorOrderDetail = () => {
             Total Cost
           </p>
           <p className="font-semibold  text-md md:text-lg text-grey">
-            Rs. {order.subOrders[0].totalAmount}
+            Rs. {order?.subOrders[0]?.totalAmount}
           </p>
         </div>
       </div>
@@ -84,7 +112,7 @@ const VendorOrderDetail = () => {
             Name
           </p>
           <p className="text-md md:text-lg text-black">
-            {order.shippingDetails.fullName}
+            {order?.shippingDetails?.fullName}
           </p>
         </div>
         <div className="flex justify-between">
@@ -92,7 +120,7 @@ const VendorOrderDetail = () => {
             Address
           </p>
           <p className="text-md md:text-lg text-black">
-            {order.shippingDetails.address}
+            {order?.shippingDetails?.address}
           </p>
         </div>
         <div className="flex justify-between">
@@ -100,7 +128,7 @@ const VendorOrderDetail = () => {
             Phone Number
           </p>
           <p className="text-md md:text-lg text-black">
-            {order.shippingDetails.phoneNo}
+            {order?.shippingDetails?.phoneNo}
           </p>
         </div>
       </div>
@@ -114,21 +142,17 @@ const VendorOrderDetail = () => {
 
         <button
           className={`w-1/4 mt-4 ${
-            order.subOrders[0].status === "Ready to ship" ||
-            order.subOrders[0].status === "Delivered"
+            order?.subOrders[0]?.status !== "Pending"
               ? "bg-gray-300 text-gray-500 cursor-not-allowed"
               : "bg-lightGreen hover:bg-[#D9D9D9] text-white hover:text-lightGreen"
           } text-lg md:text-xl py-3 rounded-xl font-semibold p-2`}
-          disabled={
-            order.subOrders[0].status === "Ready to ship" ||
-            order.subOrders[0].status === "Delivered"
-          }
+          disabled={order?.subOrders[0]?.status !== "Pending"}
           onClick={() =>
             dispatch(
               updateOrderStatus({
-                vendorId: order.subOrders[0].vendorId,
+                vendorId: order?.subOrders[0]?.vendorId,
                 status: "Ready to ship",
-                orderId: order._id,
+                orderId: order?._id,
               })
             )
           }

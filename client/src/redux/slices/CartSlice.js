@@ -150,7 +150,7 @@ const cartSlice = createSlice({
       })
       .addCase(addToCart.rejected, (state, action) => {
         state.error = action.payload;
-        toast.error(action.payload);
+        // toast.error(action.payload);
       })
       .addCase(deleteCartItem.fulfilled, (state, action) => {
         const { cartItemId } = action.payload;
