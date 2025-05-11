@@ -51,7 +51,8 @@ export const updateOrderStatus = createAsyncThunk(
         { status }
       );
       console.log(response);
-      return { orderId, status };
+      const data = response.data.data;
+      return { orderId, status, data };
     } catch (error) {
       return rejectWithValue(
         error.response?.data || "Failed to update order status"
@@ -81,12 +82,13 @@ const vendorOrderSlice = createSlice({
       })
       .addCase(updateOrderStatus.fulfilled, (state, action) => {
         state.status = "succeeded";
-        const { orderId, status } = action.payload;
+        const { orderId, status, data } = action.payload;
         const updatedOrders = state.orders.map((order) => {
           if (order._id == orderId) {
             const updatedSubOrders = order.subOrders.map((subOrder, index) => {
               if (index === 0) {
-                return { ...subOrder, status };
+                const shipmentRequestedAt = data.shipmentRequestedAt;
+                return { ...subOrder, status, shipmentRequestedAt };
               }
               return subOrder;
             });

@@ -1,5 +1,5 @@
 import { React, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Logo from "/images/Logo.png";
 import { useDispatch, useSelector } from "react-redux";
 import { userLogout, setLastPage } from "../redux/slices/AuthSlice";
@@ -7,6 +7,7 @@ import { clearCart } from "../redux/slices/CartSlice";
 
 const Navbar = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const auth = useSelector((state) => state.auth.userAuth);
   console.log(auth);
 
@@ -56,15 +57,15 @@ const Navbar = () => {
                 </li>
                 {auth ? (
                   <li>
-                    <Link
-                      to="/"
+                    <button
                       onClick={() => {
                         dispatch(userLogout());
                         dispatch(clearCart());
+                        navigate("/");
                       }}
                     >
                       Logout
-                    </Link>
+                    </button>
                   </li>
                 ) : (
                   <li>
@@ -115,9 +116,15 @@ const Navbar = () => {
               </li>
               {auth ? (
                 <li>
-                  <Link to="/" onClick={() => dispatch(logout())}>
+                  <button
+                    onClick={() => {
+                      dispatch(userLogout());
+                      dispatch(clearCart());
+                      navigate("/");
+                    }}
+                  >
                     Logout
-                  </Link>
+                  </button>
                 </li>
               ) : (
                 <li>

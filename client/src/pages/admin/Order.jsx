@@ -16,7 +16,7 @@ const AdminOrder = () => {
   console.log(orders);
   return (
     <>
-      <div className="flex gap-4 flex-wrap justify-center py-8">
+      <div className="flex gap-4 flex-wrap justify-center pt-28 pb-4">
         {filters.map((statusText) => (
           <button
             key={statusText}

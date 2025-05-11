@@ -24,7 +24,7 @@ const OrdersPage = () => {
   console.log(orders);
   return (
     <>
-      <div className="bg-customWhite my-16 mx-8 p-8 rounded-xl">
+      <div className="bg-customWhite mb-12 mt-32  mx-8 p-8 rounded-xl">
         {/* FILTER BUTTONS */}
         <div className="flex gap-4 flex-wrap justify-center my-4">
           {filters.map((statusText) => (

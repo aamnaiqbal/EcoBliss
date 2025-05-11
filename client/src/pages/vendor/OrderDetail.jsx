@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { MdKeyboardArrowRight } from "react-icons/md";
 import {
   updateOrderStatus,
   fetchVendorOrders,
@@ -10,11 +11,9 @@ const VendorOrderDetail = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  // const { order } = location.state;
   const { id } = useSelector((state) => state.auth.vendorAuth);
   const vendorId = id;
   const { orderId, subOrderId } = useParams();
-  console.log(orderId, subOrderId);
 
   const order = useSelector((state) =>
     state.vendorOrders.orders.find(
@@ -38,7 +37,20 @@ const VendorOrderDetail = () => {
   }
 
   return (
-    <div className="bg-white my-16 mx-8 p-8 rounded-xl">
+    <div className="bg-white mb-12 mt-32  mx-8 p-8 rounded-xl">
+      <div className="flex justify-end mb-4">
+        <button
+          onClick={() =>
+            navigate(`/vendor/orders/summary/${orderId}/${subOrderId}`)
+          }
+          className="hover:text-green text-lightGreen font-semibold px-4 py-2 rounded italic"
+        >
+          <span className="flex items-center gap-1">
+            Check Order Summary <MdKeyboardArrowRight size={24} />
+          </span>
+        </button>
+      </div>
+
       <div className="flex flex-row items-center justify-between">
         <p className="font-semibold  text-md md:text-lg text-black">
           Order Id:
@@ -96,7 +108,7 @@ const VendorOrderDetail = () => {
         </div>
         <div className="flex justify-between">
           <p className="font-semibold  text-md md:text-lg text-lightGrey">
-            Total Cost
+            Total
           </p>
           <p className="font-semibold  text-md md:text-lg text-grey">
             Rs. {order?.subOrders[0]?.totalAmount}

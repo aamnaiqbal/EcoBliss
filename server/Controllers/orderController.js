@@ -8,6 +8,68 @@ const moment = require("moment");
 const mongoose = require("mongoose");
 const asyncErrorHandler = require("../utils/asyncErrorHandler");
 
+const qs = require("querystring"); // Built-in, to parse body
+const crypto = require("crypto"); // For signature verification (optional but recommended)
+
+exports.handlePayFastIPN = asyncErrorHandler(async (req, res, next) => {
+  const ipnData = req.body;
+  const orderId = ipnData.custom_str1;
+  if (!orderId) {
+    return res.status(400).json({ error: "Order ID not found in IPN." });
+  }
+  // verify payment_status, amount, signature, etc.
+  const paymentStatus = ipnData.payment_status;
+  const paidAmount = parseFloat(ipnData.amount_gross);
+  if (paymentStatus === "COMPLETE") {
+    const order = await Order.findById(orderId);
+    if (!order) return res.status(404).json({ error: "Order not found." });
+
+    // Update order as paid
+    order.paymentStatus = "Paid";
+    order.paymentAt = new Date();
+    await order.save();
+
+    console.log(`Order ${orderId} marked as paid.`);
+    return res.status(200).send("OK");
+  } else {
+    console.log(`Payment not completed for Order ${orderId}`);
+    return res.status(200).send("Payment not complete, ignored.");
+  }
+});
+
+exports.verifyPayFastReturn = asyncErrorHandler(async (req, res, next) => {
+  const { m_payment_id, payment_status } = req.body;
+
+  console.log("User returned from PayFast:", { m_payment_id, payment_status });
+  if (payment_status === "COMPLETE") {
+    const order = await Order.findById(m_payment_id);
+    if (!order) return res.status(404).json({ error: "Order not found." });
+
+    order.paymentStatus = "Paid";
+    order.paymentAt = new Date();
+    await order.save();
+
+    return res.status(200).json({ message: "Payment completed successfully." });
+  }
+
+  if (!m_payment_id) {
+    return res.status(400).json({ error: "Missing payment reference." });
+  }
+  const order = await Order.findById(m_payment_id);
+  if (!order) {
+    return res.status(404).json({ error: "Order not found." });
+  }
+
+  // Redirect or respond
+  if (payment_status === "COMPLETE") {
+    // Payment successful, redirect to a success page
+    return res.status(200).json({ message: "Payment completed successfully." });
+  } else {
+    // Payment failed or canceled
+    return res.status(200).json({ message: "Payment was not successful." });
+  }
+});
+
 exports.placeOrder = asyncErrorHandler(async (req, res, next) => {
   // console.log(req.body);
   const { customerId, shippingCharges, paymentMethod, shippingDetails } =
@@ -47,7 +109,7 @@ exports.placeOrder = asyncErrorHandler(async (req, res, next) => {
       product = await PlantCare.findById(item.productId);
     }
 
-    console.log(product);
+    // console.log(product);
 
     // Add item to vendor's sub-order
     vendorOrders[vendorId].items.push({
@@ -96,7 +158,7 @@ exports.getVendorOrders = asyncErrorHandler(async (req, res, next) => {
     "subOrders.vendorId": vendorId,
   };
 
-  // 👇 Add status filter if provided
+  // status filter if provided
   if (status && status !== "All") {
     matchStage["subOrders.status"] = status;
   }
@@ -152,6 +214,11 @@ exports.getVendorOrders = asyncErrorHandler(async (req, res, next) => {
         items: { $push: "$subOrders.items" },
         subOrderTotalAmount: { $first: "$subOrders.totalAmount" },
         subOrderTotalItems: { $first: "$subOrders.totalItems" },
+        subOrderPaymentStatus: { $first: "$subOrders.paymentStatus" },
+        subOrderShipmentAcceptedAt: { $first: "$subOrders.shipmentAcceptedAt" },
+        subOrderShipmentRequestedAt: {
+          $first: "$subOrders.shipmentRequestedAt",
+        },
       },
     },
     {
@@ -172,6 +239,9 @@ exports.getVendorOrders = asyncErrorHandler(async (req, res, next) => {
             items: "$items",
             totalAmount: "$subOrderTotalAmount",
             totalItems: "$subOrderTotalItems",
+            paymentStatus: "$subOrderPaymentStatus",
+            shipmentAcceptedAt: "$subOrderShipmentAcceptedAt",
+            shipmentRequestedAt: "$subOrderShipmentRequestedAt",
           },
         },
       },

@@ -7,18 +7,19 @@ import { Link, Outlet } from "react-router-dom";
 import styles from "./VendorLayout.module.css";
 const AdminLayout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [selectedTab, setSelectedTab] = useState("Dashboard");
   return (
     <div>
       <div className="flex h-screen bg-gray-100">
         {/* Sidebar */}
         <aside
-          className={`bg-green shadow-lg h-full marcellus fixed top-0 left-0 overflow-hidden ${
+          className={`bg-white shadow-lg h-full marcellus fixed top-0 left-0 overflow-hidden ${
             isSidebarOpen ? "w-64" : "w-20"
           } transition-all p-4`}
         >
           <div>
             <button
-              className="p-3 text-gray-600 text-white "
+              className="p-3 text-gray-600 "
               onClick={() => setIsSidebarOpen(!isSidebarOpen)}
             >
               {isSidebarOpen ? <FaTimes size={22} /> : <FaBars size={22} />}
@@ -35,68 +36,92 @@ const AdminLayout = () => {
             </div>
           </div>
 
-          <nav className="mt-8  text-white">
+          <nav className="mt-8  ">
             <ul className="space-y-1">
               <li>
                 <Link
                   to="/admin/dashboard"
-                  className="flex items-center gap-3 p-3 hover:bg-green-100 rounded-lg"
+                  className={`flex items-center gap-3 p-3 hover:bg-green-100 rounded-lg ${
+                    selectedTab === "Dashboard"
+                      ? "text-white bg-lightGreen"
+                      : "text-grey"
+                  }`}
+                  onClick={() => setSelectedTab("Dashboard")}
                 >
                   <FaHome /> {isSidebarOpen && "Dashboard"}
                 </Link>
-                <hr />
               </li>
               <li>
                 <Link
                   to="/admin/customers"
-                  className="flex items-center gap-3 p-3 hover:bg-green-100 rounded-lg"
+                  className={`flex items-center gap-3 p-3 hover:bg-green-100 rounded-lg ${
+                    selectedTab === "Customers"
+                      ? "text-white bg-lightGreen"
+                      : "text-grey"
+                  }`}
+                  onClick={() => setSelectedTab("Customers")}
                 >
                   <IoIosPeople /> {isSidebarOpen && "Customers"}
                 </Link>
-                <hr />
               </li>
               <li>
                 <Link
                   to="/admin/vendors"
-                  className="flex items-center gap-3 p-3 hover:bg-green-100 rounded-lg"
+                  className={`flex items-center gap-3 p-3 hover:bg-green-100 rounded-lg ${
+                    selectedTab === "Vendors"
+                      ? "text-white bg-lightGreen"
+                      : "text-grey"
+                  }`}
+                  onClick={() => setSelectedTab("Vendors")}
                 >
                   <FaUserTie />
                   {isSidebarOpen && "Vendors"}
                 </Link>
-                <hr />
               </li>
               <li>
                 <Link
                   to="/admin/products"
-                  className="flex items-center gap-3 p-3 hover:bg-green-100 rounded-lg"
+                  className={`flex items-center gap-3 p-3 hover:bg-green-100 rounded-lg ${
+                    selectedTab === "Products"
+                      ? "text-white bg-lightGreen"
+                      : "text-grey"
+                  }`}
+                  onClick={() => setSelectedTab("Products")}
                 >
                   <FaLeaf />
                   {isSidebarOpen && "Products"}
                 </Link>
-                <hr />
               </li>
               <li>
                 <Link
                   to="/admin/orders"
-                  className="flex items-center gap-3 p-3 hover:bg-green-100 rounded-lg"
+                  className={`flex items-center gap-3 p-3 hover:bg-green-100 rounded-lg ${
+                    selectedTab === "Order Management"
+                      ? "text-white bg-lightGreen"
+                      : "text-grey"
+                  }`}
+                  onClick={() => setSelectedTab("Order Management")}
                 >
                   <PiPathBold />
                   {isSidebarOpen && "Order Management"}
                 </Link>
-                <hr />
               </li>
 
               <li>
                 <Link
                   to="/vendor/payments"
-                  className="flex items-center gap-3 p-3 hover:bg-green-100 rounded-lg"
+                  className={`flex items-center gap-3 p-3 hover:bg-green-100 rounded-lg ${
+                    selectedTab === "Payments"
+                      ? "text-white bg-lightGreen"
+                      : "text-grey"
+                  }`}
+                  onClick={() => setSelectedTab("Payments")}
                 >
                   <PiMoneyFill />
                   {isSidebarOpen && "Payments"}
                 </Link>
-                <hr />
               </li>
-              <li>
+              {/* <li>
                 <Link
                   to="/vendor/chats"
                   className="flex items-center gap-3 p-3 hover:bg-green-100 rounded-lg"
@@ -109,7 +134,7 @@ const AdminLayout = () => {
                   {isSidebarOpen && "Chats"}
                 </Link>
                 <hr />
-              </li>
+              </li> */}
             </ul>
           </nav>
         </aside>
@@ -121,7 +146,11 @@ const AdminLayout = () => {
           } relative`}
         >
           {/* Header */}
-          <header className="bg-white shadow-md p-4 flex justify-between items-center">
+          <header
+            className={`bg-white shadow-md p-4 flex justify-between items-center fixed top-0 right-0 z-20 ${
+              isSidebarOpen ? "left-64" : "left-20"
+            }`}
+          >
             <h2 className="text-xl font-semibold">Admin Dashboard</h2>
             <div className="flex items-center space-x-4">
               <span className="text-gray-700">Welcome, Admin!</span>

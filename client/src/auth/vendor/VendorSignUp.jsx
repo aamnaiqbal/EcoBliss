@@ -98,9 +98,11 @@ const VendorSignup = () => {
         });
       }
     } catch (error) {
-      setError("root", {
-        message: "This email is already taken.",
-      });
+      const message =
+        error?.response?.data?.message ||
+        "Something went wrong. Please try again.";
+      toast.error(message); // Show error to user
+      setError("root", { message }); // Optionally store in form state
     }
   };
 
@@ -116,14 +118,6 @@ const VendorSignup = () => {
           </h1>
           <img src="/images/Logo.png" alt="EcoBliss" className="h-16" />
         </div>
-        {step !== 1 && (
-          <FaArrowLeft
-            onClick={() => {
-              setStep(step - 1);
-              console.log(step);
-            }}
-          />
-        )}
         <form className="lg:w-[60%] w-[90%]" onSubmit={handleSubmit(onSubmit)}>
           {step === 1 && (
             <div className="flex flex-col gap-1 ">
@@ -244,6 +238,14 @@ const VendorSignup = () => {
                   Next
                 </button>
               </div>
+              <button
+                onClick={() => setStep(1)}
+                className="hover:text-black text-grey font-semibold px-4 py-2 rounded italic"
+              >
+                <span className="flex items-center gap-1 italic underline">
+                  Back
+                </span>
+              </button>
             </div>
           )}
           {step === 3 && (
@@ -290,6 +292,14 @@ const VendorSignup = () => {
                   {isSubmitting ? "Submitting..." : "Submit"}
                 </button>
               </div>
+              <button
+                onClick={() => setStep(2)}
+                className="hover:text-black text-grey font-semibold px-4 py-2 rounded italic"
+              >
+                <span className="flex items-center gap-1 italic underline">
+                  Back
+                </span>
+              </button>
             </div>
           )}
         </form>
@@ -299,5 +309,3 @@ const VendorSignup = () => {
 };
 
 export default VendorSignup;
-
-//Adore you from Harrry Styles Tiki Tiki raat from Prince Narula

@@ -20,6 +20,10 @@ function generateOTP() {
 //Signup
 exports.signUp = asyncErrorHandler(async (req, res, next) => {
   console.log("Body", req.body);
+  const nurseryName = req.body.nurseryName;
+  const bankAccountNo = req.body.bankAccountNo;
+  const cnic = req.body.cnic;
+
   const transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
     port: 587,
@@ -34,6 +38,32 @@ exports.signUp = asyncErrorHandler(async (req, res, next) => {
   if (vendor) {
     return next(
       new customError("The vendor with this email already exists.", 400)
+    );
+  }
+  // Check if vendor with the same nurseryName already exists
+  vendor = await Vendor.findOne({ nurseryName });
+  if (vendor) {
+    return next(
+      new customError("The vendor with this nursery name already exists.", 400)
+    );
+  }
+
+  // Check if vendor with the same CNIC already exists
+  vendor = await Vendor.findOne({ cnic });
+  if (vendor) {
+    return next(
+      new customError("The vendor with this CNIC already exists.", 400)
+    );
+  }
+
+  // Check if vendor with the same bankAccountNo already exists
+  vendor = await Vendor.findOne({ bankAccountNo });
+  if (vendor) {
+    return next(
+      new customError(
+        "The vendor with this bank account number already exists.",
+        400
+      )
     );
   }
   const { otp, expiresAt } = generateOTP();

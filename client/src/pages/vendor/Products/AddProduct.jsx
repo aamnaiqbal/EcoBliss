@@ -121,7 +121,7 @@ const AddProduct = () => {
     }
   }, [existingProduct]);
   return (
-    <div className="bg-white my-16 mx-8 p-8 rounded-xl">
+    <div className="bg-white mb-12 mt-32  mx-8 p-8 rounded-xl">
       <form className="flex flex-col" onSubmit={handleSubmit(addProduct)}>
         <label className="poppins font-semibold text-lg">Plant Name</label>
         <input

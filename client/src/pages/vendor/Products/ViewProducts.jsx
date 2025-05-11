@@ -19,13 +19,15 @@ const ViewProducts = () => {
   if (status === "loading") return <p>Loading...</p>;
   if (status === "failed") return <p>Error</p>;
   return (
-    <div className="bg-white my-16 mx-8 p-8 rounded-xl">
+    <div className="bg-white mb-12 mt-32  mx-8 p-8 rounded-xl">
       <div className="flex justify-between poppins">
         <h3 className="font-semibold text-xl">My Products</h3>
-        <div className="text-lightGreen flex gap-3 items-center">
-          <IoIosAddCircle size={20} />
-          <h4 className="font-semibold text-lg">Add more</h4>
-        </div>
+        <Link to="/vendor/products/add">
+          <div className="text-lightGreen flex gap-3 items-center cursor-pointer">
+            <IoIosAddCircle size={20} />
+            <h4 className="font-semibold text-lg">Add more</h4>
+          </div>
+        </Link>
       </div>
       {plants.map((item, i) => (
         <div

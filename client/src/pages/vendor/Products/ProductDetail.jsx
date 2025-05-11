@@ -16,7 +16,7 @@ const ProductDetail = () => {
     navigate("/vendor/products/update", { state: { item } });
   };
   return (
-    <div className="bg-white my-16 mx-8 p-8 rounded-xl">
+    <div className="bg-white mb-12 mt-32  mx-8 p-8 rounded-xl">
       <div className="flex justify-between">
         <div className="poppins flex flex-col items-center">
           <h2 className="  text-black font-bold text-3xl">{item.name}</h2>

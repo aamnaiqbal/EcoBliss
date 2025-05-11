@@ -38,7 +38,7 @@ const VendorLogin = () => {
         dispatch(vendorLogin({ ...decoded, token, ...vendorInfo }));
 
         toast.success("Login Successful");
-        navigate("/vendor");
+        navigate("/vendor/dashboard");
       }
     } catch (error) {
       toast.error(error.response?.data?.message || "Login failed");
@@ -86,6 +86,15 @@ const VendorLogin = () => {
               </div>
             </div>
           </form>
+          <p className="mt-8 text-lg">
+            Don't have an account?{" "}
+            <Link
+              to="/vendor/signup"
+              className="text-green underline italic font-medium"
+            >
+              Signup
+            </Link>
+          </p>
         </div>
       </div>
     </div>

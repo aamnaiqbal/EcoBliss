@@ -2,7 +2,7 @@ import React from "react";
 
 const Dashboard = () => {
   return (
-    <div className="min-h-dvh container mx-auto bg-bgSky p-12">
+    <div className="pt-28 pb-8 px-8">
       <div className="flex flex-wrap  gap-8">
         <div className="card bg-base-100 card-sm shadow-sm w-[25%]  flex flex-row  items-center justify-center gap-4 p-2">
           <div className="bg-[#D7D3ED] rounded-md h-1/2 p-2">

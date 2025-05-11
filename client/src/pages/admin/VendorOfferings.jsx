@@ -5,13 +5,20 @@ import {
   updateOrderShipmentRequest,
   fetchOrders,
 } from "../../redux/slices/AdminOrderSlice";
+import { fetchPlants } from "../../redux/slices/VendorPlantSlice";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 
-const AdminOrderDetail = () => {
-  const location = useLocation();
-  const [vehicleType, setVehicleType] = useState("Delivery Bike");
-  const navigate = useNavigate();
+const VendorOfferings = () => {
+  const { plants, status } = useSelector((state) => state.vendorPlants);
   const dispatch = useDispatch();
+  const vendorId = "67f2b13622bf153d5a66f23e";
+  useEffect(() => {
+    if (status === "idle") {
+      dispatch(fetchPlants(vendorId));
+    }
+  }, [dispatch, status]);
+
+  console.log(plants);
   const { orderId, subOrderId } = useParams();
   // console.log(orderId, subOrderId)
   const order = useSelector((state) =>
@@ -27,51 +34,6 @@ const AdminOrderDetail = () => {
       dispatch(fetchOrders({ filter: "All" }));
     }
   }, [dispatch, order]);
-
-  const renderVehicleCard = (
-    label,
-    image,
-    greyImage,
-    value,
-    textColor,
-    isSuzuki
-  ) => {
-    const isDisabled =
-      order?.status === "Shipped" || order?.status === "Delivered";
-    const isSelected = isDisabled
-      ? order?.vehicleType === value
-      : vehicleType === value;
-
-    const baseClasses =
-      "border-2 p-4 flex flex-col items-center justify-center rounded-3xl";
-
-    const borderClass = isDisabled
-      ? isSelected
-        ? "border-grey cursor-not-allowed"
-        : "border-grey cursor-not-allowed opacity-50"
-      : isSelected
-      ? "border-grey hover:cursor-pointer"
-      : "border-lightGreen hover:cursor-pointer hover:border-grey";
-
-    const bgClass =
-      isDisabled && isSuzuki ? "bg-grey" : isSuzuki ? "bg-lightGreen" : "";
-
-    const textClass = isDisabled
-      ? isSuzuki
-        ? "text-white"
-        : "text-grey"
-      : textColor;
-
-    return (
-      <div
-        className={`${baseClasses} ${borderClass} ${bgClass}`}
-        onClick={!isDisabled ? () => setVehicleType(value) : undefined}
-      >
-        <img src={isDisabled ? greyImage : image} alt={label} />
-        <p className={`poppins ${textClass} font-semibold text-xl`}>{label}</p>
-      </div>
-    );
-  };
 
   return (
     <div className="pt-28 pb-8 px-8">
@@ -98,30 +60,23 @@ const AdminOrderDetail = () => {
             </p>
           </div>
         </div>
-        <p className="poppins text-lightGrey text-lg mt-4">
-          Shipment request received on: {order?.shipmentRequestedAt}
-        </p>
-        {order?.shipmentAcceptedAt && (
-          <p className="poppins text-lightGreen text-lg mt-4">
-            Shipment request accepted on: {order?.shipmentAcceptedAt}
-          </p>
-        )}
         <h3 className="my-4 poppins text-black font-bold underline">
-          Order Details
+          Vendor Offerings
         </h3>
         <table className="w-full poppins table-fixed">
           <thead>
             <tr className="text-grey text-lg">
               <th className="text-left w-1/2 p-2">Items</th>
-              <th className="w-2/6 text-center p-2">Qty</th>
-              <th className="w-2/6 text-center p-2">Size</th>
+              <th className="w-2/6 text-center p-2">Item ID</th>
+              <th className="w-2/6 text-center p-2">Stock</th>
+              <th className="w-2/6 text-center p-2">Sizes</th>
               <th className="w-1/6 text-right p-2">Price</th>
             </tr>
           </thead>
           <tbody>
-            {order?.items.map((item, i) => (
+            {plants?.map((item, i) => (
               <tr className="text-black" key={i}>
-                <td className="p-2">{item.productDetails.name}</td>
+                <td className="p-2">{item.name}</td>
                 <td className="text-center p-2">{item.quantity}</td>
                 <td className="text-center p-2">{item.size}</td>
                 <td className="text-right p-2">{item.price}</td>
@@ -184,72 +139,23 @@ const AdminOrderDetail = () => {
               {order?.vendor.email}
             </p>
           </div>
-        </div>
-        <h3 className="my-4 poppins text-black font-bold underline">
-          Choose Vehicle
-        </h3>
-
-        {(order?.status === "Shipped" || order?.status === "Delivered") &&
-          order?.vehicleType && (
-            <p className="text-lg font-semibold text-grey mb-4">
-              Selected Vehicle Type: {order.vehicleType}
+          <div className="flex justify-between">
+            <p className="font-semibold text-md md:text-lg text-lightGrey">
+              Items Sold
             </p>
-          )}
-
-        <div className="flex justify-between p-4">
-          {renderVehicleCard(
-            "Delivery Bike",
-            "/images/admin/order/Bike.png",
-            "/images/admin/order/greyBike.png",
-            "Delivery Bike",
-            "text-lightGreen",
-            false
-          )}
-          {renderVehicleCard(
-            "Suzuki",
-            "/images/admin/order/Suzuki.png",
-            "/images/admin/order/Suzuki.png",
-            "Suzuki",
-            "text-white",
-            true // indicates this is the Suzuki card
-          )}
-          {renderVehicleCard(
-            "Truck",
-            "/images/admin/order/Truck.png",
-            "/images/admin/order/greyTruck.png",
-            "Truck",
-            "text-lightGreen",
-            false
-          )}
+            <p className="text-md md:text-lg text-black">46</p>
+          </div>
+          <div className="flex justify-between">
+            <p className="font-semibold text-md md:text-lg text-lightGrey">
+              Total Income
+            </p>
+            <p className="text-md md:text-lg text-black">Rs. 45,764</p>
+          </div>
         </div>
 
         <div className="flex justify-evenly gap-8 my-4">
-          <button
-            className="w-1/4 mt-4 bg-[#D9D9D9] hover:bg-lightGreen text-lightGreen hover:text-white text-lg md:text-xl py-3 rounded-xl font-semibold p-2"
-            onClick={() => navigate(-1)}
-          >
-            Go Back
-          </button>
-          <button
-            className={`${
-              order?.status === "Shipped" || order?.status === "Delivered"
-                ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-                : "bg-lightGreen hover:bg-[#D9D9D9] text-white hover:text-lightGreen"
-            } w-1/4 mt-4 text-lg md:text-xl py-3 rounded-xl font-semibold p-2`}
-            disabled={
-              order?.status === "Shipped" || order?.status === "Delivered"
-            }
-            onClick={() =>
-              dispatch(
-                updateOrderShipmentRequest({
-                  orderId: order?.orderId,
-                  subOrderId: order?.subOrderId,
-                  vehicleType,
-                })
-              )
-            }
-          >
-            Set as Accepted
+          <button className="w-1/2 mt-4 bg-red  text-white text-lg md:text-xl py-3 rounded-xl font-semibold p-2">
+            Delete Vendor
           </button>
         </div>
       </div>
@@ -257,4 +163,4 @@ const AdminOrderDetail = () => {
   );
 };
 
-export default AdminOrderDetail;
+export default VendorOfferings;

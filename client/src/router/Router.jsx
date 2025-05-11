@@ -29,6 +29,10 @@ import Dashboard from "../pages/admin/Dashboard";
 import AdminOrder from "../pages/admin/Order";
 import AdminOrderDetail from "../pages/admin/orderDetail";
 import VendorOrderDetail from "../pages/vendor/OrderDetail";
+import VendorDashboard from "../pages/vendor/VendorDashboard";
+import OrderSummary from "../pages/vendor/OrderSummary";
+import VendorOfferings from "../pages/admin/VendorOfferings";
+import PaymentReturn from "../pages/checkout/PaymentReturn";
 
 const router = createBrowserRouter([
   {
@@ -90,9 +94,10 @@ const router = createBrowserRouter([
             element: <Checkout />,
           },
           {
-            path: "/checkout/message",
+            path: "/checkout/message/:orderId",
             element: <OrderMessage />,
           },
+          { path: "order/payment-return", element: <PaymentReturn /> },
           {
             path: "/about",
             element: <AboutUs />,
@@ -123,6 +128,10 @@ const router = createBrowserRouter([
             path: "orders/detail/:orderId/:subOrderId",
             element: <AdminOrderDetail />,
           },
+          {
+            path: "vendor/offerings/:vendorId",
+            element: <VendorOfferings />,
+          },
         ],
       },
       {
@@ -130,12 +139,20 @@ const router = createBrowserRouter([
         element: <VendorLayout />,
         children: [
           {
+            path: "dashboard",
+            element: <VendorDashboard />,
+          },
+          {
             path: "orders",
             element: <OrdersPage />,
           },
           {
             path: "orders/detail/:orderId/:subOrderId",
             element: <VendorOrderDetail />,
+          },
+          {
+            path: "orders/summary/:orderId/:subOrderId",
+            element: <OrderSummary />,
           },
           {
             path: "products/view",

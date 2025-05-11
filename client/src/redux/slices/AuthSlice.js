@@ -53,17 +53,19 @@ const authSlice = createSlice({
     },
     userLogout: (state) => {
       state.userAuth = null;
-      cookies.remove("jwt_authorization");
+      cookies.remove("jwt_authorization", { path: "/" });
       toast.success("Logged out");
     },
     vendorLogin: (state, action) => {
       state.vendorAuth = action.payload;
       console.log(JSON.parse(JSON.stringify(state.vendorAuth)));
-      cookies.set("jwt_vendor_authorization", action.payload.token); // Save token in cookies
+      cookies.set("jwt_vendor_authorization", action.payload.token, {
+        path: "/vendor",
+      }); // Save token in cookies
     },
     vendorLogout: (state) => {
-      state.auth = null;
-      cookies.remove("jwt_vendor_authorization");
+      state.vendorAuth = null;
+      cookies.remove("jwt_vendor_authorization", { path: "/vendor" });
       toast.success("Logged out");
     },
     setLastPage: (state, action) => {
@@ -72,11 +74,13 @@ const authSlice = createSlice({
     adminLogin: (state, action) => {
       state.adminAuth = action.payload;
       console.log(JSON.parse(JSON.stringify(state.adminAuth)));
-      cookies.set("jwt_admin_authorization", action.payload.token);
+      cookies.set("jwt_admin_authorization", action.payload.token, {
+        path: "/admin",
+      });
     },
     adminLogout: (state) => {
-      state.auth = null;
-      cookies.remove("jwt_admin_authorization");
+      state.adminAuth = null;
+      cookies.remove("jwt_admin_authorization", { path: "/admin" });
       toast.success("Logged out");
     },
   },

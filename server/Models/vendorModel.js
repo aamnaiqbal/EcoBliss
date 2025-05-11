@@ -80,7 +80,7 @@ const vendorSchema = new mongoose.Schema({
   },
   IBANno: {
     type: String,
-    unique: true,
+    // unique: true,
     required: [true, "IBAN is rquired field."],
     // validate: {
     //   validator: (IBAN) => {

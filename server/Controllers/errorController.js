@@ -21,15 +21,55 @@ const prodErrors = (err, res) => {
   }
 };
 
+// Helper to handle duplicate key error
+const handleDuplicateFieldsDB = (err) => {
+  const field = Object.keys(err.keyValue)[0];
+  const value = err.keyValue[field];
+  const message = `Duplicate field value: '${value}' for '${field}'. Please use another value.`;
+  const error = new Error(message);
+  error.statusCode = 400;
+  error.status = "fail";
+  error.isOperational = true;
+  return error;
+};
+
+// Helper to handle validation error
+const handleValidationErrorDB = (err) => {
+  const messages = Object.values(err.errors).map((el) => el.message);
+  const error = new Error(messages.join(". "));
+  error.statusCode = 400;
+  error.status = "fail";
+  error.isOperational = true;
+  return error;
+};
+
+// Optional: handle invalid ObjectId (CastError)
+const handleCastErrorDB = (err) => {
+  const message = `Invalid ${err.path}: ${err.value}`;
+  const error = new Error(message);
+  error.statusCode = 400;
+  error.status = "fail";
+  error.isOperational = true;
+  return error;
+};
+
 module.exports = (err, req, res, next) => {
-  if (res.headersSent) {
-    return next(err); // Prevents sending a second response
-  }
+  if (res.headersSent) return next(err);
+
   err.statusCode = err.statusCode || 500;
   err.status = err.status || "error";
-  if (process.env.NODE_ENV == "development") {
+
+  if (process.env.NODE_ENV === "development") {
     devErrors(err, res);
   } else {
-    prodErrors(err, res);
+    let error = { ...err };
+    error.message = err.message;
+
+    // Handle specific errors
+    if (err.name === "ValidationError") error = handleValidationErrorDB(err);
+    if (err.code === 11000) error = handleDuplicateFieldsDB(err);
+    if (err.name === "CastError") error = handleCastErrorDB(err);
+
+    prodErrors(error, res);
   }
 };

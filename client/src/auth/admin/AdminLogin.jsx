@@ -28,7 +28,7 @@ const AdminLogin = () => {
         const decoded = jwtDecode(token);
         dispatch(adminLogin({ ...decoded, token }));
         toast.success("Login Successful");
-        navigate("/admin");
+        navigate("/admin/dashboard");
       }
     } catch (error) {
       toast.error(error.response?.data?.message || "Login failed");

@@ -62,6 +62,11 @@ const orderSchema = new mongoose.Schema({
         type: String,
         enum: ["Delivery Bike", "Suzuki", "Truck"],
       },
+      paymentStatus: {
+        type: String,
+        enum: ["Pending", "Paid", "Failed"],
+        default: "Pending",
+      },
     },
   ],
   shippingCharges: {
@@ -93,6 +98,9 @@ const orderSchema = new mongoose.Schema({
     type: String,
     enum: ["Pending", "Paid", "Failed"],
     default: "Pending",
+  },
+  paymentAt: {
+    type: Date,
   },
   createdAt: {
     type: Date,

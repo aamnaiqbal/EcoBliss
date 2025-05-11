@@ -2,14 +2,16 @@ import { Outlet, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import styles from "./VendorLayout.module.css";
 import { FaHome, FaBars, FaTimes } from "react-icons/fa";
-import { useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
-
+import { useSelector, useDispatch } from "react-redux";
+import { useLocation, useNavigate } from "react-router-dom";
 import { IoMdArrowDropdown, IoMdArrowDropup } from "react-icons/io";
+import { vendorLogout } from "../redux/slices/AuthSlice";
 
 const VendorLayout = () => {
   const vendorAuth = useSelector((state) => state.auth.vendorAuth);
   console.log(vendorAuth);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [openProductMenu, setOpenProductMenu] = useState(null);
   const [openSettingMenu, setOpenSettingMenu] = useState(null);
@@ -47,17 +49,30 @@ const VendorLayout = () => {
       title: "Update Product",
       description: "Update your product details",
     },
-    "/vendor": {
-      title: "Welcome Savea",
+    "/vendor/dashboard": {
+      title: "Welcome Vendor",
       description: "Here is your vendor dashboard.",
+    },
+    "/vendor/orders/summary/:orderId/:subOrderId": {
+      title: "Order Summary",
+      description: "Summary of your specific order",
+    },
+    "/vendor/orders/detail/:orderId/:subOrderId": {
+      title: "Order Details",
+      description: "Details of your specific order",
+    },
+    "/vendor/products/details/:id": {
+      title: "Product Details",
+      description: "Edit or Delete your product details",
     },
   };
   const location = useLocation();
   const currentPath = location.pathname;
-  const currentRoute = routeTitles[currentPath] || {
-    title: "Product Details",
-    description: "Edit or Delete your product details",
-  };
+  // const currentRoute = routeTitles[currentPath];
+  const currentRoute = Object.entries(routeTitles).find(([path]) =>
+    new RegExp("^" + path.replace(/:\w+/g, "[^/]+") + "$").test(currentPath)
+  )?.[1] || { title: "", description: "" };
+
   return (
     <div className="flex h-screen bg-gray-100">
       {/* Sidebar */}
@@ -234,7 +249,11 @@ const VendorLayout = () => {
         } relative`}
       >
         {/* Header */}
-        <header className="bg-white shadow-md p-4 flex justify-between items-center">
+        <header
+          className={`bg-white shadow-md p-4 flex justify-between items-center fixed top-0 right-0 z-20 ${
+            isSidebarOpen ? "left-64" : "left-20"
+          }`}
+        >
           <div className="flex flex-col items-center">
             <h2 className="text-xl md:text-3xl font-semibold petrona">
               {currentRoute.title}
@@ -243,9 +262,14 @@ const VendorLayout = () => {
               {currentRoute.description}
             </h2>
           </div>
-          <div className="flex items-center space-x-4">
-            <span className="text-gray-700">Welcome, Vendor!</span>
-            <button className="bg-red-500 text-white px-4 py-2 rounded">
+          <div className="flex items-center flex-end ">
+            <button
+              className=" text-black px-4 py-2 font-semibold text-md"
+              onClick={() => {
+                dispatch(vendorLogout());
+                navigate("/vendor/login");
+              }}
+            >
               Logout
             </button>
           </div>
