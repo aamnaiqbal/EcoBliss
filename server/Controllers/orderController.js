@@ -17,7 +17,6 @@ exports.handlePayFastIPN = asyncErrorHandler(async (req, res, next) => {
   if (!orderId) {
     return res.status(400).json({ error: "Order ID not found in IPN." });
   }
-  // verify payment_status, amount, signature, etc.
   const paymentStatus = ipnData.payment_status;
   const paidAmount = parseFloat(ipnData.amount_gross);
   if (paymentStatus === "COMPLETE") {
