@@ -15,13 +15,11 @@ const ViewProducts = () => {
       dispatch(fetchPlants(vendorId));
     }
   }, [dispatch, status]);
-
-  if (status === "loading") return <p>Loading...</p>;
-  if (status === "failed") return <p>Error</p>;
   return (
     <div className="bg-white mb-12 mt-32  mx-8 p-8 rounded-xl">
       <div className="flex justify-between poppins">
         <h3 className="font-semibold text-xl">My Products</h3>
+
         <Link to="/vendor/products/add">
           <div className="text-lightGreen flex gap-3 items-center cursor-pointer">
             <IoIosAddCircle size={20} />
@@ -29,6 +27,26 @@ const ViewProducts = () => {
           </div>
         </Link>
       </div>
+      {/* LOADING STATE */}
+      {status === "loading" && (
+        <p className="text-center text-blue-600 font-medium text-lg my-10">
+          Loading plants...
+        </p>
+      )}
+
+      {/* ERROR STATE */}
+      {status === "failed" && (
+        <p className="text-center text-red-500 font-medium text-lg my-10">
+          No plants found.
+        </p>
+      )}
+
+      {/* ORDERS */}
+      {status === "succeeded" && plants.length === 0 && (
+        <p className="text-center text-blue-600 font-medium text-xl my-10">
+          No plants found.
+        </p>
+      )}
       {plants.map((item, i) => (
         <div
           className="flex items-center justify-between flex-col md:flex-row my-8 border-b border-[#76767642] pb-8 gap-y-4 text-grey "

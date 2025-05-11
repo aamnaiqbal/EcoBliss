@@ -7,7 +7,7 @@ import { FaCheck } from "react-icons/fa";
 
 const AdminOrder = () => {
   const [filter, setFilter] = useState("All");
-  const filters = ["All", "Ready to ship", "Delivered"];
+  const filters = ["All", "Ready to ship", "Shipped", "Delivered"];
   const { orders, error, status } = useSelector((state) => state.adminOrders);
   const dispatch = useDispatch();
   useEffect(() => {

@@ -99,11 +99,23 @@ const AdminOrderDetail = () => {
           </div>
         </div>
         <p className="poppins text-lightGrey text-lg mt-4">
-          Shipment request received on: {order?.shipmentRequestedAt}
+          Shipment request received on:
+          {new Date(order.shipmentRequestedAt).toLocaleDateString("en-US", {
+            weekday: "short",
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          })}
         </p>
         {order?.shipmentAcceptedAt && (
           <p className="poppins text-lightGreen text-lg mt-4">
-            Shipment request accepted on: {order?.shipmentAcceptedAt}
+            Shipment request accepted on:
+            {new Date(order.shipmentAcceptedAt).toLocaleDateString("en-US", {
+              weekday: "short",
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            })}
           </p>
         )}
         <h3 className="my-4 poppins text-black font-bold underline">

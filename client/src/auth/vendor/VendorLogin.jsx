@@ -29,6 +29,7 @@ const VendorLogin = () => {
           password: password.current.value,
         }
       );
+      console.log(response);
 
       if (response.data.status === "success") {
         const token = response.data.token;
@@ -43,6 +44,29 @@ const VendorLogin = () => {
     } catch (error) {
       toast.error(error.response?.data?.message || "Login failed");
       console.error("Error logging in:", error);
+      //   if (
+      //     error.response?.data?.message ==
+      //     "Email not verified. Please verify OTP."
+      //   ) {
+      //     navigate("/vendor/verify-otp");
+      //   }
+      // }
+      console.log(error.response.data?.message);
+      if (
+        error.response &&
+        error.response.status === 400 &&
+        error.response.data?.message ===
+          "Email not verified. Please verify OTP."
+      ) {
+        console.log("Hello");
+        navigate("/vendor/verify-otp");
+      } else {
+        // Handle other errors
+        console.error(
+          "Login failed:",
+          error.response?.data?.message || error.message
+        );
+      }
     }
   };
 

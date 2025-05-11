@@ -3,19 +3,15 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
-import { useNavigate, useLocation, Link } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const formSchema = z.object({
   email: z.string().email("Valid email is required"),
-  otp: z
-    .string()
-    .nonempty("OTP is required")
-    .regex(/^\d{6}$/, "OTP must be exactly 6 digits"),
 });
 
-const VendorVerifyOTP = () => {
+const ResendOTP = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const preFilledEmail = location.state?.email || "";
@@ -26,14 +22,14 @@ const VendorVerifyOTP = () => {
     formState: { errors, isSubmitting },
   } = useForm({
     resolver: zodResolver(formSchema),
-    defaultValues: { email: preFilledEmail, otp: "" },
+    defaultValues: { email: preFilledEmail },
   });
 
   const onSubmit = async (data) => {
     console.log(data);
     try {
       const response = await axios.post(
-        "http://localhost:8000/api/v1/vendor/verify-otp",
+        "http://localhost:8000/api/v1/vendor/resend-otp",
         data,
         {
           headers: {
@@ -44,7 +40,7 @@ const VendorVerifyOTP = () => {
       console.log(response);
       if (response.data.status === "success") {
         toast.success(response.data.message);
-        navigate("/vendor/login");
+        navigate("/vendor/verify-otp");
       }
     } catch (error) {
       toast.error(error.response?.data?.message || "OTP failed");
@@ -64,6 +60,7 @@ const VendorVerifyOTP = () => {
           </h1>
           <img src="/images/Logo.png" alt="EcoBliss" className="h-16" />
         </div>
+
         <form className="lg:w-[60%] w-[90%]" onSubmit={handleSubmit(onSubmit)}>
           <div className="flex flex-col gap-1  ">
             <label className="marcellus font-medium text-black">
@@ -82,22 +79,6 @@ const VendorVerifyOTP = () => {
                 </span>
               )}
             </div>
-            <label className="marcellus font-medium text-black">
-              Enter the OTP sent on your email
-            </label>
-            <input
-              type="text"
-              placeholder=""
-              {...register("otp")}
-              className="p-[10px] border border-lightGreen outline-none rounded-md bg-white mb-2"
-            ></input>
-            <div className="h-8 mt-[-12px]">
-              {errors.otp && (
-                <span className="text-red-500 text-sm">
-                  {errors.otp?.message}
-                </span>
-              )}
-            </div>
 
             <div className="mx-auto mt-4">
               <button
@@ -105,23 +86,14 @@ const VendorVerifyOTP = () => {
                 type="submit"
                 disabled={isSubmitting}
               >
-                {isSubmitting ? "Confirming..." : "Confirm"}
+                {isSubmitting ? "Sending..." : "Send"}
               </button>
             </div>
           </div>
         </form>
-        <p className="mt-8">
-          Didn't receive the OTP?
-          <Link
-            to="/vendor/resend-otp"
-            className="underline italic text-semibold"
-          >
-            Resend-OTP
-          </Link>
-        </p>
       </div>
     </div>
   );
 };
 
-export default VendorVerifyOTP;
+export default ResendOTP;

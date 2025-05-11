@@ -33,6 +33,7 @@ import VendorDashboard from "../pages/vendor/VendorDashboard";
 import OrderSummary from "../pages/vendor/OrderSummary";
 import VendorOfferings from "../pages/admin/VendorOfferings";
 import PaymentReturn from "../pages/checkout/PaymentReturn";
+import ResendOTP from "../auth/vendor/ResendOTP";
 
 const router = createBrowserRouter([
   {
@@ -183,6 +184,10 @@ const router = createBrowserRouter([
       {
         path: "/vendor/verify-otp",
         element: <VendorVerifyOTP />,
+      },
+      {
+        path: "/vendor/resend-otp",
+        element: <ResendOTP />,
       },
       {
         path: "/admin/login",

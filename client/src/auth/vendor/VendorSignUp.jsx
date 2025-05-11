@@ -4,7 +4,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FaArrowLeft } from "react-icons/fa";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -303,6 +303,15 @@ const VendorSignup = () => {
             </div>
           )}
         </form>
+        <p className="mt-8 text-lg">
+          Already have an account?{" "}
+          <Link
+            to="/vendor/login"
+            className="text-green underline italic font-medium"
+          >
+            Login
+          </Link>
+        </p>
       </div>
     </div>
   );

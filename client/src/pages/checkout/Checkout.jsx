@@ -278,8 +278,6 @@ const Checkout = () => {
         notify_url: "http://localhost:8000/api/v1/order/payfast-notify",
         // notify_url:
         // "https://03c9-182-190-193-83.ngrok-free.app/api/v1/order/payfast-notify",
-
-        custom_str1: orderId, // Include order ID to track later
       };
 
       for (const key in paymentData) {
