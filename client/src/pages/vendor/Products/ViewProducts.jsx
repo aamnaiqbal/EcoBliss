@@ -9,12 +9,15 @@ const ViewProducts = () => {
   const { plants, status, error } = useSelector((state) => state.vendorPlants);
   const { id } = useSelector((state) => state.auth.vendorAuth);
   const vendorId = id;
+  // console.log("Vendor ID view", vendorId);
   const dispatch = useDispatch();
   useEffect(() => {
-    if (status === "idle") {
+    if (vendorId) {
       dispatch(fetchPlants(vendorId));
     }
-  }, [dispatch, status]);
+  }, [dispatch, vendorId]);
+
+  // console.log("View plants", plants);
   return (
     <div className="bg-white mb-12 mt-32  mx-8 p-8 rounded-xl">
       <div className="flex justify-between poppins">

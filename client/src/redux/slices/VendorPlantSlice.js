@@ -6,11 +6,12 @@ import axios from "axios";
 export const fetchPlants = createAsyncThunk(
   "plants/fetchPlants",
   async (vendorId, { rejectWithValue }) => {
+    console.log(vendorId);
     try {
       const response = await axios.get(
         `http://localhost:8000/api/v1/vendor/plants/${vendorId}`
       );
-      // console.log("Response", response.data.data.plants);
+      console.log("Response", response.data.data.plants);
       return response.data.data.plants;
     } catch (error) {
       return rejectWithValue(
@@ -89,7 +90,13 @@ const vendorPlantSlice = createSlice({
     status: "idle",
     error: null,
   },
-  reducers: {},
+  reducers: {
+    resetVendorPlantsState: (state) => {
+      state.plants = [];
+      state.status = "idle";
+      state.error = null;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchPlants.pending, (state) => {
@@ -140,3 +147,4 @@ const vendorPlantSlice = createSlice({
 });
 
 export default vendorPlantSlice.reducer;
+export const { resetVendorPlantsState } = vendorPlantSlice.actions;

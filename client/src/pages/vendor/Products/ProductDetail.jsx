@@ -11,7 +11,7 @@ const ProductDetail = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const item = location.state;
-  console.log("Product Detail", item);
+  // console.log("Product Detail", item);
   const handleUpdate = () => {
     navigate("/vendor/products/update", { state: { item } });
   };
@@ -24,7 +24,7 @@ const ProductDetail = () => {
         </div>
         <div className="text-lightGreen flex gap-3 items-center">
           <div
-            className="flex items-center justify-center px-4 py-2 gap-2 text-white bg-red rounded-lg min-w-28"
+            className="flex items-center justify-center px-4 py-2 gap-2 text-white bg-red rounded-lg min-w-28 cursor-pointer"
             onClick={() => {
               dispatch(
                 deletePlant({ vendorId: item.vendorId, plantId: item._id })
@@ -36,7 +36,7 @@ const ProductDetail = () => {
             <span className="poppins font-semibold">Delete</span>
           </div>
           <div
-            className="flex items-center justify-center px-4 py-2 gap-2 text-white bg-lightGreen rounded-lg min-w-28"
+            className="flex items-center justify-center px-4 py-2 gap-2 text-white bg-lightGreen rounded-lg min-w-28 cursor-pointer"
             onClick={handleUpdate}
           >
             <MdEdit size={20} />

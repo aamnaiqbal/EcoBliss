@@ -6,6 +6,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { IoMdArrowDropdown, IoMdArrowDropup } from "react-icons/io";
 import { vendorLogout } from "../redux/slices/AuthSlice";
+import { resetVendorDashboardState } from "../redux/slices/VendorDashboardSlice";
+import { resetVendorOrdersState } from "../redux/slices/vendorOrderSlice";
+import { resetVendorPlantsState } from "../redux/slices/VendorPlantSlice";
 
 const VendorLayout = () => {
   const vendorAuth = useSelector((state) => state.auth.vendorAuth);
@@ -72,6 +75,14 @@ const VendorLayout = () => {
   const currentRoute = Object.entries(routeTitles).find(([path]) =>
     new RegExp("^" + path.replace(/:\w+/g, "[^/]+") + "$").test(currentPath)
   )?.[1] || { title: "", description: "" };
+
+  const handleLogout = () => {
+    dispatch(resetVendorDashboardState());
+    dispatch(resetVendorOrdersState());
+    dispatch(resetVendorPlantsState());
+    dispatch(vendorLogout());
+    navigate("/vendor/login");
+  };
 
   return (
     <div className="flex h-screen bg-gray-100">
@@ -163,7 +174,7 @@ const VendorLayout = () => {
               </Link>
               <hr />
             </li>
-            <li>
+            {/* <li>
               <Link
                 to="/vendor/review&ratings"
                 className="flex items-center gap-3 p-3 hover:bg-green-100 rounded-lg"
@@ -228,7 +239,7 @@ const VendorLayout = () => {
                   <hr />
                 </li>
               </ul>
-            )}
+            )} */}
             {/* <li>
               <Link
                 to="/vendor/profile"
@@ -266,8 +277,7 @@ const VendorLayout = () => {
             <button
               className=" text-black px-4 py-2 font-semibold text-md"
               onClick={() => {
-                dispatch(vendorLogout());
-                navigate("/vendor/login");
+                handleLogout();
               }}
             >
               Logout

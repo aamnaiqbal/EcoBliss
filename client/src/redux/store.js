@@ -7,6 +7,8 @@ import productReducer from "./slices/ProductSlice";
 import vendorPlantReducer from "./slices/VendorPlantSlice";
 import adminOrderReducer from "./slices/AdminOrderSlice";
 import vendorOrderReducer from "./slices/vendorOrderSlice";
+import adminDashboardReducer from "./slices/AdminDashboardSlice";
+import vendorDashboardReducer from "./slices/VendorDashboardSlice";
 
 const store = configureStore({
   reducer: {
@@ -18,6 +20,8 @@ const store = configureStore({
     product: productReducer,
     vendorOrders: vendorOrderReducer,
     adminOrders: adminOrderReducer,
+    adminDashboard: adminDashboardReducer,
+    vendorDashboard: vendorDashboardReducer,
   },
 });
 

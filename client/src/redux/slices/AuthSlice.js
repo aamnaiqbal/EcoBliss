@@ -24,6 +24,7 @@ if (userToken) {
 if (vendorToken) {
   try {
     initialVendorAuth = jwtDecode(vendorToken);
+    console.log("Vendor AUTH", initialVendorAuth);
   } catch (error) {
     console.error("Failed to decode token:", error);
   }

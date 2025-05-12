@@ -34,6 +34,9 @@ import OrderSummary from "../pages/vendor/OrderSummary";
 import VendorOfferings from "../pages/admin/VendorOfferings";
 import PaymentReturn from "../pages/checkout/PaymentReturn";
 import ResendOTP from "../auth/vendor/ResendOTP";
+import ProtectedVendorRoute from "../protected/ProtectedVendorRoute";
+import ProtectedAdminRoute from "../protected/ProtectedAdminRoute";
+import PageNotFound from "../pages/PageNotFound";
 
 const router = createBrowserRouter([
   {
@@ -115,64 +118,77 @@ const router = createBrowserRouter([
       },
       {
         path: "/admin",
-        element: <AdminLayout />,
+        element: <ProtectedAdminRoute />,
         children: [
           {
-            path: "dashboard",
-            element: <Dashboard />,
-          },
-          {
-            path: "orders",
-            element: <AdminOrder />,
-          },
-          {
-            path: "orders/detail/:orderId/:subOrderId",
-            element: <AdminOrderDetail />,
-          },
-          {
-            path: "vendor/offerings/:vendorId",
-            element: <VendorOfferings />,
+            path: "",
+            element: <AdminLayout />,
+            children: [
+              {
+                path: "dashboard",
+                element: <Dashboard />,
+              },
+              {
+                path: "orders",
+                element: <AdminOrder />,
+              },
+              {
+                path: "orders/detail/:orderId/:subOrderId",
+                element: <AdminOrderDetail />,
+              },
+              {
+                path: "vendor/offerings/:vendorId",
+                element: <VendorOfferings />,
+              },
+            ],
           },
         ],
       },
       {
         path: "/vendor",
-        element: <VendorLayout />,
+        element: <ProtectedVendorRoute />,
         children: [
           {
-            path: "dashboard",
-            element: <VendorDashboard />,
-          },
-          {
-            path: "orders",
-            element: <OrdersPage />,
-          },
-          {
-            path: "orders/detail/:orderId/:subOrderId",
-            element: <VendorOrderDetail />,
-          },
-          {
-            path: "orders/summary/:orderId/:subOrderId",
-            element: <OrderSummary />,
-          },
-          {
-            path: "products/view",
-            element: <ViewProducts />,
-          },
-          {
-            path: "products/add",
-            element: <AddProduct />,
-          },
-          {
-            path: "products/update",
-            element: <AddProduct />,
-          },
-          {
-            path: "products/details/:id",
-            element: <ProductDetail />,
+            path: "",
+            element: <VendorLayout />,
+            children: [
+              {
+                path: "dashboard",
+                element: <VendorDashboard />,
+              },
+              {
+                path: "orders",
+                element: <OrdersPage />,
+              },
+              {
+                path: "orders/detail/:orderId/:subOrderId",
+                element: <VendorOrderDetail />,
+              },
+              {
+                path: "orders/summary/:orderId/:subOrderId",
+                element: <OrderSummary />,
+              },
+              {
+                path: "products/view",
+                element: <ViewProducts />,
+              },
+              {
+                path: "products/add",
+                element: <AddProduct />,
+              },
+              {
+                path: "products/update",
+                element: <AddProduct />,
+              },
+              {
+                path: "products/details/:id",
+                element: <ProductDetail />,
+              },
+            ],
           },
         ],
       },
+
       {
         path: "/vendor/signup",
         element: <VendorSignup />,
@@ -193,6 +209,7 @@ const router = createBrowserRouter([
         path: "/admin/login",
         element: <AdminLogin />,
       },
+      { path: "*", element: <PageNotFound /> },
     ],
   },
 ]);

@@ -9,23 +9,32 @@ import { useSelector, useDispatch } from "react-redux";
 import { fetchVendorOrders } from "../../redux/slices/vendorOrderSlice";
 import { fetchPlants } from "../../redux/slices/VendorPlantSlice";
 import { Link } from "react-router-dom";
+import {
+  fetchVendorRevenue,
+  fetchVendorCustomers,
+  fetchTotalVisitors,
+} from "../../redux/slices/VendorDashboardSlice";
 
 const VendorDashboard = () => {
   const { orders } = useSelector((state) => state.vendorOrders);
-  console.log(orders);
+  // console.log(orders);
 
   const { id } = useSelector((state) => state.auth.vendorAuth);
   const { plants, status, error } = useSelector((state) => state.vendorPlants);
   const vendorId = id;
+  // console.log(vendorId);
   const dispatch = useDispatch();
+
   useEffect(() => {
-    dispatch(fetchVendorOrders({ vendorId, status: "All" }));
+    if (vendorId) {
+      dispatch(fetchVendorOrders({ vendorId, status: "All" }));
+    }
   }, [dispatch, vendorId]);
   useEffect(() => {
-    if (status === "idle") {
+    if (vendorId) {
       dispatch(fetchPlants(vendorId));
     }
-  }, [dispatch, status]);
+  }, [dispatch, vendorId]);
 
   const pendingOrdersCount =
     orders?.filter((order) => order.subOrders[0].status === "Pending").length ||
@@ -33,6 +42,23 @@ const VendorDashboard = () => {
   const readyToShipCount =
     orders?.filter((order) => order.subOrders[0].status === "Ready to ship")
       .length || 0;
+
+  const { totalRevenue, totalOrders, customers, visitors, loading } =
+    useSelector((state) => state.vendorDashboard);
+
+  // console.log(totalRevenue, totalOrders, customers, visitors);
+
+  useEffect(() => {
+    if (vendorId) dispatch(fetchVendorRevenue(vendorId));
+  }, [dispatch, vendorId]);
+
+  useEffect(() => {
+    if (vendorId) dispatch(fetchVendorCustomers(vendorId));
+  }, [dispatch, vendorId]);
+
+  useEffect(() => {
+    dispatch(fetchTotalVisitors());
+  }, [dispatch]);
 
   return (
     <div className="mb-12 mt-28  mx-8 p-8">
@@ -45,7 +71,7 @@ const VendorDashboard = () => {
             <CiMoneyBill size={24} />
             <p>Revenue</p>
           </div>
-          <p>Rs. 13000</p>
+          <p>Rs. {totalRevenue || 0}</p>
         </div>
         <hr />
         <div className="flex flex-row justify-between items-center text-grey font-semibold text-lg mt-8 mb-4">
@@ -53,7 +79,7 @@ const VendorDashboard = () => {
             <FaPerson size={24} />
             <p>Visitors</p>
           </div>
-          <p>67</p>
+          <p>{visitors || 0}</p>
         </div>
         <hr />
         <div className="flex flex-row justify-between items-center text-grey font-semibold text-lg mt-8 mb-4">
@@ -61,7 +87,7 @@ const VendorDashboard = () => {
             <FaPerson size={24} />
             <p>Purchasers</p>
           </div>
-          <p>67</p>
+          <p>{customers || 0}</p>
         </div>
         <hr />
         <div className="flex flex-row justify-between items-center text-grey font-semibold text-lg mt-8 mb-4">
@@ -69,10 +95,10 @@ const VendorDashboard = () => {
             <HiShoppingBag size={24} />
             <p>Orders</p>
           </div>
-          <p>67</p>
+          <p>{totalOrders || 0}</p>
         </div>
         <hr />
-        <div className="flex flex-row justify-between items-center text-grey font-semibold text-lg mt-8 mb-4">
+        {/* <div className="flex flex-row justify-between items-center text-grey font-semibold text-lg mt-8 mb-4">
           <div className="flex flex-row justify-between items-center gap-x-4">
             <FaPerson size={24} />
             <p>Conversion Rate</p>
@@ -87,7 +113,7 @@ const VendorDashboard = () => {
           </div>
           <p>Rs 1300</p>
         </div>
-        <hr />
+        <hr /> */}
       </div>
       <div className="bg-customWhite my-8 mx-8 p-8 rounded-xl">
         <h3 className="poppins text-black font-semibold text-lg text-center">
@@ -103,7 +129,7 @@ const VendorDashboard = () => {
           </div>
         </Link>
         <hr />
-        <div className="flex flex-row justify-between items-center text-grey font-semibold text-lg mt-8 mb-4 cursor-pointer">
+        {/* <div className="flex flex-row justify-between items-center text-grey font-semibold text-lg mt-8 mb-4 cursor-pointer">
           <div className="flex flex-row justify-between items-center gap-x-4">
             <img
               src="/images/vendor/dashboard/product.png"
@@ -113,12 +139,12 @@ const VendorDashboard = () => {
             <p>Live Products</p>
           </div>
           <div className="flex flex-row justify-between items-center gap-x-4">
-            <p>67</p>
+            <p>{plants.length || 0}</p>
             <MdKeyboardArrowRight size={28} />
           </div>
-        </div>
+        </div> */}
         <hr />
-        <div className="flex flex-row justify-between items-center text-grey font-semibold text-lg mt-8 mb-4 cursor-pointer">
+        {/* <div className="flex flex-row justify-between items-center text-grey font-semibold text-lg mt-8 mb-4 cursor-pointer">
           <div className="flex flex-row justify-between items-center gap-x-4">
             <img
               src="/images/vendor/dashboard/outofstock.png"
@@ -131,7 +157,7 @@ const VendorDashboard = () => {
             <p>67</p>
             <MdKeyboardArrowRight size={28} />
           </div>
-        </div>
+        </div> */}
         <hr />
         <Link to={"/vendor/products/view"}>
           <div className="flex flex-row justify-between items-center text-grey font-semibold text-lg mt-8 mb-4 cursor-pointer">
@@ -140,7 +166,6 @@ const VendorDashboard = () => {
               <p>View All Products</p>
             </div>
             <div className="flex flex-row justify-between items-center gap-x-4">
-              <p>{plants.length || 0}</p>
               <MdKeyboardArrowRight size={28} />
             </div>
           </div>

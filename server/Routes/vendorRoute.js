@@ -8,6 +8,12 @@ router.route("/signup").post(validateVendor, vendorController.signUp);
 router.route("/login").post(vendorController.login);
 router.route("/verify-otp").post(vendorController.verifyOTP);
 router.route("/resend-otp").post(vendorController.resendOTP);
+router.get("/:vendorId/revenue", vendorController.getVendorRevenue);
+router.get(
+  "/:vendorId/getCustomersByVendor",
+  vendorController.getCustomersByVendor
+);
+router.get("/getTotalVisitors", vendorController.getTotalVisitors);
 
 router.route("/plants/:vendorId").get(vendorController.getVendorPlants);
 router

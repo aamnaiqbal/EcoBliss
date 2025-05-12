@@ -89,12 +89,12 @@ const Navbar = () => {
                     <li>
                       <Link to="/Orchid">Orchids</Link>
                     </li>
-                    <li>
+                    {/* <li>
                       <Link>Gifts</Link>
                     </li>
                     <li>
                       <Link to="/plantcare">Plant Care</Link>
-                    </li>
+                    </li> */}
                   </ul>
                 </li>
               </ul>
@@ -170,7 +170,7 @@ const Navbar = () => {
                 Orchids
               </Link>
             </li>
-            <li>
+            {/* <li>
               <Link to="/" className={`hover:text-green hover:bg-lightGreen`}>
                 Gifts
               </Link>
@@ -182,7 +182,7 @@ const Navbar = () => {
               >
                 Plant Care
               </Link>
-            </li>
+            </li> */}
           </ul>
         </div>
       </header>

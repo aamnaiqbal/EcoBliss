@@ -1,0 +1,149 @@
+{
+  "cards": [
+    {
+      "id": "1",
+      "title": "Total Sales",
+      "icon": "shopping-cart",
+      "value": 1280,
+      "percentage": 12.4,
+      "trend": "up"
+    },
+    {
+      "id": "2",
+      "title": "Total Revenue",
+      "icon": "dollar-sign",
+      "value": 152000,
+      "percentage": 9.8,
+      "trend": "up"
+    },
+    {
+      "id": "3",
+      "title": "Total Customers",
+      "icon": "users",
+      "value": 960,
+      "percentage": 7.2,
+      "trend": "up"
+    }
+  ],
+
+  "Recentsales": [
+    {
+      "id": 1,
+      "number": "#1023",
+      "product": "Aloe Vera Gel",
+      "customer": "Sarah Khan",
+      "price": 10500,
+      "status": "Completed"
+    },
+    {
+      "id": 2,
+      "number": "#2345",
+      "product": "Lavender Mist",
+      "customer": "Ahmed Ali",
+      "price": 12300,
+      "status": "Completed"
+    },
+    {
+      "id": 3,
+      "number": "#3456",
+      "product": "Neem Shampoo",
+      "customer": "Fatima Sheikh",
+      "price": 14800,
+      "status": "Pending"
+    },
+    {
+      "id": 4,
+      "number": "#4567",
+      "product": "Rose Water Toner",
+      "customer": "Hassan Raza",
+      "price": 17900,
+      "status": "Completed"
+    },
+    {
+      "id": 5,
+      "number": "#5678",
+      "product": "Herbal Soap Pack",
+      "customer": "Zara Noor",
+      "price": 20200,
+      "status": "Completed"
+    },
+    {
+      "id": 6,
+      "number": "#6789",
+      "product": "EcoPlant Fertilizer",
+      "customer": "Bilal Saeed",
+      "price": 25500,
+      "status": "Shipped"
+    },
+    {
+      "id": 7,
+      "number": "#7890",
+      "product": "Organic Face Pack",
+      "customer": "Sana Mir",
+      "price": 27800,
+      "status": "Completed"
+    },
+    {
+      "id": 8,
+      "number": "#8901",
+      "product": "Bamboo Charcoal Mask",
+      "customer": "Ali Haider",
+      "price": 16800,
+      "status": "Cancelled"
+    }
+  ],
+
+  "topSellingProducts": [
+    {
+      "id": 1,
+      "name": "Snake Plant",
+      "price": 600,
+      "preview": "https://via.placeholder.com/80x80?text=Snake+Plant",
+      "sold": 210,
+      "revenue": 8400
+    },
+    {
+      "id": 2,
+      "name": "Peace Lily",
+      "price": 350,
+      "preview": "https://via.placeholder.com/80x80?text=Peace+Lily",
+      "sold": 175,
+      "revenue": 7000
+    },
+    {
+      "id": 3,
+      "name": "Aloe Vera",
+      "price": 40,
+      "preview": "https://via.placeholder.com/80x80?text=Aloe+Vera",
+      "sold": 160,
+      "revenue": 6400
+    },
+    {
+      "id": 4,
+      "name": "Jade Plant",
+      "price": 400,
+      "preview": "https://via.placeholder.com/80x80?text=Jade+Plant",
+      "sold": 150,
+      "revenue": 6000
+    },
+    {
+      "id": 5,
+      "name": "Lavender",
+      "price": 250,
+      "preview": "https://via.placeholder.com/80x80?text=Lavender",
+      "sold": 130,
+      "revenue": 5200
+    }
+  ],
+
+  "newCustomersPerMonth": [
+    { "month": "Jan", "customers": 60 },
+    { "month": "Feb", "customers": 75 },
+    { "month": "Mar", "customers": 90 },
+    { "month": "Apr", "customers": 110 },
+    { "month": "May", "customers": 130 },
+    { "month": "Jun", "customers": 140 },
+    { "month": "Jul", "customers": 160 },
+    { "month": "Aug", "customers": 195 }
+  ]
+}

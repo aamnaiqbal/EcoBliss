@@ -2,9 +2,12 @@ const customError = require("../utils/customError");
 const asyncErrorHandler = require("../utils/asyncErrorHandler");
 const Vendor = require("../Models/vendorModel");
 const Plant = require("../Models/plantModel");
+const Order = require("../Models/orderModel");
+const Customer = require("../Models/customerModel");
 const nodemailer = require("nodemailer");
 const crypto = require("crypto");
 const signToken = require("../utils/signToken");
+const mongoose = require("mongoose");
 const {
   uploadOnCloudinary,
   deleteFromCloudinary,
@@ -302,4 +305,74 @@ exports.updatePlant = asyncErrorHandler(async (req, res, next) => {
       updatedPlant,
     },
   });
+});
+
+exports.getVendorRevenue = asyncErrorHandler(async (req, res, next) => {
+  const { vendorId } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(vendorId)) {
+    return next(new customError("Invalid vendorId.", 400));
+  }
+
+  // Find all orders that have a subOrder for the given vendor
+  const orders = await Order.find({
+    "subOrders.vendorId": vendorId,
+  });
+
+  let totalRevenue = 0;
+  let vendorOrderCount = 0;
+
+  orders.forEach((order) => {
+    const subOrder = order.subOrders.find(
+      (sub) => sub.vendorId.toString() === vendorId
+    );
+    if (subOrder) {
+      const revenueAfterCharges = subOrder.totalAmount * 0.85; // 85% after 15% platform fee
+      totalRevenue += revenueAfterCharges;
+      vendorOrderCount++;
+    }
+  });
+
+  return res.status(200).json({
+    status: "success",
+    data: {
+      vendorId,
+      totalRevenue: totalRevenue.toFixed(2),
+      totalOrders: vendorOrderCount,
+    },
+  });
+});
+
+exports.getCustomersByVendor = asyncErrorHandler(async (req, res, next) => {
+  const { vendorId } = req.params;
+
+  const result = await Order.aggregate([
+    { $unwind: "$subOrders" },
+    { $match: { "subOrders.vendorId": new mongoose.Types.ObjectId(vendorId) } },
+    {
+      $match: {
+        "subOrders.items.modelType": "Plant",
+      },
+    },
+    {
+      $group: {
+        _id: "$customerId", // Group by customer
+      },
+    },
+    {
+      $count: "uniqueCustomerCount", // Count unique customers
+    },
+  ]);
+
+  const count = result[0]?.uniqueCustomerCount || 0;
+
+  res.status(200).json({
+    status: "success",
+    data: { vendorId, uniqueCustomerCount: count },
+  });
+});
+
+exports.getTotalVisitors = asyncErrorHandler(async (req, res, next) => {
+  const totalVisitors = await Customer.countDocuments();
+  res.status(200).json({ status: "success", data: totalVisitors });
 });
