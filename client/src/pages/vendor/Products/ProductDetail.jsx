@@ -1,33 +1,57 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { MdEdit, MdDelete } from "react-icons/md";
 import { TiTick } from "react-icons/ti";
 import { ImCross } from "react-icons/im";
-import { useLocation, useNavigate } from "react-router-dom";
-import { deletePlant } from "../../../redux/slices/VendorPlantSlice";
-import { useDispatch } from "react-redux";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import {
+  deletePlant,
+  setOutofStock,
+} from "../../../redux/slices/VendorPlantSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchPlants } from "../../../redux/slices/VendorPlantSlice";
 
 const ProductDetail = () => {
-  const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const item = location.state;
-  // console.log("Product Detail", item);
+  const { plantId } = useParams();
+  const { plants, status, error } = useSelector((state) => state.vendorPlants);
+  const { id } = useSelector((state) => state.auth.vendorAuth);
+  const vendorId = id;
+  useEffect(() => {
+    if (vendorId) {
+      dispatch(fetchPlants(vendorId));
+    }
+  }, [dispatch, vendorId]);
+  console.log("plants", plants);
+
+  if (status === "loading" || !plants.length) {
+    return <div className="mt-32 mx-8">Loading...</div>;
+  }
+
+  const item = plants.find((plant) => plant._id === plantId);
+  console.log(item);
+
   const handleUpdate = () => {
     navigate("/vendor/products/update", { state: { item } });
   };
+
+  if (!item) {
+    return <div className="mt-32 mx-8 text-red-600">Product not found.</div>;
+  }
+
   return (
     <div className="bg-white mb-12 mt-32  mx-8 p-8 rounded-xl">
       <div className="flex justify-between">
         <div className="poppins flex flex-col items-center">
-          <h2 className="  text-black font-bold text-3xl">{item.name}</h2>
-          <p className="text-grey text-sm"> {item._id}</p>
+          <h2 className="  text-black font-bold text-3xl">{item?.name}</h2>
+          <p className="text-grey text-sm"> {item?._id}</p>
         </div>
         <div className="text-lightGreen flex gap-3 items-center">
           <div
             className="flex items-center justify-center px-4 py-2 gap-2 text-white bg-red rounded-lg min-w-28 cursor-pointer"
             onClick={() => {
               dispatch(
-                deletePlant({ vendorId: item.vendorId, plantId: item._id })
+                deletePlant({ vendorId: item?.vendorId, plantId: item?._id })
               );
               navigate(`/vendor/products/view`);
             }}
@@ -36,17 +60,50 @@ const ProductDetail = () => {
             <span className="poppins font-semibold">Delete</span>
           </div>
           <div
-            className="flex items-center justify-center px-4 py-2 gap-2 text-white bg-lightGreen rounded-lg min-w-28 cursor-pointer"
+            className="flex items-center justify-center px-4 py-2 gap-2 text-white bg-lightGreen rounded-lg min-w-28 cursor-pointer "
             onClick={handleUpdate}
           >
             <MdEdit size={20} />
             <span className="poppins font-semibold">Edit</span>
           </div>
-          <div className="flex items-center justify-center px-4 py-2 gap-2 border border-red rounded-lg min-w-28">
+          {/* <div
+            className={`flex items-center justify-center px-4 py-2 gap-2 border border-red rounded-lg min-w-28 ${
+              item?.isOutOfStock
+                ? "border-gray-400 cursor-not-allowed opacity-50"
+                : "border-red cursor-pointer"
+            }`}
+            onClick={() => {
+              dispatch(
+                setOutofStock({ vendorId: item?.vendorId, plantId: item?._id })
+              );
+              // navigate(`/vendor/products/view`);
+            }}
+          >
             <span className="poppins font-normal text-black">
               Set as Out of Stock
             </span>
-          </div>
+          </div> */}
+          <button
+            disabled={item?.isOutOfStock}
+            className={`flex items-center justify-center px-4 py-2 gap-2 border rounded-lg min-w-28 ${
+              item.isOutOfStock
+                ? "border-gray-400 bg-gray-200 cursor-not-allowed opacity-50"
+                : "border-red bg-white cursor-pointer"
+            }`}
+            onClick={() => {
+              if (!item?.isOutOfStock) {
+                dispatch(
+                  setOutofStock({ vendorId: item.vendorId, plantId: item._id })
+                );
+              }
+            }}
+          >
+            <span className="poppins font-normal text-black">
+              {item?.isOutOfStock
+                ? "Already Out of Stock"
+                : "Set as Out of Stock"}
+            </span>
+          </button>
         </div>
       </div>
       {/* Top Image */}
@@ -54,7 +111,7 @@ const ProductDetail = () => {
         <div className="w-52 h-64 border rounded flex items-center justify-center bg-gray-100">
           {item.image ? (
             <img
-              src={item.image}
+              src={item?.image}
               alt=""
               className="w-full h-full object-cover rounded"
             />
@@ -85,7 +142,7 @@ const ProductDetail = () => {
         <h5 className="text-lg">
           {item.category == "HousePlants"
             ? "House Plants"
-            : `${item.category} Plants`}
+            : `${item?.category} Plants`}
         </h5>
       </div>
       <hr />
@@ -94,7 +151,7 @@ const ProductDetail = () => {
           Product Description
         </h3>
         <p className="marcellus text-black text-base text-justify">
-          {item.description}
+          {item?.description}
         </p>
       </div>
       <hr />
@@ -124,10 +181,10 @@ const ProductDetail = () => {
               <div className="flex items-center justify-center gap-x-2 ">
                 <div
                   className={`${
-                    item.size.M ? "bg-lightGreen" : "bg-red"
+                    item?.size?.M ? "bg-lightGreen" : "bg-red"
                   } p-2 rounded-sm`}
                 >
-                  {item.size.M ? (
+                  {item?.size?.M ? (
                     <TiTick color="white" size={16} />
                   ) : (
                     <ImCross color="white" size={16} />
@@ -140,10 +197,10 @@ const ProductDetail = () => {
               <div className="flex items-center justify-center gap-x-2 ">
                 <div
                   className={`${
-                    item.size.L ? "bg-lightGreen" : "bg-red"
+                    item?.size?.L ? "bg-lightGreen" : "bg-red"
                   } p-2 rounded-sm`}
                 >
-                  {item.size.L ? (
+                  {item?.size?.L ? (
                     <TiTick color="white" size={16} />
                   ) : (
                     <ImCross color="white" size={16} />
@@ -158,13 +215,13 @@ const ProductDetail = () => {
               <span className="font-semibold text-xl">Prices (Rs)</span>
             </td>
             <td className="text-center text-lg p-6 ">
-              {item.size.S ? item.size.S : "-"}
+              {item?.size?.S ? item.size.S : "-"}
             </td>
             <td className="text-center text-lg p-6">
-              {item.size.M ? item.size.M : "-"}
+              {item?.size?.M ? item.size.M : "-"}
             </td>
             <td className="text-center  text-lg p-6">
-              {item.size.L ? item.size.L : "-"}
+              {item?.size?.L ? item.size.L : "-"}
             </td>
           </tr>
           <tr>
@@ -172,13 +229,13 @@ const ProductDetail = () => {
               <span className="font-semibold text-xl">Stock Quantity</span>
             </td>
             <td className="text-center text-lg p-6">
-              {item.stockQuantity.S ? item.stockQuantity.S : "-"}
+              {item?.stockQuantity?.S ? item?.stockQuantity?.S : "-"}
             </td>
             <td className="text-center text-lg p-6">
-              {item.stockQuantity.M ? item.stockQuantity.M : "-"}
+              {item?.stockQuantity?.M ? item?.stockQuantity?.M : "-"}
             </td>
             <td className="text-center text-lg p-6">
-              {item.stockQuantity.L ? item.stockQuantity.L : "-"}
+              {item?.stockQuantity?.L ? item?.stockQuantity?.L : "-"}
             </td>
           </tr>
         </tbody>

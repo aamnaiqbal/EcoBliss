@@ -90,6 +90,10 @@ const router = createBrowserRouter([
             element: <ProductDetails />,
           },
           {
+            path: "/about",
+            element: <AboutUs />,
+          },
+          {
             path: "/cart",
             element: <Cart />,
           },
@@ -102,10 +106,6 @@ const router = createBrowserRouter([
             element: <OrderMessage />,
           },
           { path: "order/payment-return", element: <PaymentReturn /> },
-          {
-            path: "/about",
-            element: <AboutUs />,
-          },
         ],
       },
       {
@@ -181,7 +181,7 @@ const router = createBrowserRouter([
                 element: <AddProduct />,
               },
               {
-                path: "products/details/:id",
+                path: "products/details/:plantId",
                 element: <ProductDetail />,
               },
             ],

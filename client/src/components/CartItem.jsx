@@ -15,6 +15,8 @@ const CartItem = ({ item }) => {
     }
     return item.productId.price;
   });
+  console.log(item.stockQuantity);
+  console.log(item);
 
   const handleIncrease = async (productId) => {
     try {

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import { CiMoneyBill } from "react-icons/ci";
 import { FaPerson } from "react-icons/fa6";
 import { FaLeaf } from "react-icons/fa";
@@ -43,6 +43,13 @@ const VendorDashboard = () => {
     orders?.filter((order) => order.subOrders[0].status === "Ready to ship")
       .length || 0;
 
+  const shippedCount =
+    orders?.filter((order) => order.subOrders[0].status === "Shipped").length ||
+    0;
+  const deliveredCount =
+    orders?.filter((order) => order.subOrders[0].status === "Delivered")
+      .length || 0;
+
   const { totalRevenue, totalOrders, customers, visitors, loading } =
     useSelector((state) => state.vendorDashboard);
 
@@ -59,6 +66,14 @@ const VendorDashboard = () => {
   useEffect(() => {
     dispatch(fetchTotalVisitors());
   }, [dispatch]);
+
+  const outofStockPlants = useMemo(() => {
+    return plants.filter((plant) => plant.isOutOfStock);
+  }, [plants]);
+
+  const livePlantsCount = useMemo(() => {
+    return plants.length - outofStockPlants.length;
+  }, [plants, outofStockPlants]);
 
   return (
     <div className="mb-12 mt-28  mx-8 p-8">
@@ -98,12 +113,16 @@ const VendorDashboard = () => {
           <p>{totalOrders || 0}</p>
         </div>
         <hr />
-        {/* <div className="flex flex-row justify-between items-center text-grey font-semibold text-lg mt-8 mb-4">
+        <div className="flex flex-row justify-between items-center text-grey font-semibold text-lg mt-8 mb-4">
           <div className="flex flex-row justify-between items-center gap-x-4">
             <FaPerson size={24} />
             <p>Conversion Rate</p>
           </div>
-          <p>67%</p>
+          <p>
+            {visitors > 0
+              ? `${((customers / visitors) * 100).toFixed(2)}%`
+              : "0%"}
+          </p>
         </div>
         <hr />
         <div className="flex flex-row justify-between items-center text-grey font-semibold text-lg mt-8 mb-4">
@@ -111,9 +130,12 @@ const VendorDashboard = () => {
             <FaPerson size={24} />
             <p>Average Order Value</p>
           </div>
-          <p>Rs 1300</p>
+          <p>
+            Rs.{" "}
+            {totalOrders > 0 ? (totalRevenue / totalOrders).toFixed(2) : "0"}
+          </p>
         </div>
-        <hr /> */}
+        <hr />
       </div>
       <div className="bg-customWhite my-8 mx-8 p-8 rounded-xl">
         <h3 className="poppins text-black font-semibold text-lg text-center">
@@ -129,7 +151,7 @@ const VendorDashboard = () => {
           </div>
         </Link>
         <hr />
-        {/* <div className="flex flex-row justify-between items-center text-grey font-semibold text-lg mt-8 mb-4 cursor-pointer">
+        <div className="flex flex-row justify-between items-center text-grey font-semibold text-lg mt-8 mb-4 cursor-pointer">
           <div className="flex flex-row justify-between items-center gap-x-4">
             <img
               src="/images/vendor/dashboard/product.png"
@@ -138,13 +160,10 @@ const VendorDashboard = () => {
             />
             <p>Live Products</p>
           </div>
-          <div className="flex flex-row justify-between items-center gap-x-4">
-            <p>{plants.length || 0}</p>
-            <MdKeyboardArrowRight size={28} />
-          </div>
-        </div> */}
+          <p>{livePlantsCount || 0}</p>
+        </div>
         <hr />
-        {/* <div className="flex flex-row justify-between items-center text-grey font-semibold text-lg mt-8 mb-4 cursor-pointer">
+        <div className="flex flex-row justify-between items-center text-grey font-semibold text-lg mt-8 mb-4 cursor-pointer">
           <div className="flex flex-row justify-between items-center gap-x-4">
             <img
               src="/images/vendor/dashboard/outofstock.png"
@@ -153,11 +172,8 @@ const VendorDashboard = () => {
             />
             <p>Out of Stock</p>
           </div>
-          <div className="flex flex-row justify-between items-center gap-x-4">
-            <p>67</p>
-            <MdKeyboardArrowRight size={28} />
-          </div>
-        </div> */}
+          <p>{outofStockPlants?.length || 0}</p>
+        </div>
         <hr />
         <Link to={"/vendor/products/view"}>
           <div className="flex flex-row justify-between items-center text-grey font-semibold text-lg mt-8 mb-4 cursor-pointer">
@@ -185,10 +201,7 @@ const VendorDashboard = () => {
             />
             <p>Pending Orders</p>
           </div>
-          <div className="flex flex-row justify-between items-center gap-x-4">
-            <p>{pendingOrdersCount}</p>
-            <MdKeyboardArrowRight size={28} />
-          </div>
+          <p>{pendingOrdersCount}</p>
         </div>
         <hr />
         <div className="flex flex-row justify-between items-center text-grey font-semibold text-lg mt-8 mb-4">
@@ -200,10 +213,17 @@ const VendorDashboard = () => {
             />
             <p>Ready To Ship</p>
           </div>
-          <div className="flex flex-row justify-between items-center gap-x-4">
-            <p>{readyToShipCount}</p>
-            <MdKeyboardArrowRight size={28} />
-          </div>
+          <p>{readyToShipCount}</p>
+        </div>
+        <hr />
+        <div className="flex flex-row justify-between items-center text-grey font-semibold text-lg mt-8 mb-4 pl-10">
+          <p>Shipped</p>
+          <p>{shippedCount}</p>
+        </div>
+        <hr />
+        <div className="flex flex-row justify-between items-center text-grey font-semibold text-lg mt-8 mb-4 pl-10">
+          <p>Delivered</p>
+          <p>{deliveredCount}</p>
         </div>
       </div>
     </div>

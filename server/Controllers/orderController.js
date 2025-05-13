@@ -126,6 +126,39 @@ exports.placeOrder = asyncErrorHandler(async (req, res, next) => {
     console.log(vendorOrders);
   }
 
+  for (const subOrder of Object.values(vendorOrders)) {
+    for (const item of subOrder.items) {
+      if (item.modelType === "Plant") {
+        const plant = await Plant.findById(item.productId);
+        if (!plant)
+          return next(new customError("Plant product not found", 404));
+
+        const size = item.size;
+        const currentStock = plant.stockQuantity[size];
+
+        if (currentStock < item.quantity) {
+          return next(
+            new customError(
+              `Insufficient stock for ${plant.name} (size ${size})`,
+              400
+            )
+          );
+        }
+
+        plant.stockQuantity[size] -= item.quantity;
+
+        const totalStock =
+          (plant.stockQuantity.S || 0) +
+          (plant.stockQuantity.M || 0) +
+          (plant.stockQuantity.L || 0);
+
+        plant.isOutOfStock = totalStock === 0;
+
+        await plant.save();
+      }
+    }
+  }
+
   // Create Order
   const order = await Order.create({
     customerId,

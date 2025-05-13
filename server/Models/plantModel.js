@@ -53,6 +53,10 @@ const plantSchema = new mongoose.Schema({
       type: Number,
     },
   },
+  isOutOfStock: {
+    type: Boolean,
+    default: false,
+  },
   popular: {
     type: Boolean,
     default: false,

@@ -21,7 +21,7 @@ const VendorOrderDetail = () => {
     )
   );
 
-  console.log("order detail ", order);
+  // console.log("order detail ", order);
 
   useEffect(() => {
     if (!order) {

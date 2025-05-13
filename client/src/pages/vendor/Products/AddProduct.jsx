@@ -10,7 +10,7 @@ const AddProduct = () => {
   const dispatch = useDispatch();
   const location = useLocation();
   const existingProduct = location.state?.item;
-  console.log("existing Product ", existingProduct);
+  // console.log("existing Product ", existingProduct);
   const [selectedSizes, setSelectedSizes] = useState({
     S: !!existingProduct?.size?.S || false,
     M: !!existingProduct?.size?.M || false,
@@ -75,6 +75,7 @@ const AddProduct = () => {
     formData.append("category", data.plantCategory);
     formData.append("description", data.plantDescription);
     formData.append("vendorId", vendorId);
+    formData.append("isOutOfStock", false);
 
     if (data.S) {
       formData.append("size[S]", data.SPrice);
@@ -102,7 +103,7 @@ const AddProduct = () => {
       dispatch(updatePlant({ plantId: existingProduct._id, formData }));
       navigate(`/vendor/products/view`);
     } else {
-      console.log("Plant added");
+      // console.log("Plant added");
       dispatch(addPlant(formData));
       navigate(`/vendor/products/view`);
     }
@@ -117,7 +118,7 @@ const AddProduct = () => {
         (img) => img
       );
       setImgPreview([...topImg, ...subImgs]);
-      console.log(imgPreview);
+      // console.log(imgPreview);
     }
   }, [existingProduct]);
   return (

@@ -38,6 +38,32 @@ exports.getPlant = asyncErrorHandler(async (req, res, next) => {
   });
 });
 
+exports.setPlantOutofStock = asyncErrorHandler(async (req, res, next) => {
+  console.log(req.params);
+  const plant = await Plant.findOne({
+    _id: req.params.plantId,
+    vendorId: req.params.vendorId,
+  });
+  if (!plant) {
+    return next(new customError("Plant not found", 404));
+  }
+  // Set each size's quantity to 0 only if it exists
+  if (plant.stockQuantity?.S !== undefined) plant.stockQuantity.S = 0;
+  if (plant.stockQuantity?.M !== undefined) plant.stockQuantity.M = 0;
+  if (plant.stockQuantity?.L !== undefined) plant.stockQuantity.L = 0;
+
+  plant.isOutOfStock = true;
+
+  // Pre-save hook will handle setting isOutOfStock
+  await plant.save();
+
+  res.status(200).json({
+    status: "success",
+    message: "Plant marked as out of stock successfully",
+    plant,
+  });
+});
+
 exports.getPopularPlants = asyncErrorHandler(async (req, res, next) => {
   const popularPlants = await Plant.find({ popular: true }).select(
     "name size category image subImg"

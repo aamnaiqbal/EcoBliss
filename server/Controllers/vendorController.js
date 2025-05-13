@@ -246,7 +246,7 @@ exports.deletePlant = asyncErrorHandler(async (req, res, next) => {
 exports.updatePlant = asyncErrorHandler(async (req, res, next) => {
   const productId = req.params.id;
   const vendorId = req.body.vendorId;
-  // console.log(vendorId);
+  console.log(req.body);
 
   const plant = await Plant.findOne({ _id: productId, vendorId });
   if (!plant)

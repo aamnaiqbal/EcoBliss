@@ -12,7 +12,7 @@ import { resetVendorPlantsState } from "../redux/slices/VendorPlantSlice";
 
 const VendorLayout = () => {
   const vendorAuth = useSelector((state) => state.auth.vendorAuth);
-  console.log(vendorAuth);
+  // console.log(vendorAuth);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);

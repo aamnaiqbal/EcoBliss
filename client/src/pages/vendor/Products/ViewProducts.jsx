@@ -17,7 +17,7 @@ const ViewProducts = () => {
     }
   }, [dispatch, vendorId]);
 
-  // console.log("View plants", plants);
+  console.log("View plants", plants);
   return (
     <div className="bg-white mb-12 mt-32  mx-8 p-8 rounded-xl">
       <div className="flex justify-between poppins">

@@ -19,7 +19,7 @@ const OrderSummary = () => {
     })
   );
 
-  console.log("order summary ", order);
+  // console.log("order summary ", order);
 
   const calculatePlatformFee = (totalAmount) => {
     if (!totalAmount || isNaN(totalAmount)) return 0;

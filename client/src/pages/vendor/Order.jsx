@@ -19,9 +19,9 @@ const OrdersPage = () => {
     // }
   }, [dispatch, vendorId, filter]);
 
-  const filters = ["All", "Pending", "Ready to ship", "Delivered"];
+  const filters = ["All", "Pending", "Ready to ship", "Shipped", "Delivered"];
 
-  console.log(orders);
+  // console.log(orders);
   return (
     <>
       <div className="bg-customWhite mb-12 mt-32  mx-8 p-8 rounded-xl">

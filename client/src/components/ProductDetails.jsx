@@ -188,12 +188,24 @@ const productDetails = () => {
               )}
             </div>
           </div>
+
           <div className="mt-4">
             <h3 className="text-2xl font-lg mb-[3px]">Description</h3>
             <p className="text-justify text-grey">
               {selectedProduct?.description}
             </p>
           </div>
+          {selectedProduct?.size && (
+            <div className="mt-4 text-center text-gray-600 font-semibold">
+              {selectedSize && (
+                <span>
+                  {selectedProduct?.stockQuantity?.[selectedSize] > 0
+                    ? `In Stock: ${selectedProduct?.stockQuantity?.[selectedSize]}`
+                    : "Out of Stock"}
+                </span>
+              )}
+            </div>
+          )}
           <div className="mt-4">
             <h3 className="text-2xl font-lg">Quantity</h3>
             <div className="join flex justify-center items-center">
@@ -210,8 +222,13 @@ const productDetails = () => {
               </div>
 
               <button
-                className={`join-item btn btn-square px-8 text-xl hover:bg-[#99EDC3]`}
-                onClick={() => setQuantity(quantity + 1)}
+                className="join-item btn btn-square px-8 text-xl hover:bg-[#99EDC3]"
+                onClick={() => {
+                  const maxStock =
+                    selectedProduct?.stockQuantity?.[selectedSize] ??
+                    selectedProduct?.stockQuantity;
+                  if (quantity < maxStock) setQuantity(quantity + 1);
+                }}
               >
                 +
               </button>
@@ -219,6 +236,10 @@ const productDetails = () => {
           </div>
           <button
             className={`btn  text-white text-base bg-lightGreen  hover:bg-lightestGreen hover:text-white outline-none border-0 w-full mt-8`}
+            disabled={
+              selectedProduct?.stockQuantity?.[selectedSize] === 0 ||
+              selectedProduct?.stockQuantity?.[selectedSize] === null
+            }
             onClick={() =>
               dispatch(
                 addToCart({

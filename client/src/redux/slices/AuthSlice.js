@@ -24,7 +24,6 @@ if (userToken) {
 if (vendorToken) {
   try {
     initialVendorAuth = jwtDecode(vendorToken);
-    console.log("Vendor AUTH", initialVendorAuth);
   } catch (error) {
     console.error("Failed to decode token:", error);
   }
@@ -49,7 +48,7 @@ const authSlice = createSlice({
   reducers: {
     userLogin: (state, action) => {
       state.userAuth = action.payload;
-      console.log(JSON.parse(JSON.stringify(state.userAuth)));
+      // console.log(JSON.parse(JSON.stringify(state.userAuth)));
       cookies.set("jwt_authorization", action.payload.token, { path: "/" }); // Save token in cookies
     },
     userLogout: (state) => {
@@ -59,7 +58,7 @@ const authSlice = createSlice({
     },
     vendorLogin: (state, action) => {
       state.vendorAuth = action.payload;
-      console.log(JSON.parse(JSON.stringify(state.vendorAuth)));
+      // console.log(JSON.parse(JSON.stringify(state.vendorAuth)));
       cookies.set("jwt_vendor_authorization", action.payload.token, {
         path: "/vendor",
       }); // Save token in cookies
@@ -74,7 +73,7 @@ const authSlice = createSlice({
     },
     adminLogin: (state, action) => {
       state.adminAuth = action.payload;
-      console.log(JSON.parse(JSON.stringify(state.adminAuth)));
+      // console.log(JSON.parse(JSON.stringify(state.adminAuth)));
       cookies.set("jwt_admin_authorization", action.payload.token, {
         path: "/admin",
       });

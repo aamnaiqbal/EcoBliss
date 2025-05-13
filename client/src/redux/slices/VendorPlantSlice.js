@@ -6,12 +6,12 @@ import axios from "axios";
 export const fetchPlants = createAsyncThunk(
   "plants/fetchPlants",
   async (vendorId, { rejectWithValue }) => {
-    console.log(vendorId);
+    // console.log(vendorId);
     try {
       const response = await axios.get(
         `http://localhost:8000/api/v1/vendor/plants/${vendorId}`
       );
-      console.log("Response", response.data.data.plants);
+      // console.log("Response", response.data.data.plants);
       return response.data.data.plants;
     } catch (error) {
       return rejectWithValue(
@@ -31,7 +31,7 @@ export const updatePlant = createAsyncThunk(
         formData,
         { headers: { "Content-Type": "multipart/form-data" } }
       );
-      console.log(response.data.data.updatedPlant);
+      // console.log(response.data.data.updatedPlant);
       return response.data.data.updatedPlant;
     } catch (error) {
       console.log(error);
@@ -51,8 +51,27 @@ export const deletePlant = createAsyncThunk(
       const response = await axios.delete(
         `http://localhost:8000/api/v1/vendor/plants/${plantId}/${vendorId}`
       );
-      console.log(response);
+      // console.log(response);
       return { plantId };
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data || "Failed to delete plant data"
+      );
+    }
+  }
+);
+export const setOutofStock = createAsyncThunk(
+  "plant/setOutofStock",
+  async ({ vendorId, plantId }, { rejectWithValue }) => {
+    console.log("vendorId", vendorId);
+    console.log("plantId", plantId);
+    try {
+      const response = await axios.patch(
+        `http://localhost:8000/api/v1/plant/${plantId}/${vendorId}/setoutofstock`
+      );
+      // console.log(response.data.plant);
+      const updatedPlant = response.data.plant;
+      return { updatedPlant };
     } catch (error) {
       return rejectWithValue(
         error.response?.data || "Failed to delete plant data"
@@ -126,7 +145,7 @@ const vendorPlantSlice = createSlice({
         state.plants = state.plants.filter((item) => {
           return item._id !== plantId;
         });
-        console.log(action.payload);
+        // console.log(action.payload);
         toast.success("Plant deleted from the list");
       })
       .addCase(deletePlant.rejected, (state, action) => {
@@ -137,11 +156,29 @@ const vendorPlantSlice = createSlice({
       .addCase(updatePlant.fulfilled, (state, action) => {
         state.status = "succeeded";
         const updatedPlant = action.payload;
-        console.log(updatedPlant);
+        // console.log(updatedPlant);
         state.plants = state.plants.map((plant) =>
           plant._id === updatedPlant._id ? updatedPlant : plant
         );
         toast.success("Plant details updated successfully.");
+      })
+      .addCase(updatePlant.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload;
+        toast.error("Failed to update Plant");
+      })
+      .addCase(setOutofStock.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        const updatedPlant = action.payload.updatedPlant;
+        state.plants = state.plants.map((plant) =>
+          plant._id === updatedPlant._id ? updatedPlant : plant
+        );
+        toast.success("Plant marked as out of stock successfully");
+      })
+      .addCase(setOutofStock.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload;
+        toast.error("Failed to set out of stock.");
       });
   },
 });
