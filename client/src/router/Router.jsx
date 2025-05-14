@@ -37,6 +37,7 @@ import ResendOTP from "../auth/vendor/ResendOTP";
 import ProtectedVendorRoute from "../protected/ProtectedVendorRoute";
 import ProtectedAdminRoute from "../protected/ProtectedAdminRoute";
 import PageNotFound from "../pages/PageNotFound";
+import VendorOfferingDetail from "../pages/admin/VendorOfferingDetail";
 
 const router = createBrowserRouter([
   {
@@ -137,8 +138,12 @@ const router = createBrowserRouter([
                 element: <AdminOrderDetail />,
               },
               {
-                path: "vendor/offerings/:vendorId",
+                path: "vendor/offerings",
                 element: <VendorOfferings />,
+              },
+              {
+                path: "vendor/offerings/:vendorId",
+                element: <VendorOfferingDetail />,
               },
             ],
           },

@@ -22,6 +22,77 @@ exports.login = asyncErrorHandler(async (req, res, next) => {
     .json({ status: "success", message: "Login Successful", token });
 });
 
+// exports.getAllVendors = asyncErrorHandler(async (req, res, next) => {
+//   const vendors = await Vendor.find({ isVerified: true }).select(
+//     "_id fullName email nurseryName address"
+//   );
+//   res.status(200).json({
+//     status: "success",
+//     data: {
+//       vendors,
+//     },
+//   });
+// });
+
+exports.getAllVendors = asyncErrorHandler(async (req, res, next) => {
+  // Step 1: Get verified vendors
+  const vendors = await Vendor.find({ isVerified: true }).select(
+    "_id fullName email phoneNo nurseryName address "
+  );
+
+  // Step 2: Aggregate total earnings per vendor (from all subOrders)
+  const earningsData = await Order.aggregate([
+    { $unwind: "$subOrders" },
+    // { $match: { "subOrders.paymentStatus": "Paid" } },
+    {
+      $group: {
+        _id: "$subOrders.vendorId",
+        totalEarnings: { $sum: "$subOrders.totalAmount" },
+      },
+    },
+  ]);
+
+  // Step 3: Aggregate plant count per vendor
+  const plantCounts = await Plant.aggregate([
+    {
+      $group: {
+        _id: "$vendorId",
+        totalPlants: { $sum: 1 },
+      },
+    },
+  ]);
+
+  // Step 4: Convert both results to Maps for easy lookup
+  const earningsMap = new Map();
+  earningsData.forEach((item) => {
+    earningsMap.set(item._id.toString(), item.totalEarnings);
+  });
+
+  const plantCountMap = new Map();
+  plantCounts.forEach((item) => {
+    plantCountMap.set(item._id.toString(), item.totalPlants);
+  });
+
+  // Step 5: Merge everything into final vendor response
+  const enrichedVendors = vendors.map((vendor) => ({
+    _id: vendor._id,
+    fullName: vendor.fullName,
+    email: vendor.email,
+    nurseryName: vendor.nurseryName,
+    address: vendor.address,
+    phoneNo: vendor.phoneNo,
+    totalEarnings: earningsMap.get(vendor._id.toString()) || 0,
+    totalPlants: plantCountMap.get(vendor._id.toString()) || 0,
+  }));
+
+  res.status(200).json({
+    status: "success",
+    data: {
+      vendors: enrichedVendors,
+    },
+  });
+});
+
 exports.getTotalVendors = asyncErrorHandler(async (req, res, next) => {
   const totalVendors = await Vendor.countDocuments();
   res.status(200).json({ status: "success", data: totalVendors });

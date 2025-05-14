@@ -9,14 +9,14 @@ export const fetchDashboardStats = createAsyncThunk(
   "adminDashboard/fetchDashboardStats",
   async (_, { rejectWithValue }) => {
     try {
-      const [vendorsRes, plantsRes, customersRes, salesRes] = await Promise.all(
-        [
+      const [vendorsRes, plantsRes, customersRes, salesRes, visitorsRes] =
+        await Promise.all([
           axios.get(`${BASE_URL}/getTotalVendors`),
           axios.get(`${BASE_URL}/getTotalPlants`),
           axios.get(`${BASE_URL}/getTotalCustomers`),
           axios.get(`${BASE_URL}/getTotalSales`),
-        ]
-      );
+          axios.get("http://localhost:8000/api/v1/vendor/getTotalVisitors"),
+        ]);
       // console.log(vendorsRes, plantsRes, customersRes, salesRes);
 
       return {
@@ -24,6 +24,7 @@ export const fetchDashboardStats = createAsyncThunk(
         totalPlants: plantsRes.data.data,
         totalCustomers: customersRes.data.data,
         totalSales: salesRes.data.data,
+        totalVisitors: visitorsRes.data.data,
       };
     } catch (err) {
       return rejectWithValue(
@@ -56,6 +57,7 @@ const adminDashboardSlice = createSlice({
     totalVendors: 0,
     totalPlants: 0,
     totalCustomers: 0,
+    totalVisitors: 0,
     totalSales: {
       totalProductRevenue: 0,
       totalShippingRevenue: 0,
@@ -78,6 +80,7 @@ const adminDashboardSlice = createSlice({
         state.totalPlants = action.payload.totalPlants;
         state.totalCustomers = action.payload.totalCustomers;
         state.totalSales = action.payload.totalSales;
+        state.totalVisitors = action.payload.totalVisitors;
       })
       .addCase(fetchDashboardStats.rejected, (state, action) => {
         state.loading = false;

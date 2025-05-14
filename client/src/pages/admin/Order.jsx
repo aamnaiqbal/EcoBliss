@@ -13,7 +13,7 @@ const AdminOrder = () => {
   useEffect(() => {
     dispatch(fetchOrders({ filter }));
   }, [dispatch, filter]);
-  console.log(orders);
+  // console.log(orders);
   return (
     <>
       <div className="flex gap-4 flex-wrap justify-center pt-28 pb-4">
@@ -81,7 +81,13 @@ const AdminOrder = () => {
               )}
             </div>
             <p className="poppins text-lightGrey text-lg mt-4">
-              Request received on: {order.shipmentRequestedAt}
+              Request received on:
+              {new Date(order.shipmentRequestedAt).toLocaleDateString("en-US", {
+                weekday: "short",
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              })}
             </p>
             <hr />
             <table className="w-full poppins">

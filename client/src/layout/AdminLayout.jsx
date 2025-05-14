@@ -5,9 +5,12 @@ import { IoIosPeople } from "react-icons/io";
 import { PiMoneyFill, PiPathBold } from "react-icons/pi";
 import { Link, Outlet } from "react-router-dom";
 import styles from "./VendorLayout.module.css";
+import { useDispatch } from "react-redux";
+import { adminLogout } from "../redux/slices/AuthSlice";
 const AdminLayout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [selectedTab, setSelectedTab] = useState("Dashboard");
+  const dispatch = useDispatch();
   return (
     <div>
       <div className="flex h-screen bg-gray-100">
@@ -51,7 +54,7 @@ const AdminLayout = () => {
                   <FaHome /> {isSidebarOpen && "Dashboard"}
                 </Link>
               </li>
-              <li>
+              {/* <li>
                 <Link
                   to="/admin/customers"
                   className={`flex items-center gap-3 p-3 hover:bg-green-100 rounded-lg ${
@@ -63,10 +66,10 @@ const AdminLayout = () => {
                 >
                   <IoIosPeople /> {isSidebarOpen && "Customers"}
                 </Link>
-              </li>
+              </li> */}
               <li>
                 <Link
-                  to="/admin/vendors"
+                  to="/admin/vendor/offerings"
                   className={`flex items-center gap-3 p-3 hover:bg-green-100 rounded-lg ${
                     selectedTab === "Vendors"
                       ? "text-white bg-lightGreen"
@@ -78,7 +81,7 @@ const AdminLayout = () => {
                   {isSidebarOpen && "Vendors"}
                 </Link>
               </li>
-              <li>
+              {/* <li>
                 <Link
                   to="/admin/products"
                   className={`flex items-center gap-3 p-3 hover:bg-green-100 rounded-lg ${
@@ -91,7 +94,7 @@ const AdminLayout = () => {
                   <FaLeaf />
                   {isSidebarOpen && "Products"}
                 </Link>
-              </li>
+              </li> */}
               <li>
                 <Link
                   to="/admin/orders"
@@ -107,7 +110,7 @@ const AdminLayout = () => {
                 </Link>
               </li>
 
-              <li>
+              {/* <li>
                 <Link
                   to="/vendor/payments"
                   className={`flex items-center gap-3 p-3 hover:bg-green-100 rounded-lg ${
@@ -120,7 +123,7 @@ const AdminLayout = () => {
                   <PiMoneyFill />
                   {isSidebarOpen && "Payments"}
                 </Link>
-              </li>
+              </li> */}
               {/* <li>
                 <Link
                   to="/vendor/chats"
@@ -153,8 +156,10 @@ const AdminLayout = () => {
           >
             <h2 className="text-xl font-semibold">Admin Dashboard</h2>
             <div className="flex items-center space-x-4">
-              <span className="text-gray-700">Welcome, Admin!</span>
-              <button className="bg-red-500 text-white px-4 py-2 rounded">
+              <button
+                className="text-black px-4 py-2 font-semibold"
+                onClick={() => dispatch(adminLogout())}
+              >
                 Logout
               </button>
             </div>

@@ -91,6 +91,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchDashboardStats } from "../../redux/slices/AdminDashboardSlice";
+import { FaPerson } from "react-icons/fa6";
 import {
   BarChart,
   Bar,
@@ -114,6 +115,7 @@ const Dashboard = () => {
     totalVendors,
     totalPlants,
     totalCustomers,
+    totalVisitors,
     totalSales,
     loading,
     error,
@@ -141,7 +143,7 @@ const Dashboard = () => {
 
   return (
     <div className="pt-28 pb-8 px-8">
-      <div className="flex flex-wrap  gap-8 justify-center">
+      <div className="flex flex-wrap  gap-8 justify-center mb-12">
         <div className="card bg-base-100 card-sm shadow-sm w-[25%]  flex flex-row  items-center justify-center gap-4 p-2">
           <div className="bg-[#D7D3ED] rounded-md h-1/2 p-2">
             <img
@@ -150,10 +152,23 @@ const Dashboard = () => {
             />
           </div>
           <div className="marcellus p-2">
-            <p className="font-bold">{totalCustomers}</p>
+            <p className="font-bold">{totalCustomers || 0}</p>
             <p className="font-semibold">Total Customers</p>
           </div>
         </div>
+        <div className="card bg-base-100 card-sm shadow-sm w-[25%]  flex flex-row  items-center justify-center gap-4 p-2">
+          <div className="bg-[#D7D3ED] rounded-md h-1/2 p-2">
+            <img
+              src="/images/admin/dashboard/customer.png"
+              className="h-full"
+            />
+          </div>
+          <div className="marcellus p-2">
+            <p className="font-bold">{totalVisitors || 0}</p>
+            <p className="font-semibold">Total Visitors</p>
+          </div>
+        </div>
+
         <div className="card bg-base-100 card-sm shadow-sm w-[25%] flex flex-row  items-center justify-center gap-4 p-2">
           <div className="bg-[#E1F4EB] rounded-md h-1/2 p-2">
             <img src="/images/admin/dashboard/plant.png" className="h-full" />
@@ -199,11 +214,34 @@ const Dashboard = () => {
             <p className="font-semibold">Total Revenue</p>
           </div>
         </div>
+        <div className="card bg-base-100 card-sm shadow-sm w-[25%] flex flex-row  items-center justify-center gap-4 p-2">
+          <FaPerson size={24} />
+          <div className="marcellus p-2">
+            <p className="font-bold">
+              {totalVisitors > 0
+                ? `${((totalCustomers / totalVisitors) * 100).toFixed(2)}%`
+                : "0%"}
+            </p>
+            <p className="font-semibold">Conversion Rate</p>
+          </div>
+        </div>
+        {/* <div className="card bg-base-100 card-sm shadow-sm w-[25%] flex flex-row  items-center justify-center gap-4 p-2">
+          <FaPerson size={24} />
+          <div className="marcellus p-2">
+            <p className="font-bold">
+              Rs.{" "}
+              {totalOrders > 0
+                ? (totalSales.totalRevenue / totalOrders).toFixed(2)
+                : "0"}
+            </p>
+            <p className="font-semibold">Average Order Value</p>
+          </div>
+        </div> */}
       </div>
       <div style={{ display: "flex", gap: "2rem", flexWrap: "wrap" }}>
         {/* --- Bar Chart for Overview --- */}
         <div style={{ flex: 1, minWidth: 300 }}>
-          <h3>Overview</h3>
+          <h3 className="text-2xl font-bold mb-4">Overview</h3>
           <ResponsiveContainer width="100%" height={300}>
             <BarChart data={overviewData}>
               <CartesianGrid strokeDasharray="3 3" />
@@ -217,7 +255,7 @@ const Dashboard = () => {
 
         {/* --- Pie Chart for Revenue --- */}
         <div style={{ flex: 1, minWidth: 300 }}>
-          <h3>Revenue Breakdown</h3>
+          <h3 className="text-2xl font-bold mb-4">Revenue Breakdown</h3>
           <ResponsiveContainer width="100%" height={300}>
             <PieChart>
               <Pie
@@ -240,6 +278,7 @@ const Dashboard = () => {
             </PieChart>
           </ResponsiveContainer>
         </div>
+        <br />
         <TopSellingCategoriesChart />
       </div>
     </div>

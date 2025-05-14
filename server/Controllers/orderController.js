@@ -12,6 +12,7 @@ const qs = require("querystring"); // Built-in, to parse body
 const crypto = require("crypto"); // For signature verification (optional but recommended)
 
 exports.handlePayFastIPN = asyncErrorHandler(async (req, res, next) => {
+  console.log(req.body);
   const ipnData = req.body;
   const orderId = ipnData.custom_str1;
   if (!orderId) {
@@ -38,19 +39,6 @@ exports.handlePayFastIPN = asyncErrorHandler(async (req, res, next) => {
 
 exports.verifyPayFastReturn = asyncErrorHandler(async (req, res, next) => {
   const { m_payment_id, payment_status } = req.body;
-
-  console.log("User returned from PayFast:", { m_payment_id, payment_status });
-  if (payment_status === "COMPLETE") {
-    const order = await Order.findById(m_payment_id);
-    if (!order) return res.status(404).json({ error: "Order not found." });
-
-    order.paymentStatus = "Paid";
-    order.paymentAt = new Date();
-    await order.save();
-
-    return res.status(200).json({ message: "Payment completed successfully." });
-  }
-
   if (!m_payment_id) {
     return res.status(400).json({ error: "Missing payment reference." });
   }
@@ -123,7 +111,7 @@ exports.placeOrder = asyncErrorHandler(async (req, res, next) => {
     vendorOrders[vendorId].totalAmount += itemTotal;
     vendorOrders[vendorId].totalItems += item.quantity;
     totalAmount += itemTotal;
-    console.log(vendorOrders);
+    // console.log(vendorOrders);
   }
 
   for (const subOrder of Object.values(vendorOrders)) {
