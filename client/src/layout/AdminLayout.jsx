@@ -154,7 +154,7 @@ const AdminLayout = () => {
               isSidebarOpen ? "left-64" : "left-20"
             }`}
           >
-            <h2 className="text-xl font-semibold">Admin Dashboard</h2>
+            <h2 className="text-xl font-semibold">Welcome Admin</h2>
             <div className="flex items-center space-x-4">
               <button
                 className="text-black px-4 py-2 font-semibold"

@@ -3,7 +3,7 @@ import "./App.module.css";
 import ScrollToTop from "./components/ScrollToTop";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import ChatComponent from "./components/Chat_component";
 function App() {
   return (
     <>
@@ -22,6 +22,7 @@ function App() {
         transition:Bounce
       />
       <Outlet />
+      <ChatComponent />
     </>
   );
 }

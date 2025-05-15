@@ -81,7 +81,10 @@ exports.getAllVendors = asyncErrorHandler(async (req, res, next) => {
     nurseryName: vendor.nurseryName,
     address: vendor.address,
     phoneNo: vendor.phoneNo,
-    totalEarnings: earningsMap.get(vendor._id.toString()) || 0,
+    totalEarnings: Math.round(
+      (earningsMap.get(vendor._id.toString()) || 0) * 0.85
+    ),
+
     totalPlants: plantCountMap.get(vendor._id.toString()) || 0,
   }));
 

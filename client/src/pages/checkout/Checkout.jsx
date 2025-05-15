@@ -276,7 +276,7 @@ const Checkout = () => {
         return_url: `http://localhost:5173/order/payment-return?m_payment_id=${orderId}&payment_status=COMPLETE`,
         cancel_url: "http://localhost:5173/payment-cancel",
         notify_url:
-          "https://1373-182-190-193-109.ngrok-free.app/api/v1/order/payfast-notify",
+          " https://198c-111-68-110-251.ngrok-free.app/api/v1/order/payfast-notify",
       };
 
       for (const key in paymentData) {
